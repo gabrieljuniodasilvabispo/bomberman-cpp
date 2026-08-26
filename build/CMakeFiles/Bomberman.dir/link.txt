@@ -1,3 +1,0 @@
-C:\mingw64\bin\cmake.exe -E rm -f CMakeFiles\Bomberman.dir/objects.a
-C:\mingw64\bin\ar.exe qc CMakeFiles\Bomberman.dir/objects.a @CMakeFiles\Bomberman.dir\objects1.rsp
-C:\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Bomberman.dir/objects.a -Wl,--no-whole-archive -o Bomberman.exe -Wl,--out-implib,libBomberman.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Bomberman.dir\linkLibs.rsp
