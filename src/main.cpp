@@ -1,39 +1,45 @@
 #include <SFML/Graphics.hpp>
+#include <optional>
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode({800u, 600u}), "SFML 3.0.2 - Green Circle");
+int main() {
+    // Cria a janela de exibição
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "Movimentacao Base para teste");
     window.setFramerateLimit(60);
 
-    sf::CircleShape circle(30.f);
-    circle.setFillColor(sf::Color::Green);
-    circle.setPosition({385.f, 285.f});
+    // Cria o círculo verde com raio de 30 pixels
+    sf::CircleShape shape(30.f);
+    shape.setFillColor(sf::Color::Green);
+    // Posiciona o círculo no centro da janela
+    shape.setPosition({370.f, 270.f});
 
-    const float speed = 4.f;
+    // Velocidade de movimento em pixels por segundo
+    float speed = 300.f;
+    sf::Clock clock;
 
-    while (window.isOpen())
-    {
-        while (const std::optional event = window.pollEvent())
-        {
+    while (window.isOpen()) {
+        // Processamento de eventos (fechamento da janela)
+        while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
 
-        // Movement (WASD or arrow keys)
-        sf::Vector2f move(0.f, 0.f);
+        // Cálculo do tempo decorrido por frame (Delta Time)
+        sf::Time dt = clock.restart();
+        float movement = speed * dt.asSeconds();
+
+        // Movimentação contínua baseada em tempo real (teclado)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-            move.y -= speed;
+            shape.move({0.f, -movement});
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-            move.y += speed;
+            shape.move({0.f, movement});
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-            move.x -= speed;
+            shape.move({-movement, 0.f});
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-            move.x += speed;
+            shape.move({movement, 0.f});
 
-        circle.move(move);
-
-        window.clear(sf::Color::Black);
-        window.draw(circle);
+        // Renderização
+        window.clear();
+        window.draw(shape);
         window.display();
     }
 
