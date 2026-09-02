@@ -1,11 +1,14 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.22)
 
 project(Bomberman CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Desativação de módulos do SFML que não serão usados para acelerar a compilação. ATIVAR DEPOIS!!!!!
 set(SFML_BUILD_AUDIO OFF CACHE BOOL "" FORCE)
+set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
 
 include(FetchContent)
 
@@ -22,12 +25,11 @@ add_executable(Bomberman
 )
 
 target_link_libraries(Bomberman PRIVATE
-    sfml-graphics
-    sfml-window
-    sfml-system
+    SFML::Graphics
+    SFML::Window
+    SFML::System
 )
 
-# Copiar DLLs automaticamente no Windows
 if(WIN32)
     add_custom_command(TARGET Bomberman POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
