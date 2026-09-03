@@ -1,15 +1,15 @@
-# Cache e arquivos gerados pelo CMake (NÃO sobem para o Git)
+# Cache e arquivos gerados pelo CMake
 build/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile
 
-# Configurações de IDEs (NÃO sobem)
+# Configurações de IDEs
 .vscode/
 .idea/
 
-# Binários e executáveis (NÃO sobem)
+# Binários e executáveis
 *.exe
 *.o
 *.a
