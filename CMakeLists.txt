@@ -23,15 +23,16 @@ FetchContent_MakeAvailable(SFML)
 # Declara o executável listando o main e todas as implementações em src/
 add_executable(Bomberman
     src/main.cpp
-    src/Map.cpp
-    src/Block.cpp
-    src/Bomb.cpp
-    src/Explosion.cpp
+    src/Mapa.cpp
+    src/Bloco.cpp
+    src/Bomba.cpp
+    src/Explosao.cpp
     src/Player.cpp
     src/Enemy.cpp
     src/Menu.cpp
     src/Effects.cpp
     src/Game.cpp
+    src/Posicao.cpp
 )
 
 # Informa ao CMake onde estão os arquivos .hpp (na pasta include)
