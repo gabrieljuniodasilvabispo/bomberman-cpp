@@ -60,4 +60,3 @@ private:
 } // namespace bomberman
 
 #endif // BOMBERMAN_MENU_HPP
-```
