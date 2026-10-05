@@ -30,8 +30,8 @@ add_executable(Bomberman
     src/Player.cpp
     src/Enemy.cpp
     src/Menu.cpp
-    src/Effects.cpp
-    src/Game.cpp
+    src/Melhoria.cpp
+    src/Partida.cpp
     src/Posicao.cpp
 )
 
