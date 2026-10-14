@@ -33,3 +33,15 @@ Com relação à implementação, o jogo original foi desenvolvido em **BASIC**,
 A adaptação de um projeto desse porte para **C++** apresenta um grande desafio técnico, envolvendo aspectos como programação orientada a objetos, gerenciamento de recursos, lógica de jogo, gráficos e interação com o usuário.
 
 Dessa forma, o desenvolvimento do projeto busca não apenas reproduzir a experiência de *Bomberman*, mas também proporcionar ao grupo uma oportunidade de aplicar e aprofundar conhecimentos adquiridos ao longo da disciplina **PDS II**.
+
+## Testes iniciais (TDD)
+
+Os testes usam doctest e estao na fase **RED**: os comportamentos do jogo ainda
+nao foram implementados e as falhas sao esperadas.
+
+No Windows, execute `mingw32-make test` na pasta do projeto ou abra `testar.bat`.
+Use `mingw32-make test-build` para apenas compilar. No Linux, use `make test`.
+
+Veja [o guia de testes](docs/testes-iniciais.md) para saber como executar os
+testes, por que eles falham e o que verificam. A meta final de 60% de
+cobertura com gcov ainda nao se aplica aos auxiliares desta fase inicial.
