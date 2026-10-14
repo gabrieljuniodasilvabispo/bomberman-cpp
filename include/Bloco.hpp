@@ -4,7 +4,8 @@
 #include "Posicao.hpp"
 
 class Mapa;
-class Melhoria;
+namespace bomberman { class Melhoria; }
+using Melhoria = bomberman::Melhoria;
 
 /** @file Bloco.hpp
  * @brief Contrato de Bloco, baseado no CRC08 e nas historias US02, US04 e US05.

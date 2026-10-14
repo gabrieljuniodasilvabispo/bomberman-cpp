@@ -4,10 +4,12 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
+class Mapa;
+
 namespace bomberman {
 
 class Jogador;
-class Mapa;
+using ::Mapa;
 
 /**
  * @class Bomba

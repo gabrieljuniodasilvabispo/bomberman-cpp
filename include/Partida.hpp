@@ -3,9 +3,11 @@
 
 #include <SFML/System/Time.hpp>
 
+class Mapa;
+
 namespace bomberman {
 
-class Mapa;
+using ::Mapa;
 class Jogador;
 class Inimigo;
 class Bomba;

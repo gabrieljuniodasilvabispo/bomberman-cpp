@@ -6,9 +6,11 @@
 
 #include <vector>
 
+class Mapa;
+
 namespace bomberman {
 
-class Mapa;
+using ::Mapa;
 class Jogador;
 class Inimigo;
 

@@ -5,7 +5,6 @@
 #include "Bloco.hpp"
 #include "Posicao.hpp"
 
-class Melhoria;
 
 /** @file Mapa.hpp
  * @brief Contrato de Mapa, baseado no CRC02 e nas historias US01 a US06.
