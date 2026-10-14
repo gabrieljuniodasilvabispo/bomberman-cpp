@@ -3,7 +3,7 @@ build/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
+# O Makefile da raiz e parte da entrega; gerados ficam em build/.
 
 # Configurações de IDEs
 .vscode/
@@ -15,3 +15,7 @@ Makefile
 *.a
 *.so
 *.dylib
+
+*.gcda
+*.gcno
+*.gcov
