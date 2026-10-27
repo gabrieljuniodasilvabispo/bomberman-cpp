@@ -2,8 +2,8 @@
 #define BOMBERMAN_TESTES_APOIO_HPP
 #include <doctest/doctest.h>
 #include "Mapa.hpp"
-#include "Player.hpp"
-#include "Enemy.hpp"
+#include "Jogador.hpp"
+#include "Inimigo.hpp"
 #include "Melhoria.hpp"
 
 inline void conferirPosicao(Posicao atual, Posicao esperada) {
@@ -13,8 +13,8 @@ inline void conferirPosicao(Posicao atual, Posicao esperada) {
 
 struct TestesMapa {
     Mapa mapa{5, 5, {Bloco({1, 1}, TipoBloco::Destrutivel),
-                     Bloco({2, 2}, TipoBloco::Indestrutivel)},
-              {0, 0}, {{4, 0}}, {4, 4}};
+                      Bloco({2, 2}, TipoBloco::Indestrutivel)},
+               {0, 0}, {{4, 0}}, {4, 4}};
 };
 struct TestesBloco : TestesMapa {};
 struct TestesJogador : TestesMapa {
