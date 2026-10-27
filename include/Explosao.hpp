@@ -6,13 +6,12 @@
 
 #include <vector>
 
-class Mapa;
-
 namespace bomberman {
 
-using ::Mapa;
+class Mapa;
 class Jogador;
 class Inimigo;
+class Bomba;
 
 /**
  * @class Explosao
@@ -55,6 +54,13 @@ public:
      * @param inimigo Inimigo a ser verificado.
      */
     void aplicarEm(Inimigo& inimigo);
+
+    /**
+     * @brief Antecipa a detonação de uma bomba encontrada em uma célula atingida
+     *        (reação em cadeia), caso ela esteja em uma célula atingida.
+     * @param bomba Bomba a ser verificada.
+     */
+    void aplicarEm(Bomba& bomba);
 
 private:
     sf::Vector2i origem_;

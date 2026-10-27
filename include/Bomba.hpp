@@ -4,12 +4,13 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
-class Mapa;
+#include <memory>
 
 namespace bomberman {
 
 class Jogador;
-using ::Mapa;
+class Mapa;
+class Explosao;
 
 /**
  * @class Bomba
@@ -44,10 +45,16 @@ public:
     void anteciparDetonacao();
 
     /**
-     * @brief Detona a bomba, gerando os efeitos da explosão na arena.
+     * @brief Detona a bomba e cria a explosão correspondente na arena.
+     *
+     * Libera a vaga de bomba do jogador responsável e devolve a posse da
+     * explosão já propagada para quem chamou (normalmente a Partida), que
+     * passa a ser responsável por atualizá-la e por aplicá-la aos personagens.
+     *
      * @param mapa Mapa onde a explosão ocorre.
+     * @return Explosão já propagada, pronta para ser atualizada a cada ciclo.
      */
-    void detonar(Mapa& mapa);
+    std::unique_ptr<Explosao> detonar(Mapa& mapa);
 
 private:
     sf::Vector2i posicao_;

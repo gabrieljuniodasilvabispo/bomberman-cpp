@@ -1,5 +1,5 @@
-#ifndef BOMBERMAN_ENEMY_HPP
-#define BOMBERMAN_ENEMY_HPP
+#ifndef BOMBERMAN_INIMIGO_HPP
+#define BOMBERMAN_INIMIGO_HPP
 
 #include "Posicao.hpp"
 #include <SFML/System/Time.hpp>

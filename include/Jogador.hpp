@@ -1,5 +1,5 @@
-#ifndef BOMBERMAN_PLAYER_HPP
-#define BOMBERMAN_PLAYER_HPP
+#ifndef BOMBERMAN_JOGADOR_HPP
+#define BOMBERMAN_JOGADOR_HPP
 
 #include "Posicao.hpp"
 class Mapa;

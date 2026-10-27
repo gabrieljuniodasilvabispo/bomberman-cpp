@@ -48,7 +48,7 @@ option(BOMBERMAN_TDD_STUBS "Permitir auxiliares que falham para classes ainda au
 option(BOMBERMAN_COVERAGE "Instrumentar codigo proprio com GCC/gcov" OFF)
 
 if(BUILD_TESTING)
-    set(CLASSES Mapa Bloco Bomba Explosao Player Enemy Menu Melhoria Partida)
+    set(CLASSES Mapa Bloco Bomba Explosao Jogador Inimigo Menu Melhoria Partida)
     set(FONTES_TESTADAS)
     set(CLASSES_PENDENTES)
     foreach(CLASSE IN LISTS CLASSES)
