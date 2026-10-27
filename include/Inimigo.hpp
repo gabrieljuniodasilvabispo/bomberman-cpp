@@ -3,11 +3,13 @@
 
 #include "Posicao.hpp"
 #include <SFML/System/Time.hpp>
+
 class Mapa;
 
 namespace bomberman {
+
 class Jogador;
-/** @brief Contrato inicial para CRC06 e US04; sem implementacao. */
+
 class Inimigo {
 public:
     explicit Inimigo(Posicao posicao);
@@ -16,6 +18,12 @@ public:
     void atualizar(sf::Time deltaTempo, ::Mapa& mapa);
     void receberExplosao();
     void verificarContato(Jogador& jogador);
+
+private:
+    Posicao posicao_;
+    bool ativo_ = true;
 };
-}
+
+} // namespace bomberman
+
 #endif
