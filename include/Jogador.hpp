@@ -20,6 +20,13 @@ public:
     void receberExplosao();
     /** @brief Contato com inimigo derrota mesmo um jogador com escudo. */
     void receberContatoInimigo();
+
+private:
+    Posicao posicao_;
+    bool ativo_ = true;
+    bool escudo_ = false;
+    int alcance_ = 2;
+    int limiteBombas_ = 1;
 };
 }
 #endif
