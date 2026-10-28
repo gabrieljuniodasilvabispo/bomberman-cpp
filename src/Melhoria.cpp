@@ -3,26 +3,14 @@
 
 namespace bomberman {
 
-Melhoria::Melhoria(Posicao posicao, TipoMelhoria tipo)
+Melhoria::Melhoria(sf::Vector2i posicao, TipoMelhoria tipo)
     : posicao_(posicao)
     , tipo_(tipo)
     , coletada_(false)
 {
 }
 
-Posicao Melhoria::obterPosicao() const {
-    return posicao_;
-}
-
-TipoMelhoria Melhoria::obterTipo() const {
-    return tipo_;
-}
-
-bool Melhoria::foiColetada() const {
-    return coletada_;
-}
-
-void Melhoria::coletar(Jogador& jogador) {
+void Melhoria::aplicarEm(Jogador& jogador) {
     if (coletada_) {
         return;
     }
@@ -30,11 +18,14 @@ void Melhoria::coletar(Jogador& jogador) {
     coletada_ = true;
 
     switch (tipo_) {
-    case TipoMelhoria::AumentarAlcance:
+    case TipoMelhoria::AumentoAlcance:
         jogador.aumentarAlcance();
         break;
-    case TipoMelhoria::AumentarQuantidadeBomba:
+    case TipoMelhoria::BombaExtra:
         jogador.aumentarLimiteBombas();
+        break;
+    case TipoMelhoria::AumentoVelocidade:
+        jogador.aumentarVelocidade();
         break;
     case TipoMelhoria::Escudo:
         jogador.ativarEscudo();
@@ -42,4 +33,23 @@ void Melhoria::coletar(Jogador& jogador) {
     }
 }
 
+bool Melhoria::coletada() const {
+    return coletada_;
+}
+
+void Melhoria::atualizar(sf::Time deltaTempo) {
+    // Atualização de tempo de permanência ou animação do item no mapa
+    (void)deltaTempo;
+}
+
+sf::Vector2i Melhoria::getPosicao() const {
+    return posicao_;
+}
+
+TipoMelhoria Melhoria::getTipo() const {
+    return tipo_;
+}
+
 } // namespace bomberman
+
+🎮 *Quer ajuda para integrar a geração desses power-ups no método de destruição de blocos da classe `Mapa`?*
