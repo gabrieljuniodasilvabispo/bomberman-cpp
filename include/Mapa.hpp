@@ -145,6 +145,24 @@ public:
      * configuracao inicial devem continuar vivos para reutilizacao.
      */
     void reiniciar();
+
+private:
+    struct Celula {
+        int indiceBloco = -1;
+        bool temBomba = false;
+        Melhoria* melhoria = nullptr;
+    };
+
+    int linhas_;
+    int colunas_;
+    Posicao inicioJogador_;
+    std::vector<Posicao> iniciosInimigos_;
+    Posicao saida_;
+
+    // Configuracao original, preservada para reiniciar a fase.
+    std::vector<Bloco> blocosIniciais_;
+    std::vector<Bloco> blocos_;
+    std::vector<std::vector<Celula>> celulas_;
 };
 
 #endif // BOMBERMAN_MAPA_HPP
