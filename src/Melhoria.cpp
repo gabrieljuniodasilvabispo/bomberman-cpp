@@ -51,5 +51,3 @@ TipoMelhoria Melhoria::getTipo() const {
 }
 
 } // namespace bomberman
-
-🎮 *Quer ajuda para integrar a geração desses power-ups no método de destruição de blocos da classe `Mapa`?*
