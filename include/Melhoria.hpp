@@ -1,55 +1,63 @@
-#include "Melhoria.hpp"
-#include "Jogador.hpp"
+#include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
+
+class Mapa;
 
 namespace bomberman {
 
-Melhoria::Melhoria(sf::Vector2i posicao, TipoMelhoria tipo)
-    : posicao_(posicao)
-    , tipo_(tipo)
-    , coletada_(false)
-{
-}
+class Jogador;
+class Mapa;
+using ::Mapa;
 
-void Melhoria::aplicarEm(Jogador& jogador) {
-    if (coletada_) {
-        return;
-    }
+/// @brief Tipos de melhorias (Power-ups) disponíveis no jogo.
+enum class TipoMelhoria {
+    AumentoAlcance,
+    BombaExtra,
+    AumentoVelocidade
+    AumentoVelocidade,
+    Escudo ///< Previsto na US05; velocidade e uma extensao do contrato anterior.
+};
 
-    coletada_ = true;
+/**
+ * @class Melhoria
+ * @brief Representa um item coletável no mapa que altera os atributos do jogador.
+ */
+class Melhoria {
+public:
+    /**
+     * @brief Constrói uma melhoria em uma posição do mapa.
+     * @param posicao Célula (x, y) onde a melhoria será gerada.
+     * @param tipo O tipo de benefício concedido por este item.
+     */
+    Melhoria(sf::Vector2i posicao, TipoMelhoria tipo);
 
-    switch (tipo_) {
-    case TipoMelhoria::AumentoAlcance:
-        jogador.aumentarAlcance();
-        break;
-    case TipoMelhoria::BombaExtra:
-        jogador.aumentarLimiteBombas();
-        break;
-    case TipoMelhoria::AumentoVelocidade:
-        jogador.aumentarVelocidade();
-        break;
-    case TipoMelhoria::Escudo:
-        jogador.ativarEscudo();
-        break;
-    }
-}
+    /**
+     * @brief Aplica o efeito do item diretamente sobre o jogador.
+     * @param jogador Referência ao jogador que coletou a melhoria.
+     */
+    void aplicarEm(Jogador& jogador);
 
-bool Melhoria::coletada() const {
-    return coletada_;
-}
+    /** @brief Indica se o item já foi coletado por algum personagem. */
+    bool coletada() const;
 
-void Melhoria::atualizar(sf::Time deltaTempo) {
-    // Atualização de tempo de permanência ou animação do item no mapa
-    (void)deltaTempo;
-}
+    /**
+     * @brief Avança a animação ou tempo de permanência do item no mapa.
+     * @param deltaTempo Tempo decorrido desde o último quadro.
+     */
+    void atualizar(sf::Time deltaTempo);
 
-sf::Vector2i Melhoria::getPosicao() const {
-    return posicao_;
-}
+    /** @brief Retorna a posição da célula onde o item se encontra. */
+    sf::Vector2i getPosicao() const;
 
-TipoMelhoria Melhoria::getTipo() const {
-    return tipo_;
-}
+    /** @brief Retorna o tipo de melhoria que este item representa. */
+    TipoMelhoria getTipo() const;
+
+private:
+    sf::Vector2i posicao_;
+    TipoMelhoria tipo_;
+    bool coletada_;
+};
 
 } // namespace bomberman
 
-🎮 *Quer ajuda para integrar a geração desses power-ups no método de destruição de blocos da classe `Mapa`?*
+#endif // BOMBERMAN_MELHORIA_HPP
