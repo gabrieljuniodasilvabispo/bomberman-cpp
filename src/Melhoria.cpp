@@ -7,8 +7,7 @@ Melhoria::Melhoria(sf::Vector2i posicao, TipoMelhoria tipo)
     : posicao_(posicao)
     , tipo_(tipo)
     , coletada_(false)
-{
-}
+{}
 
 void Melhoria::aplicarEm(Jogador& jogador) {
     if (coletada_) {
@@ -25,7 +24,7 @@ void Melhoria::aplicarEm(Jogador& jogador) {
         jogador.aumentarLimiteBombas();
         break;
     case TipoMelhoria::AumentoVelocidade:
-        jogador.aumentarVelocidade();
+        // Reservado para quando o Jogador possuir controle de velocidade
         break;
     case TipoMelhoria::Escudo:
         jogador.ativarEscudo();
@@ -38,7 +37,6 @@ bool Melhoria::coletada() const {
 }
 
 void Melhoria::atualizar(sf::Time deltaTempo) {
-    // Atualização de tempo de permanência ou animação do item no mapa
     (void)deltaTempo;
 }
 
