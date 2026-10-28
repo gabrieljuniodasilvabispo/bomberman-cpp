@@ -68,4 +68,16 @@ void Jogador::receberContatoInimigo() {
     ativo_ = false;
 }
 
+//implementações realcionadas ao Melhoria.cpp
+void Jogador::aumentarAlcance() {
+    alcance_++; 
+}
+
+void Jogador::aumentarLimiteBombas() {
+    limiteBombas_++;
+}
+
+void Jogador::ativarEscudo() {
+    escudo_ = true;
+}
 } // namespace bomberman
