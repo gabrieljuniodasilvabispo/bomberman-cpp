@@ -59,6 +59,12 @@ public:
      * @note O mapa preserva o objeto durante a notificacao.
      */
     bool receberExplosao(Mapa& mapa);
+
+    private:
+    Posicao posicao_;
+    TipoBloco tipo_;
+    bool destruido_ = false;
+    Melhoria* melhoria_ = nullptr;
 };
 
 #endif // BOMBERMAN_BLOCO_HPP
