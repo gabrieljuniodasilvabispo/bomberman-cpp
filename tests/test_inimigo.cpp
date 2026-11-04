@@ -1,4 +1,7 @@
 #include "apoio.hpp"
+#include <cstdint>
+#include <limits>
+#include <stdexcept>
 TEST_CASE_FIXTURE(TestesInimigo, "Inimigo inicia ativo e e eliminado por explosao") {
     conferirPosicao(inimigo.obterPosicao(), {4, 0});
     CHECK(inimigo.ativo());
@@ -51,4 +54,30 @@ TEST_CASE("Inimigo respeita obstaculos com tempo positivo e para apos ser elimin
     inimigo.receberExplosao();
     inimigo.atualizar(sf::seconds(1), corredor);
     conferirPosicao(inimigo.obterPosicao(), {0, 0});
+}
+
+TEST_CASE("Inimigo rejeita coordenadas negativas ou atualizacao fora do mapa") {
+    CHECK_THROWS_AS((bomberman::Inimigo({-1, 0})), std::invalid_argument);
+    CHECK_THROWS_AS((bomberman::Inimigo({0, -1})), std::invalid_argument);
+    const int maximo = std::numeric_limits<int>::max();
+    bomberman::Inimigo inimigo({maximo, maximo});
+    Mapa mapa(2, 2, {}, {0, 0}, {}, {1, 1});
+    CHECK_THROWS_AS(inimigo.atualizar(sf::milliseconds(500), mapa), std::invalid_argument);
+    conferirPosicao(inimigo.obterPosicao(), {maximo, maximo});
+}
+
+TEST_CASE("Inimigo rejeita tempo excessivo sem consumir o acumulador valido") {
+    Mapa corredor(1, 2, {}, {0, 0}, {{0, 1}}, {0, 0});
+    bomberman::Inimigo inimigo({0, 1});
+    inimigo.atualizar(sf::milliseconds(250), corredor);
+    CHECK_THROWS_AS(inimigo.atualizar(sf::milliseconds(5001), corredor),
+                    std::invalid_argument);
+    CHECK_THROWS_AS(inimigo.atualizar(
+        sf::microseconds(std::numeric_limits<std::int64_t>::max()), corredor),
+        std::invalid_argument);
+    conferirPosicao(inimigo.obterPosicao(), {0, 1});
+    inimigo.atualizar(sf::milliseconds(250), corredor);
+    conferirPosicao(inimigo.obterPosicao(), {0, 0});
+    CHECK_NOTHROW(inimigo.atualizar(sf::seconds(5), corredor));
+    conferirPosicao(inimigo.obterPosicao(), {0, 0}); // Dez passos no corredor.
 }

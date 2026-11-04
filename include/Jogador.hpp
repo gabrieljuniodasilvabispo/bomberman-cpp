@@ -12,6 +12,7 @@ namespace bomberman {
  */
 class Jogador {
 public:
+    /** @throws std::invalid_argument Se linha ou coluna for negativa. */
     explicit Jogador(Posicao posicao);
     Jogador(const Jogador&) = delete;
     Jogador& operator=(const Jogador&) = delete;
@@ -19,7 +20,8 @@ public:
     Jogador& operator=(Jogador&&) = delete;
     Posicao obterPosicao() const;
     bool ativo() const;
-    /** @brief Tenta um passo ortogonal unitario; retorna false se bloqueado. */
+    /** @brief Tenta um passo ortogonal unitario; retorna false se bloqueado,
+     * inativo, deslocamento invalido ou posicao atual fora do mapa. */
     bool mover(Posicao deslocamento, ::Mapa& mapa);
     int obterAlcance() const;
     int obterLimiteBombas() const;
@@ -29,9 +31,13 @@ public:
     /** @brief Devolve uma vaga ocupada, sem alterar o limite de bombas. */
     void liberarVagaBomba();
     bool temEscudo() const;
-    /** @brief Aplica o aumento de alcance de uma melhoria. */
+    /** @brief Aplica o aumento de alcance de uma melhoria.
+     * @throws std::overflow_error Se o alcance ja atingiu o limite de int.
+     * @note Em caso de erro, preserva o alcance anterior. */
     void aumentarAlcance();
-    /** @brief Aplica o aumento de bombas simultaneas de uma melhoria. */
+    /** @brief Aplica o aumento de bombas simultaneas de uma melhoria.
+     * @throws std::overflow_error Se o limite ja atingiu o maximo de int.
+     * @note Em caso de erro, preserva o limite anterior. */
     void aumentarLimiteBombas();
     /** @brief Concede protecao contra uma explosao. */
     void ativarEscudo();

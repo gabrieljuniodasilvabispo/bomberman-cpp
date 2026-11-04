@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <random>
+#include <stdexcept>
 
 #include "Jogador.hpp"
 #include "Mapa.hpp"
@@ -13,6 +14,9 @@ Inimigo::Inimigo(Posicao posicao)
     : posicao_(posicao)
     , ativo_(true)
 {
+    if (posicao_.linha < 0 || posicao_.coluna < 0) {
+        throw std::invalid_argument("A posicao do inimigo nao pode ser negativa.");
+    }
 }
 
 Posicao Inimigo::obterPosicao() const {
@@ -26,6 +30,12 @@ bool Inimigo::ativo() const {
 void Inimigo::atualizar(sf::Time deltaTempo, ::Mapa& mapa) {
     if (!ativo_ || deltaTempo <= sf::Time::Zero) {
         return;
+    }
+    if (!mapa.dentroDosLimites(posicao_)) {
+        throw std::invalid_argument("O inimigo esta fora dos limites do mapa.");
+    }
+    if (deltaTempo > sf::seconds(5)) {
+        throw std::invalid_argument("A atualizacao do inimigo nao pode superar 5 segundos.");
     }
 
     const sf::Time intervalo = sf::milliseconds(500);

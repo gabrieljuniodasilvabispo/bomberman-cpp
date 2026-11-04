@@ -71,7 +71,7 @@ if(BUILD_TESTING)
         tests/main.cpp tests/test_posicao.cpp tests/test_mapa.cpp
         tests/test_bloco.cpp tests/test_jogador.cpp tests/test_inimigo.cpp
         tests/test_bomba.cpp tests/test_explosao.cpp tests/test_melhoria.cpp
-        tests/test_menu.cpp tests/test_partida.cpp ${FONTES_TESTADAS})
+        tests/test_menu.cpp tests/test_partida.cpp tests/test_defensiva.cpp ${FONTES_TESTADAS})
     target_include_directories(BombermanTests PRIVATE include third_party)
     target_link_libraries(BombermanTests PRIVATE SFML::System)
     if(BOMBERMAN_COVERAGE)
@@ -89,4 +89,13 @@ if(BUILD_TESTING)
             COMMAND_EXPAND_LISTS)
     endif()
     add_test(NAME testes_iniciais COMMAND BombermanTests)
+    # O alvo usado por make test-build tambem prepara os testes da entrada da aplicacao.
+    add_dependencies(BombermanTests Bomberman)
+    foreach(CASO ajuda help invalido excesso)
+        add_test(NAME cli_${CASO}
+            COMMAND ${CMAKE_COMMAND}
+                "-DEXECUTAVEL=$<TARGET_FILE:Bomberman>"
+                "-DCASO=${CASO}"
+                -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/verificar_cli.cmake")
+    endforeach()
 endif()

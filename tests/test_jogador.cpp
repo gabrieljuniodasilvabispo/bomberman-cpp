@@ -1,4 +1,6 @@
 #include "apoio.hpp"
+#include <limits>
+#include <stdexcept>
 TEST_CASE_FIXTURE(TestesJogador, "Jogador inicia ativo na posicao informada") {
     CHECK(jogador.ativo());
     conferirPosicao(jogador.obterPosicao(), {0, 0});
@@ -35,4 +37,18 @@ TEST_CASE_FIXTURE(TestesJogador, "Jogador rejeita diagonais saltos e deslocament
     conferirPosicao(jogador.obterPosicao(), {0, 1});
     jogador.receberExplosao();
     CHECK_FALSE(jogador.mover({0, 1}, mapa));
+}
+
+TEST_CASE("Jogador rejeita coordenadas negativas na criacao") {
+    CHECK_THROWS_AS((bomberman::Jogador({-1, 0})), std::invalid_argument);
+    CHECK_THROWS_AS((bomberman::Jogador({0, -1})), std::invalid_argument);
+}
+
+TEST_CASE("Jogador fora do mapa nao soma deslocamento a coordenada extrema") {
+    const int maximo = std::numeric_limits<int>::max();
+    bomberman::Jogador jogador({maximo, maximo});
+    Mapa mapa(2, 2, {}, {0, 0}, {}, {1, 1});
+    CHECK_FALSE(jogador.mover({1, 0}, mapa));
+    CHECK_FALSE(jogador.mover({0, 1}, mapa));
+    conferirPosicao(jogador.obterPosicao(), {maximo, maximo});
 }

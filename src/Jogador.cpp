@@ -1,6 +1,8 @@
 #include "Jogador.hpp"
 
 #include "Mapa.hpp"
+#include <limits>
+#include <stdexcept>
 
 namespace bomberman {
 
@@ -11,6 +13,9 @@ Jogador::Jogador(Posicao posicao)
     , alcance_(2)
     , limiteBombas_(1)
 {
+    if (posicao_.linha < 0 || posicao_.coluna < 0) {
+        throw std::invalid_argument("A posicao do jogador nao pode ser negativa.");
+    }
 }
 
 Posicao Jogador::obterPosicao() const {
@@ -26,7 +31,8 @@ bool Jogador::mover(Posicao deslocamento, ::Mapa& mapa) {
         && (deslocamento.linha == -1 || deslocamento.linha == 1);
     const bool passoHorizontal = deslocamento.linha == 0
         && (deslocamento.coluna == -1 || deslocamento.coluna == 1);
-    if (!ativo_ || (!passoVertical && !passoHorizontal)) {
+    if (!ativo_ || (!passoVertical && !passoHorizontal)
+        || !mapa.dentroDosLimites(posicao_)) {
         return false;
     }
 
@@ -92,10 +98,16 @@ void Jogador::receberContatoInimigo() {
 
 //implementações realcionadas ao Melhoria.cpp
 void Jogador::aumentarAlcance() {
+    if (alcance_ == std::numeric_limits<int>::max()) {
+        throw std::overflow_error("O alcance do jogador atingiu o limite numerico.");
+    }
     alcance_++; 
 }
 
 void Jogador::aumentarLimiteBombas() {
+    if (limiteBombas_ == std::numeric_limits<int>::max()) {
+        throw std::overflow_error("O limite de bombas atingiu o maximo numerico.");
+    }
     limiteBombas_++;
 }
 

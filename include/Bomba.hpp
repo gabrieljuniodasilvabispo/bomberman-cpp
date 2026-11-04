@@ -26,7 +26,8 @@ public:
      * @param alcance Distância, em células, atingida pela explosão.
      * @param responsavel Jogador que posicionou a bomba.
      * @pre O responsavel deve permanecer vivo durante toda a vida da bomba.
-     * @throws std::invalid_argument Se o alcance nao for positivo.
+     * @throws std::invalid_argument Se o alcance nao for positivo ou a posicao
+     * contiver coordenadas negativas. A validacao ocorre antes da reserva.
      * @throws std::logic_error Se nao houver vaga disponivel no jogador.
      * @note Reserva uma vaga; o registro da celula no mapa cabe a Partida.
      */
@@ -55,6 +56,7 @@ public:
     /**
      * @brief Avança o temporizador da bomba a cada ciclo da partida.
      * @param deltaTempo Tempo decorrido desde a última atualização.
+     * @note Tempos nao positivos sao ignorados; ao vencer, o tempo para em zero.
      */
     void atualizar(sf::Time deltaTempo);
 
@@ -70,6 +72,8 @@ public:
      *
      * @param mapa Mapa onde a explosão ocorre.
      * @return Explosao propagada, ou nullptr se ainda nao estiver pronta ou ja detonou.
+     * @throws std::invalid_argument Se a bomba pronta estiver fora do mapa ou
+     * sobre um bloco. Essa falha preserva a reserva e a ocupacao do mapa.
      * @note Remove a ocupacao no mapa e devolve a vaga uma unica vez.
      */
     std::unique_ptr<Explosao> detonar(Mapa& mapa);

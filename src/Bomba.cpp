@@ -19,6 +19,9 @@ Bomba::Bomba(sf::Vector2i posicao, int alcance, Jogador& responsavel)
     , responsavel_(responsavel)
     , tempoRestante_(sf::seconds(TEMPO_DETONACAO_SEGUNDOS))
 {
+    if (posicao_.x < 0 || posicao_.y < 0) {
+        throw std::invalid_argument("A posicao da bomba nao pode ser negativa.");
+    }
     if (alcance_ <= 0) {
         throw std::invalid_argument("O alcance da bomba deve ser positivo.");
     }
@@ -56,7 +59,8 @@ void Bomba::atualizar(sf::Time deltaTempo)
         return;
     }
 
-    tempoRestante_ -= deltaTempo;
+    tempoRestante_ = deltaTempo >= tempoRestante_
+        ? sf::Time::Zero : tempoRestante_ - deltaTempo;
 }
 
 void Bomba::anteciparDetonacao()

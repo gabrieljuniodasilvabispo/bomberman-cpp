@@ -2,6 +2,8 @@
 #include "Bomba.hpp"
 #include "Explosao.hpp"
 #include <stdexcept>
+#include <cstdint>
+#include <limits>
 struct TestesBomba {
     bomberman::Jogador jogador{{0, 0}};
     bomberman::Bomba bomba{{2, 1}, 3, jogador};
@@ -74,4 +76,34 @@ TEST_CASE("Falha ao detonar fora do mapa preserva reserva e permite limpeza") {
         CHECK(jogador.obterBombasAtivas() == 1);
     }
     CHECK(jogador.obterBombasAtivas() == 0);
+}
+
+TEST_CASE("Bomba rejeita posicao negativa sem ocupar vaga do jogador") {
+    bomberman::Jogador jogador({0, 0});
+    CHECK_THROWS_AS((bomberman::Bomba({-1, 0}, 1, jogador)), std::invalid_argument);
+    CHECK_THROWS_AS((bomberman::Bomba({0, -1}, 1, jogador)), std::invalid_argument);
+    CHECK(jogador.obterBombasAtivas() == 0);
+    jogador.receberContatoInimigo();
+    CHECK_THROWS_AS((bomberman::Bomba({0, 0}, 1, jogador)), std::logic_error);
+    CHECK(jogador.obterBombasAtivas() == 0);
+}
+
+TEST_CASE_FIXTURE(TestesBomba, "Bomba mantem temporizador vencido com tempos extremos repetidos") {
+    const auto extremo = sf::microseconds(std::numeric_limits<std::int64_t>::max());
+    bomba.atualizar(extremo);
+    CHECK(bomba.prontaParaExplodir());
+    bomba.atualizar(extremo);
+    CHECK(bomba.prontaParaExplodir());
+}
+
+TEST_CASE("Bomba sobre bloco falha sem alterar terreno ou devolver reserva prematuramente") {
+    bomberman::Jogador jogador({0, 0});
+    Mapa mapa(3, 4, {Bloco({1, 2}, TipoBloco::Destrutivel)}, {0, 0}, {}, {2, 3});
+    bomberman::Bomba bomba({2, 1}, 1, jogador);
+    bomba.anteciparDetonacao();
+    CHECK_THROWS_AS(bomba.detonar(mapa), std::invalid_argument);
+    REQUIRE(mapa.obterBloco({1, 2}) != nullptr);
+    CHECK_FALSE(mapa.obterBloco({1, 2})->estaDestruido());
+    CHECK(jogador.obterBombasAtivas() == 1);
+    CHECK(bomba.prontaParaExplodir());
 }

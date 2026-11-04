@@ -18,6 +18,8 @@
  */
 class Mapa {
 public:
+    /** @brief Limite de recursos para evitar alocacoes desproporcionais. */
+    static constexpr int MAXIMO_CELULAS = 1000000;
     /**
      * @brief Define a configuracao inicial de uma fase.
      * @param linhas Quantidade positiva de linhas.
@@ -29,6 +31,7 @@ public:
      * @throws std::invalid_argument Se dimensoes nao forem positivas, houver
      * posicoes fora da grade, blocos sobrepostos ou destruidos, ou posicoes
      * iniciais sobrepostas entre personagens ou bloqueadas, ou saida bloqueada.
+     * @throws std::length_error Se a arena exceder MAXIMO_CELULAS.
      * @note A seguranca adicional da area inicial deve ser acordada com o grupo.
      */
     Mapa(int linhas, int colunas, const std::vector<Bloco>& blocos,
@@ -119,6 +122,10 @@ public:
      * @param melhoria Objeto pertencente a Partida, que deve permanecer vivo
      * ate removerMelhoria, reiniciar ou destruir o mapa.
      * @pre Celula valida e sem outra melhoria registrada.
+     * @throws std::invalid_argument Se a celula for invalida, estiver bloqueada,
+     * diferir da posicao do item ou o item ja tiver sido coletado.
+     * @throws std::logic_error Se outra melhoria ocupar a celula.
+     * @note Repetir o registro do mesmo item na mesma celula nao tem efeito.
      * @note Nao aplica o efeito ao jogador nem transfere propriedade do objeto.
      */
     void registrarMelhoria(Posicao posicao, Melhoria& melhoria);
@@ -143,6 +150,7 @@ public:
      * @note Invalida ponteiros de blocos. A Partida restaura personagens, bombas
      * e estados das melhorias; os objetos de melhorias referenciados na
      * configuracao inicial devem continuar vivos para reutilizacao.
+     * @note Se a alocacao falhar, o estado anterior permanece intacto.
      */
     void reiniciar();
 

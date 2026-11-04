@@ -1,9 +1,9 @@
-# Testes iniciais com doctest
+# Testes com doctest e verificações de entrada
 
-Nesta etapa, foram criados testes iniciais com doctest para as principais classes
-descritas nos cartões CRC e para Posicao. Os testes descrevem o comportamento
-esperado de cada classe. Como as regras do jogo ainda não foram implementadas,
-é esperado que os testes dessas regras falhem.
+Os testes exercitam as implementações das classes descritas nos cartões CRC,
+Posicao e programação defensiva. Nesta etapa, a suíte deve passar; falhas não
+são consideradas esperadas. O CTest também verifica ajuda e argumentos inválidos
+do executável, sem abrir janela. Isso não equivale a uma partida integrada.
 
 ## Como executar os testes
 
@@ -38,27 +38,19 @@ O projeto usa Ninja como padrão para organizar a compilação. No Linux, é
 possível usar outra opção com `GENERATOR="Unix Makefiles"`. Nesse caso, informe
 uma nova pasta de compilação com `BUILD_DIR`, para não misturar as configurações.
 
-## Por que os testes falham
+## Diagnóstico e etapa C9
 
-As classes ainda não possuem seus arquivos de implementação na pasta `src`.
-Por isso, foram criados arquivos temporários em `tests/tdd` para permitir a
-compilação e a execução dos testes. Ao usar um desses arquivos, o teste recebe
-um erro do tipo `std::runtime_error` com a mensagem `Nao implementado`.
+Erros de compilação ou asserções precisam ser corrigidos antes da entrega.
+Os arquivos antigos de `tests/tdd` são auxiliares históricos; todas as classes
+listadas no CMake já possuem implementação própria. Para impedir o uso acidental
+de auxiliares, configure com `-DBOMBERMAN_TDD_STUBS=OFF`.
 
-Esses arquivos são usados apenas nos testes e não contêm regras do jogo.
-Como os construtores também informam esse erro, muitos testes falham logo ao
-criar os objetos que seriam usados nas verificações.
+O CTest apresenta a suíte doctest como um teste agregado e os quatro cenários
+de terminal separadamente. Para ver os casos individuais, execute
+`build/BombermanTests.exe` no Windows ou `build/BombermanTests` no Linux.
 
-Quando arquivos como `src/Mapa.cpp` e `src/Bloco.cpp` forem criados, a configuração
-da compilação passará a usá-los no lugar dos arquivos temporários. O comando
-`mingw32-make test` refaz essa configuração antes de compilar. Se algum método
-usado pelos testes ainda estiver sem definição, a compilação indicará o problema.
-
-As falhas aparecem normalmente no resultado. Mesmo sendo esperadas nesta etapa,
-elas não são contadas como testes aprovados.
-
-O teste de `Posicao` já pode passar, pois essa estrutura já possui os campos
-de linha e coluna. Não foi necessário implementar nada para aprovar esse teste.
+Os casos de programação defensiva verificam tanto a exceção quanto o estado
+preservado depois da rejeição.
 
 ## O que os testes verificam
 
@@ -72,5 +64,7 @@ de linha e coluna. Não foi necessário implementar nada para aprovar esse teste
 | Explosao | Propagação em cruz, alcance, limites do mapa, interrupção por blocos e efeito nos personagens |
 | Melhoria | Aumento de alcance, bomba extra, aplicação do benefício uma única vez e proteção do escudo |
 | Menu | Opções disponíveis, confirmação da escolha e seleção dentro dos limites da lista |
-| Partida | Início e reinício de uma fase com inimigos |
+| Partida | Contrato inicial de início/reinício; ainda não comprova criação de inimigos nem o fluxo completo |
 | Posicao | Valores de linha e coluna e cópia que pode ser alterada sem modificar o original |
+| Programação defensiva | Entradas inválidas, limites de recursos, estado preservado e valores extremos |
+| Terminal | Ajuda, opção desconhecida e excesso de argumentos; valida código de saída e mensagem |

@@ -1,4 +1,5 @@
 #include "Mapa.hpp"
+#include "Melhoria.hpp"
 
 #include <stdexcept>
 
@@ -6,12 +7,23 @@ Mapa::Mapa(int linhas, int colunas, const std::vector<Bloco>& blocos,
            Posicao inicioJogador, const std::vector<Posicao>& iniciosInimigos,
            Posicao saida)
     : linhas_(linhas), colunas_(colunas), inicioJogador_(inicioJogador),
-      iniciosInimigos_(iniciosInimigos), saida_(saida),
-      blocosIniciais_(blocos), blocos_(blocos) {
+      saida_(saida) {
 
     if (linhas_ <= 0 || colunas_ <= 0) {
         throw std::invalid_argument("As dimensoes do mapa devem ser positivas.");
     }
+
+    // Divide antes de multiplicar: mesmo INT_MAX nao causa overflow.
+    if (linhas_ > MAXIMO_CELULAS / colunas_) {
+        throw std::length_error("O mapa excede o limite de um milhao de celulas.");
+    }
+    const auto quantidadeCelulas = static_cast<std::size_t>(linhas_) * colunas_;
+    if (blocos.size() > quantidadeCelulas || iniciosInimigos.size() >= quantidadeCelulas) {
+        throw std::invalid_argument("Quantidade de blocos ou personagens excede a arena.");
+    }
+    blocosIniciais_ = blocos;
+    blocos_ = blocos;
+    iniciosInimigos_ = iniciosInimigos;
 
     celulas_.assign(linhas_, std::vector<Celula>(colunas_));
 
@@ -34,17 +46,20 @@ Mapa::Mapa(int linhas, int colunas, const std::vector<Bloco>& blocos,
         throw std::invalid_argument("Inicio do jogador fora da grade ou bloqueado.");
     }
 
-    std::vector<Posicao> iniciosOcupados{inicioJogador_};
+    std::vector<bool> iniciosOcupados(quantidadeCelulas, false);
+    const auto indiceInicial = [this](Posicao posicao) {
+        return static_cast<std::size_t>(posicao.linha) * colunas_ + posicao.coluna;
+    };
+    iniciosOcupados[indiceInicial(inicioJogador_)] = true;
     for (Posicao inicio : iniciosInimigos_) {
         if (!podeEntrar(inicio)) {
             throw std::invalid_argument("Inicio de inimigo fora da grade ou bloqueado.");
         }
-        for (Posicao ocupado : iniciosOcupados) {
-            if (inicio.linha == ocupado.linha && inicio.coluna == ocupado.coluna) {
-                throw std::invalid_argument("Personagens com posicoes iniciais sobrepostas.");
-            }
+        const auto indiceCelula = indiceInicial(inicio);
+        if (iniciosOcupados[indiceCelula]) {
+            throw std::invalid_argument("Personagens com posicoes iniciais sobrepostas.");
         }
-        iniciosOcupados.push_back(inicio);
+        iniciosOcupados[indiceCelula] = true;
     }
 
     if (!podeEntrar(saida_)) {
@@ -140,14 +155,18 @@ bool Mapa::temBomba(Posicao posicao) const {
 }
 
 void Mapa::registrarMelhoria(Posicao posicao, Melhoria& melhoria) {
-    if (!dentroDosLimites(posicao) || obterBloco(posicao) != nullptr) {
-        return;
+    const auto posicaoItem = melhoria.getPosicao();
+    if (!dentroDosLimites(posicao) || obterBloco(posicao) != nullptr
+        || posicaoItem.x != posicao.coluna || posicaoItem.y != posicao.linha
+        || melhoria.coletada()) {
+        throw std::invalid_argument("Melhoria indisponivel ou posicao de registro invalida.");
     }
 
     Celula& celula = celulas_[posicao.linha][posicao.coluna];
-    if (celula.melhoria == nullptr) {
-        celula.melhoria = &melhoria;
+    if (celula.melhoria != nullptr && celula.melhoria != &melhoria) {
+        throw std::logic_error("Outra melhoria ja ocupa esta celula.");
     }
+    celula.melhoria = &melhoria;
 }
 
 Melhoria* Mapa::obterMelhoria(Posicao posicao) const {
@@ -164,14 +183,16 @@ void Mapa::removerMelhoria(Posicao posicao) {
 }
 
 void Mapa::reiniciar() {
-    blocos_ = blocosIniciais_;
-    // Celulas novas comecam sem blocos, bombas ou melhorias reveladas.
-    celulas_.assign(linhas_, std::vector<Celula>(colunas_));
+    // Prepara o novo estado antes de invalidar os objetos atuais.
+    auto novosBlocos = blocosIniciais_;
+    std::vector<std::vector<Celula>> novasCelulas(linhas_, std::vector<Celula>(colunas_));
 
     int indice = 0;
-    for (const Bloco& bloco : blocos_) {
+    for (const Bloco& bloco : novosBlocos) {
         const Posicao posicao = bloco.obterPosicao();
-        celulas_[posicao.linha][posicao.coluna].indiceBloco = indice;
+        novasCelulas[posicao.linha][posicao.coluna].indiceBloco = indice;
         ++indice;
     }
+    blocos_.swap(novosBlocos);
+    celulas_.swap(novasCelulas);
 }

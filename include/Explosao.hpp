@@ -27,6 +27,8 @@ public:
      * @param origem Célula onde a bomba detonou.
      * @param alcance Distância máxima, em células, atingida em cada direção.
      * @param mapa Mapa onde a explosão se propaga.
+     * @throws std::invalid_argument Se o alcance nao for positivo ou a origem
+     * estiver fora do mapa ou sobre um bloco intacto.
      */
     Explosao(sf::Vector2i origem, int alcance, Mapa& mapa);
 
@@ -39,6 +41,7 @@ public:
     /**
      * @brief Avança o tempo de duração do efeito da explosão.
      * @param deltaTempo Tempo decorrido desde a última atualização.
+     * @note Tempos nao positivos sao ignorados; o temporizador para em zero.
      */
     void atualizar(sf::Time deltaTempo);
 

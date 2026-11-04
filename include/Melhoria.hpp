@@ -29,12 +29,16 @@ public:
      * @brief Constrói uma melhoria em uma posição do mapa.
      * @param posicao Célula (x, y) onde a melhoria será gerada.
      * @param tipo O tipo de benefício concedido por este item.
+     * @throws std::invalid_argument Se a posicao for negativa ou o tipo desconhecido.
      */
     Melhoria(sf::Vector2i posicao, TipoMelhoria tipo);
 
     /**
      * @brief Aplica o efeito do item diretamente sobre o jogador.
      * @param jogador Referência ao jogador que coletou a melhoria.
+     * @note Nao consome o item se o jogador estiver inativo ou o efeito falhar.
+     * @throws std::logic_error Para AumentoVelocidade, ainda nao implementado.
+     * @throws std::overflow_error Se o atributo do jogador nao puder aumentar.
      */
     void aplicarEm(Jogador& jogador);
 

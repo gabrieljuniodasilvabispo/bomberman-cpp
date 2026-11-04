@@ -5,6 +5,10 @@ set "PATH=C:\msys64\ucrt64\bin;%PATH%"
 mingw32-make test
 set "resultado=%errorlevel%"
 echo.
-echo Na fase TDD inicial, falhas por comportamento nao implementado sao esperadas.
+if "%resultado%"=="0" (
+    echo Testes concluidos com sucesso.
+) else (
+    echo Falha na compilacao ou nos testes. Confira as mensagens acima.
+)
 pause
 exit /b %resultado%

@@ -30,6 +30,8 @@ public:
      * @param tipo Comportamento diante de uma explosao.
      * @param melhoria Melhoria escondida, ou nullptr quando nao houver.
      * @pre Uma melhoria so pode estar escondida em um bloco destrutivel.
+     * @throws std::invalid_argument Se posicao/tipo forem invalidos ou a melhoria
+     * nao estiver na mesma celula de um bloco destrutivel.
      * @note A melhoria pertence a Partida e deve permanecer viva enquanto
      * referenciada pelo bloco ou mapa. O bloco nao a exclui.
      */
@@ -53,6 +55,9 @@ public:
      * @return true se o bloco estava intacto e interrompe esta propagacao,
      * inclusive quando acaba de ser destruido; false se ja estava destruido.
      * @pre Este bloco pertence ao mapa informado.
+     * @throws std::invalid_argument Se o bloco intacto nao pertencer ao mapa.
+     * @throws std::logic_error Se a melhoria escondida ja estiver coletada
+     * ou tiver mudado de posicao.
      * @post Um bloco indestrutivel permanece intacto. Um destrutivel fica
      * destruido, notifica liberarBlocoDestruido e revela sua melhoria, se houver,
      * por registrarMelhoria. Impactos repetidos nao repetem a revelacao.

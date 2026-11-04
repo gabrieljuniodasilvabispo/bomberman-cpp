@@ -32,7 +32,8 @@ Explosao::Explosao(sf::Vector2i origem, int alcance, Mapa& mapa)
     , mapa_(mapa)
     , tempoRestante_(sf::seconds(DURACAO_EFEITO_SEGUNDOS))
 {
-    if (alcance_ <= 0 || !mapa_.dentroDosLimites({origem_.y, origem_.x})) {
+    if (alcance_ <= 0 || !mapa_.dentroDosLimites({origem_.y, origem_.x})
+        || mapa_.obterBloco({origem_.y, origem_.x}) != nullptr) {
         throw std::invalid_argument("Origem ou alcance de explosao invalido.");
     }
 }
@@ -48,7 +49,13 @@ void Explosao::propagar()
 
     for (const sf::Vector2i& direcao : DIRECOES)
     {
-        for (int passo = 1; passo <= alcance_; ++passo)
+        // Limita antes da soma para nao transbordar coordenadas com alcance alto.
+        const int distanciaBorda = direcao.x < 0 ? origem_.x
+            : direcao.x > 0 ? mapa_.obterColunas() - 1 - origem_.x
+            : direcao.y < 0 ? origem_.y
+            : mapa_.obterLinhas() - 1 - origem_.y;
+        const int passos = std::min(alcance_, distanciaBorda);
+        for (int passo = 1; passo <= passos; ++passo)
         {
             const sf::Vector2i posicao = origem_ + direcao * passo;
 
@@ -87,7 +94,8 @@ bool Explosao::ativa() const
 void Explosao::atualizar(sf::Time deltaTempo)
 {
     if (deltaTempo > sf::Time::Zero) {
-        tempoRestante_ -= deltaTempo;
+        tempoRestante_ = deltaTempo >= tempoRestante_
+            ? sf::Time::Zero : tempoRestante_ - deltaTempo;
     }
 }
 
