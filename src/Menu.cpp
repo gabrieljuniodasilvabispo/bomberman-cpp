@@ -49,7 +49,8 @@ namespace bomberman {
 		return OpcaoMenu::Nenhuma;
 	}
 	
-	void Menu::atualizar () {
+	void Menu::atualizar (sf::Time deltaTempo) {
+		(void)deltaTempo;
 		//vou fazer-la em paralelo com o Render da main
 	}
 

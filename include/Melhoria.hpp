@@ -1,3 +1,6 @@
+#ifndef BOMBERMAN_MELHORIA_HPP
+#define BOMBERMAN_MELHORIA_HPP
+
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -6,14 +9,12 @@ class Mapa;
 namespace bomberman {
 
 class Jogador;
-class Mapa;
 using ::Mapa;
 
 /// @brief Tipos de melhorias (Power-ups) disponíveis no jogo.
 enum class TipoMelhoria {
     AumentoAlcance,
     BombaExtra,
-    AumentoVelocidade
     AumentoVelocidade,
     Escudo ///< Previsto na US05; velocidade e uma extensao do contrato anterior.
 };

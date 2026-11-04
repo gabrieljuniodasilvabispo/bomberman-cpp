@@ -1,5 +1,6 @@
 #include "Inimigo.hpp"
 
+#include <algorithm>
 #include <array>
 #include <random>
 
@@ -27,26 +28,29 @@ void Inimigo::atualizar(sf::Time deltaTempo, ::Mapa& mapa) {
         return;
     }
 
-    static std::mt19937 rng{std::random_device{}()};
-
-    std::array<Posicao, 4> direcoes{
-        Posicao{1, 0},
-        Posicao{-1, 0},
-        Posicao{0, 1},
-        Posicao{0, -1}
-    };
-
-    std::shuffle(direcoes.begin(), direcoes.end(), rng);
-
-    for (const auto& direcao : direcoes) {
-        Posicao destino{
-            posicao_.linha + direcao.linha,
-            posicao_.coluna + direcao.coluna
+    const sf::Time intervalo = sf::milliseconds(500);
+    tempoAcumulado_ += deltaTempo;
+    while (tempoAcumulado_ >= intervalo) {
+        tempoAcumulado_ -= intervalo;
+        static std::mt19937 rng{std::random_device{}()};
+        std::array<Posicao, 4> direcoes{
+            Posicao{1, 0},
+            Posicao{-1, 0},
+            Posicao{0, 1},
+            Posicao{0, -1}
         };
 
-        if (mapa.dentroDosLimites(destino) && mapa.podeEntrar(destino)) {
-            posicao_ = destino;
-            break;
+        std::shuffle(direcoes.begin(), direcoes.end(), rng);
+        for (const auto& direcao : direcoes) {
+            Posicao destino{
+                posicao_.linha + direcao.linha,
+                posicao_.coluna + direcao.coluna
+            };
+
+            if (mapa.dentroDosLimites(destino) && mapa.podeEntrar(destino)) {
+                posicao_ = destino;
+                break;
+            }
         }
     }
 }

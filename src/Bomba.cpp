@@ -2,6 +2,8 @@
 
 #include "Explosao.hpp"
 #include "Jogador.hpp"
+#include "Mapa.hpp"
+#include <stdexcept>
 
 namespace bomberman {
 
@@ -17,6 +19,19 @@ Bomba::Bomba(sf::Vector2i posicao, int alcance, Jogador& responsavel)
     , responsavel_(responsavel)
     , tempoRestante_(sf::seconds(TEMPO_DETONACAO_SEGUNDOS))
 {
+    if (alcance_ <= 0) {
+        throw std::invalid_argument("O alcance da bomba deve ser positivo.");
+    }
+    if (!responsavel_.reservarVagaBomba()) {
+        throw std::logic_error("Jogador sem vaga disponivel para bomba.");
+    }
+}
+
+Bomba::~Bomba()
+{
+    if (!detonada_) {
+        responsavel_.liberarVagaBomba();
+    }
 }
 
 sf::Vector2i Bomba::getPosicao() const
@@ -36,7 +51,7 @@ bool Bomba::prontaParaExplodir() const
 
 void Bomba::atualizar(sf::Time deltaTempo)
 {
-    if (detonada_)
+    if (detonada_ || deltaTempo <= sf::Time::Zero)
     {
         return;
     }
@@ -53,13 +68,16 @@ void Bomba::anteciparDetonacao()
 
 std::unique_ptr<Explosao> Bomba::detonar(Mapa& mapa)
 {
-    detonada_ = true;
-
-    // Devolve a vaga de bomba ao jogador responsável, conforme o CRC04.
-    responsavel_.liberarVagaBomba();
+    if (!prontaParaExplodir()) {
+        return nullptr;
+    }
 
     auto explosao = std::make_unique<Explosao>(posicao_, alcance_, mapa);
     explosao->propagar();
+
+    detonada_ = true;
+    mapa.removerBomba({posicao_.y, posicao_.x});
+    responsavel_.liberarVagaBomba();
 
     return explosao;
 }

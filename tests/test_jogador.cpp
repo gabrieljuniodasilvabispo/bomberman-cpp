@@ -23,3 +23,16 @@ TEST_CASE_FIXTURE(TestesJogador, "Jogador sem escudo e derrotado por explosao") 
     jogador.receberExplosao();
     CHECK_FALSE(jogador.ativo());
 }
+
+TEST_CASE_FIXTURE(TestesJogador, "Jogador rejeita diagonais saltos e deslocamento nulo") {
+    CHECK_FALSE(jogador.mover({0, 0}, mapa));
+    CHECK_FALSE(jogador.mover({2, 2}, mapa));
+    CHECK_FALSE(jogador.mover({1, 2}, mapa));
+    CHECK_FALSE(jogador.mover({2, 0}, mapa));
+    conferirPosicao(jogador.obterPosicao(), {0, 0});
+    REQUIRE(jogador.mover({0, 1}, mapa));
+    CHECK_FALSE(jogador.mover({2, 0}, mapa)); // Nao pula o bloco em {1, 1}.
+    conferirPosicao(jogador.obterPosicao(), {0, 1});
+    jogador.receberExplosao();
+    CHECK_FALSE(jogador.mover({0, 1}, mapa));
+}

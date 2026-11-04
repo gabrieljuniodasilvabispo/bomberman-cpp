@@ -22,7 +22,11 @@ bool Jogador::ativo() const {
 }
 
 bool Jogador::mover(Posicao deslocamento, ::Mapa& mapa) {
-    if (!ativo_) {
+    const bool passoVertical = deslocamento.coluna == 0
+        && (deslocamento.linha == -1 || deslocamento.linha == 1);
+    const bool passoHorizontal = deslocamento.linha == 0
+        && (deslocamento.coluna == -1 || deslocamento.coluna == 1);
+    if (!ativo_ || (!passoVertical && !passoHorizontal)) {
         return false;
     }
 
@@ -53,6 +57,24 @@ int Jogador::obterLimiteBombas() const {
 
 bool Jogador::temEscudo() const {
     return escudo_;
+}
+
+int Jogador::obterBombasAtivas() const {
+    return bombasAtivas_;
+}
+
+bool Jogador::reservarVagaBomba() {
+    if (!ativo_ || bombasAtivas_ >= limiteBombas_) {
+        return false;
+    }
+    ++bombasAtivas_;
+    return true;
+}
+
+void Jogador::liberarVagaBomba() {
+    if (bombasAtivas_ > 0) {
+        --bombasAtivas_;
+    }
 }
 
 void Jogador::receberExplosao() {

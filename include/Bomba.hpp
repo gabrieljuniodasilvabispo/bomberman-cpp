@@ -6,10 +6,12 @@
 
 #include <memory>
 
+class Mapa;
+
 namespace bomberman {
 
 class Jogador;
-class Mapa;
+using ::Mapa;
 class Explosao;
 
 /**
@@ -23,8 +25,23 @@ public:
      * @param posicao Célula onde a bomba foi colocada.
      * @param alcance Distância, em células, atingida pela explosão.
      * @param responsavel Jogador que posicionou a bomba.
+     * @pre O responsavel deve permanecer vivo durante toda a vida da bomba.
+     * @throws std::invalid_argument Se o alcance nao for positivo.
+     * @throws std::logic_error Se nao houver vaga disponivel no jogador.
+     * @note Reserva uma vaga; o registro da celula no mapa cabe a Partida.
      */
     Bomba(sf::Vector2i posicao, int alcance, Jogador& responsavel);
+    /**
+     * @brief Devolve a reserva se a bomba for descartada sem detonar.
+     * @note Ao descartar uma bomba registrada, a Partida deve tambem remover
+     * sua ocupacao do mapa, ou reiniciar o mapa, antes da proxima atualizacao.
+     */
+    ~Bomba();
+    // Uma bomba possui uma unica reserva. Armazene bombas por unique_ptr.
+    Bomba(const Bomba&) = delete;
+    Bomba& operator=(const Bomba&) = delete;
+    Bomba(Bomba&&) = delete;
+    Bomba& operator=(Bomba&&) = delete;
 
     /** @brief Retorna a posição da bomba na arena. */
     sf::Vector2i getPosicao() const;
@@ -52,7 +69,8 @@ public:
      * passa a ser responsável por atualizá-la e por aplicá-la aos personagens.
      *
      * @param mapa Mapa onde a explosão ocorre.
-     * @return Explosão já propagada, pronta para ser atualizada a cada ciclo.
+     * @return Explosao propagada, ou nullptr se ainda nao estiver pronta ou ja detonou.
+     * @note Remove a ocupacao no mapa e devolve a vaga uma unica vez.
      */
     std::unique_ptr<Explosao> detonar(Mapa& mapa);
 

@@ -15,6 +15,7 @@ public:
     explicit Inimigo(Posicao posicao);
     Posicao obterPosicao() const;
     bool ativo() const;
+    /** @brief Tenta um passo a cada 500 ms, preservando o tempo entre chamadas. */
     void atualizar(sf::Time deltaTempo, ::Mapa& mapa);
     void receberExplosao();
     void verificarContato(Jogador& jogador);
@@ -22,6 +23,7 @@ public:
 private:
     Posicao posicao_;
     bool ativo_ = true;
+    sf::Time tempoAcumulado_ = sf::Time::Zero;
 };
 
 } // namespace bomberman

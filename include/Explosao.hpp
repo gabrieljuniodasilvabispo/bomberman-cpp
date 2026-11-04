@@ -6,9 +6,11 @@
 
 #include <vector>
 
+class Mapa;
+
 namespace bomberman {
 
-class Mapa;
+using ::Mapa;
 class Jogador;
 class Inimigo;
 class Bomba;
@@ -28,7 +30,7 @@ public:
      */
     Explosao(sf::Vector2i origem, int alcance, Mapa& mapa);
 
-    /** @brief Calcula as células atingidas nas quatro direções a partir da origem. */
+    /** @brief Calcula o impacto uma unica vez; chamadas posteriores nao alteram o mapa. */
     void propagar();
 
     /** @brief Indica se a explosão ainda está ativa (visível/com efeito). */
@@ -68,6 +70,9 @@ private:
     Mapa& mapa_;
     std::vector<sf::Vector2i> celulasAtingidas_;
     sf::Time tempoRestante_;
+    bool propagada_ = false;
+    // Referencias emprestadas: os jogadores devem viver mais que a explosao.
+    std::vector<const Jogador*> jogadoresAtingidos_;
 };
 
 } // namespace bomberman

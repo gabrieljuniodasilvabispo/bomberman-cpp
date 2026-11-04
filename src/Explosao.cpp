@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <array>
+#include <stdexcept>
 
 namespace bomberman {
 
@@ -31,12 +32,19 @@ Explosao::Explosao(sf::Vector2i origem, int alcance, Mapa& mapa)
     , mapa_(mapa)
     , tempoRestante_(sf::seconds(DURACAO_EFEITO_SEGUNDOS))
 {
+    if (alcance_ <= 0 || !mapa_.dentroDosLimites({origem_.y, origem_.x})) {
+        throw std::invalid_argument("Origem ou alcance de explosao invalido.");
+    }
 }
 
 void Explosao::propagar()
 {
+    if (propagada_ || !ativa()) {
+        return;
+    }
     celulasAtingidas_.clear();
     celulasAtingidas_.push_back(origem_);
+    mapa_.removerMelhoria({origem_.y, origem_.x});
 
     for (const sf::Vector2i& direcao : DIRECOES)
     {
@@ -44,33 +52,23 @@ void Explosao::propagar()
         {
             const sf::Vector2i posicao = origem_ + direcao * passo;
 
-            if (!mapa_.dentroDosLimites(posicao))
+            const Posicao celula{posicao.y, posicao.x};
+            if (!mapa_.dentroDosLimites(celula))
             {
                 break;
             }
 
             celulasAtingidas_.push_back(posicao);
 
-            Bloco* bloco = mapa_.getBloco(posicao);
+            Bloco* bloco = mapa_.obterBloco(celula);
             if (bloco == nullptr)
             {
-                // Célula livre: a explosão continua se propagando nessa direção.
+                mapa_.removerMelhoria(celula);
                 continue;
             }
 
-            const bool interrompePropagacao = bloco->receberImpacto();
-
-            if (bloco->estaDestruido())
-            {
-                std::unique_ptr<Melhoria> melhoriaRevelada = bloco->revelarMelhoria();
-                mapa_.liberarCelula(posicao);
-
-                if (melhoriaRevelada)
-                {
-                    melhoriaRevelada->revelar();
-                    mapa_.adicionarMelhoriaAtiva(std::move(melhoriaRevelada));
-                }
-            }
+            // O bloco libera sua celula e registra a melhoria que escondia.
+            const bool interrompePropagacao = bloco->receberExplosao(mapa_);
 
             if (interrompePropagacao)
             {
@@ -78,6 +76,7 @@ void Explosao::propagar()
             }
         }
     }
+    propagada_ = true;
 }
 
 bool Explosao::ativa() const
@@ -87,7 +86,9 @@ bool Explosao::ativa() const
 
 void Explosao::atualizar(sf::Time deltaTempo)
 {
-    tempoRestante_ -= deltaTempo;
+    if (deltaTempo > sf::Time::Zero) {
+        tempoRestante_ -= deltaTempo;
+    }
 }
 
 const std::vector<sf::Vector2i>& Explosao::getCelulasAtingidas() const
@@ -97,33 +98,46 @@ const std::vector<sf::Vector2i>& Explosao::getCelulasAtingidas() const
 
 void Explosao::aplicarEm(Jogador& jogador)
 {
-    const bool atingido = std::find(celulasAtingidas_.begin(), celulasAtingidas_.end(), jogador.getPosicao())
+    if (!ativa() || !jogador.ativo()
+        || std::find(jogadoresAtingidos_.begin(), jogadoresAtingidos_.end(), &jogador)
+            != jogadoresAtingidos_.end()) {
+        return;
+    }
+    const Posicao posicao = jogador.obterPosicao();
+    const bool atingido = std::find(celulasAtingidas_.begin(), celulasAtingidas_.end(),
+                                   sf::Vector2i{posicao.coluna, posicao.linha})
         != celulasAtingidas_.end();
 
     if (atingido)
     {
-        jogador.serAtingido();
+        jogadoresAtingidos_.push_back(&jogador);
+        jogador.receberExplosao();
     }
 }
 
 void Explosao::aplicarEm(Inimigo& inimigo)
 {
-    if (!inimigo.estaAtivo())
+    if (!ativa() || !inimigo.ativo())
     {
         return;
     }
 
-    const bool atingido = std::find(celulasAtingidas_.begin(), celulasAtingidas_.end(), inimigo.getPosicao())
+    const Posicao posicao = inimigo.obterPosicao();
+    const bool atingido = std::find(celulasAtingidas_.begin(), celulasAtingidas_.end(),
+                                   sf::Vector2i{posicao.coluna, posicao.linha})
         != celulasAtingidas_.end();
 
     if (atingido)
     {
-        inimigo.eliminar();
+        inimigo.receberExplosao();
     }
 }
 
 void Explosao::aplicarEm(Bomba& bomba)
 {
+    if (!ativa()) {
+        return;
+    }
     const bool atingida = std::find(celulasAtingidas_.begin(), celulasAtingidas_.end(), bomba.getPosicao())
         != celulasAtingidas_.end();
 
