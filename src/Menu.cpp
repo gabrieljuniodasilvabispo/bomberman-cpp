@@ -65,5 +65,48 @@ namespace bomberman {
 	const std::vector<std::string>& Menu::getOpcoes() const {
 		return opcoes_;
 	}
+
+	const std::vector<SecaoInstrucao>& Menu::getInstrucoes() {
+    static const std::vector<SecaoInstrucao> secoes = {
+        {
+            "OBJETIVO",
+            {"Elimine todos os inimigos e alcance a saida da fase."}
+        },
+        {
+            "CONTROLES",
+            {
+                "Setas ou W A S D - Mover o personagem",
+                "Espaco - Posicionar uma bomba",
+                "Esc - Voltar ao menu principal"
+            }
+        },
+        {
+            "BOMBAS E EXPLOSOES",
+            {
+                "A bomba explode apos um intervalo, nas quatro direcoes.",
+                "Paredes bloqueiam a explosao; blocos destrutiveis sao",
+                "removidos e interrompem a propagacao.",
+                "Bombas atingidas explodem na hora: reacao em cadeia!",
+                "Cuidado: a explosao tambem elimina voce!"
+            }
+        },
+        {
+            "MELHORIAS (escondidas nos blocos)",
+            {
+                "Alcance - Aumenta o alcance da explosao",
+                "Bomba Extra - Permite mais bombas simultaneas",
+                "Escudo - Protege de uma explosao"
+            }
+        },
+        {
+            "DERROTA",
+            {
+                "Ser atingido por uma explosao sem escudo.",
+                "Encostar em um inimigo (o escudo nao protege do contato!)."
+            }
+        }
+    };
+    return secoes;
+}
 	
 }//namespace bomberman
