@@ -6,16 +6,27 @@
 #include <stdexcept>
 #include <string>
 
+// Definido pelo CMake; este valor so vale se o arquivo for compilado fora dele.
+#ifndef BOMBERMAN_ASSETS_DIR
+#define BOMBERMAN_ASSETS_DIR "assets"
+#endif
+
 namespace {
+
+// Erro causado pelos argumentos da linha de comando (codigo de saida 2).
+// Violacoes de contrato das classes do jogo continuam sendo std::exception comuns.
+struct ErroEntrada : std::invalid_argument {
+    using std::invalid_argument::invalid_argument;
+};
 
 int executar(int argc, char* argv[]) {
     if (argc > 2) {
-        throw std::invalid_argument("Numero de argumentos invalido. Use --ajuda.");
+        throw ErroEntrada("Numero de argumentos invalido. Use --ajuda.");
     }
     if (argc == 2) {
         const std::string argumento = argv[1];
         if (argumento != "--ajuda" && argumento != "--help") {
-            throw std::invalid_argument("Opcao desconhecida. Use --ajuda.");
+            throw ErroEntrada("Opcao desconhecida. Use --ajuda.");
         }
         std::cout << "Uso: Bomberman [--ajuda|--help]\n"
                   << "Sem argumentos: abre o menu principal do jogo.\n"
@@ -26,10 +37,13 @@ int executar(int argc, char* argv[]) {
     sf::RenderWindow window(sf::VideoMode({800, 600}), "Bomberman - Menu Principal");
     window.setFramerateLimit(60);
 
+    // A fonte fica em assets/fonts. O CMake define BOMBERMAN_ASSETS_DIR com o
+    // caminho absoluto de assets, entao funciona de qualquer pasta de execucao.
     sf::Font font;
-    bool fonteCarregada = font.openFromFile("C:/Windows/Fonts/arial.ttf");
+    const std::string caminhoFonte = std::string(BOMBERMAN_ASSETS_DIR) + "/fonts/tuffy.ttf";
+    const bool fonteCarregada = font.openFromFile(caminhoFonte);
     if (!fonteCarregada) {
-        std::cout << "ERRO: A fonte arial nao pôde ser carregada!\n";
+        std::cerr << "ERRO: nao foi possivel carregar a fonte: " << caminhoFonte << '\n';
     }
 
     bomberman::Menu menu;
@@ -135,5 +149,16 @@ int executar(int argc, char* argv[]) {
 
 int main(int argc, char* argv[]) {
     try { return executar(argc, argv); }
-    catch (...) { return 1; }
+    catch (const ErroEntrada& e) {
+        std::cerr << "Erro de entrada: " << e.what() << '\n';
+        return 2;
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Erro: " << e.what() << '\n';
+        return 1;
+    }
+    catch (...) {
+        std::cerr << "Erro: excecao desconhecida.\n";
+        return 1;
+    }
 }

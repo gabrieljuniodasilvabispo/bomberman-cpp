@@ -65,17 +65,24 @@ void Explosao::propagar()
                 break;
             }
 
-            celulasAtingidas_.push_back(posicao);
-
             Bloco* bloco = mapa_.obterBloco(celula);
             if (bloco == nullptr)
             {
+                celulasAtingidas_.push_back(posicao);
                 mapa_.removerMelhoria(celula);
                 continue;
             }
 
             // O bloco libera sua celula e registra a melhoria que escondia.
             const bool interrompePropagacao = bloco->receberExplosao(mapa_);
+
+            // Somente um bloco destrutivel recem-destruido passa a ser ocupado
+            // pelo fogo; paredes indestrutiveis nao entram nas celulas atingidas.
+            // (O mapa preserva o objeto do bloco, entao a consulta e segura.)
+            if (bloco->estaDestruido())
+            {
+                celulasAtingidas_.push_back(posicao);
+            }
 
             if (interrompePropagacao)
             {

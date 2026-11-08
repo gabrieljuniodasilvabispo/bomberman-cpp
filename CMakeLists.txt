@@ -20,12 +20,18 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
-# O prototipo atual possui somente main.cpp; Posicao e um struct no cabecalho.
-add_executable(Bomberman src/main.cpp)
+# O main.cpp usa bomberman::Menu, entao Menu.cpp precisa ser compilado junto.
+# Acrescente aqui cada classe nova que o main passar a usar.
+add_executable(Bomberman src/main.cpp src/Menu.cpp)
 
 # Informa ao CMake onde estão os arquivos .hpp (na pasta include)
 target_include_directories(Bomberman PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# Caminho absoluto da pasta assets, usado pelo main.cpp para achar a fonte.
+target_compile_definitions(Bomberman PRIVATE
+    BOMBERMAN_ASSETS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets"
 )
 
 target_link_libraries(Bomberman PRIVATE
