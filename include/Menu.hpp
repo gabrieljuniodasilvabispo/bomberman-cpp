@@ -15,6 +15,11 @@ enum class OpcaoMenu {
     Nenhuma
 };
 
+struct SecaoInstrucao {
+    std::string titulo;
+    std::vector<std::string> linhas;
+};
+
 /**
  * @class Menu
  * @brief Gerencia a navegação, seleção de opções e estado da interface do menu.
@@ -50,6 +55,9 @@ public:
 
     /** @brief Retorna a lista de textos de todas as opções do menu. */
     const std::vector<std::string>& getOpcoes() const;
+
+    /** @brief Retorna as secoes de instrucoes exibidas na tela de comandos. */
+    static const std::vector<SecaoInstrucao>& getInstrucoes();
 
 private:
     std::vector<std::string> opcoes_;
