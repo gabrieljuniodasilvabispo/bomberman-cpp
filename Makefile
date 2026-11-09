@@ -3,12 +3,20 @@ CMAKE ?= cmake
 CTEST ?= ctest
 BUILD_DIR ?= build
 GENERATOR ?= Ninja
+COVERAGE ?= OFF
+CMAKE_ARGS ?=
 
-.PHONY: all configure test-build test list-tests
-all: test-build
+.PHONY: all configure game run test-build test list-tests
+all: game
 
 configure:
-	$(CMAKE) -S . -B "$(BUILD_DIR)" -G "$(GENERATOR)" -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DBOMBERMAN_COVERAGE=OFF
+	$(CMAKE) -S . -B "$(BUILD_DIR)" -G "$(GENERATOR)" -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DBOMBERMAN_COVERAGE=$(COVERAGE) $(CMAKE_ARGS)
+
+game: configure
+	$(CMAKE) --build "$(BUILD_DIR)" --target Bomberman --parallel 4
+
+run: game
+	"$(BUILD_DIR)/Bomberman"
 
 test-build: configure
 	$(CMAKE) --build "$(BUILD_DIR)" --target BombermanTests --parallel 4

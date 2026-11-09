@@ -20,8 +20,6 @@ em andamento.
 ******************************************************************************/
 
 #include "Menu.hpp"
-#include <SFML/Graphics.hpp>
-#include <iostream>
 
 namespace bomberman {
 
@@ -51,7 +49,6 @@ namespace bomberman {
 	
 	void Menu::atualizar (sf::Time deltaTempo) {
 		(void)deltaTempo;
-		//vou fazer-la em paralelo com o Render da main
 	}
 
 	bool Menu::ativo() const {
@@ -77,32 +74,31 @@ namespace bomberman {
             {
                 "Setas ou W A S D - Mover o personagem",
                 "Espaco - Posicionar uma bomba",
-                "Esc - Voltar ao menu principal"
+                "R - Reiniciar (Enter tambem apos o resultado)",
+                "Esc - Voltar ao menu; outra janela pausa a partida"
             }
         },
         {
             "BOMBAS E EXPLOSOES",
             {
-                "A bomba explode apos um intervalo, nas quatro direcoes.",
-                "Paredes bloqueiam a explosao; blocos destrutiveis sao",
-                "removidos e interrompem a propagacao.",
-                "Bombas atingidas explodem na hora: reacao em cadeia!",
-                "Cuidado: a explosao tambem elimina voce!"
+                "A bomba explode em 3 segundos, nas quatro direcoes.",
+                "Paredes e o primeiro bloco atingido interrompem o fogo.",
+                "Blocos sao destruidos; bombas atingidas explodem em cadeia."
             }
         },
         {
             "MELHORIAS (escondidas nos blocos)",
             {
-                "Alcance - Aumenta o alcance da explosao",
-                "Bomba Extra - Permite mais bombas simultaneas",
-                "Escudo - Protege de uma explosao"
+                "A - Alcance: aumenta o alcance da explosao",
+                "B - Bomba Extra: permite mais bombas simultaneas",
+                "E - Escudo: protege de uma explosao"
             }
         },
         {
-            "DERROTA",
+            "RESULTADO",
             {
-                "Ser atingido por uma explosao sem escudo.",
-                "Encostar em um inimigo (o escudo nao protege do contato!)."
+                "A saida fica verde quando todos os inimigos forem eliminados.",
+                "Fogo sem escudo ou contato com inimigo causam derrota."
             }
         }
     };

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Desativação de módulos do SFML que não serão usados para acelerar a compilação. ATIVAR DEPOIS!!!!!
+# O jogo atual nao utiliza audio nem rede.
 set(SFML_BUILD_AUDIO OFF CACHE BOOL "" FORCE)
 set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
 
@@ -20,14 +20,19 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
-# O main.cpp usa bomberman::Menu, entao Menu.cpp precisa ser compilado junto.
-# Acrescente aqui cada classe nova que o main passar a usar.
-add_executable(Bomberman src/main.cpp src/Menu.cpp)
+include(CTest)
+option(BOMBERMAN_COVERAGE "Instrumentar codigo proprio com GCC/gcov" OFF)
 
-# Informa ao CMake onde estão os arquivos .hpp (na pasta include)
-target_include_directories(Bomberman PRIVATE
+# Jogo e testes usam a mesma implementacao das regras, compilada uma unica vez.
+add_library(BombermanLogica STATIC
+    src/Mapa.cpp src/Bloco.cpp src/Bomba.cpp src/Explosao.cpp
+    src/Jogador.cpp src/Inimigo.cpp src/Menu.cpp src/Melhoria.cpp src/Partida.cpp)
+target_include_directories(BombermanLogica PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+target_link_libraries(BombermanLogica PUBLIC SFML::System)
+
+add_executable(Bomberman src/main.cpp)
 
 # Caminho absoluto da pasta assets, usado pelo main.cpp para achar a fonte.
 target_compile_definitions(Bomberman PRIVATE
@@ -35,10 +40,20 @@ target_compile_definitions(Bomberman PRIVATE
 )
 
 target_link_libraries(Bomberman PRIVATE
+    BombermanLogica
     SFML::Graphics
     SFML::Window
-    SFML::System
 )
+
+if(BOMBERMAN_COVERAGE)
+    if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        message(FATAL_ERROR "Use GCC para instrumentacao com gcov.")
+    endif()
+    target_compile_options(BombermanLogica PRIVATE --coverage -O0 -g)
+    # O runtime de cobertura tambem e necessario aos executaveis consumidores.
+    target_link_options(BombermanLogica PUBLIC --coverage)
+    target_compile_options(Bomberman PRIVATE --coverage -O0 -g)
+endif()
 
 if(WIN32 AND BUILD_SHARED_LIBS)
     add_custom_command(TARGET Bomberman POST_BUILD
@@ -49,44 +64,14 @@ if(WIN32 AND BUILD_SHARED_LIBS)
     )
 endif()
 
-include(CTest)
-option(BOMBERMAN_TDD_STUBS "Permitir auxiliares que falham para classes ainda ausentes" ON)
-option(BOMBERMAN_COVERAGE "Instrumentar codigo proprio com GCC/gcov" OFF)
-
 if(BUILD_TESTING)
-    set(CLASSES Mapa Bloco Bomba Explosao Jogador Inimigo Menu Melhoria Partida)
-    set(FONTES_TESTADAS)
-    set(CLASSES_PENDENTES)
-    foreach(CLASSE IN LISTS CLASSES)
-        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/${CLASSE}.cpp")
-            list(APPEND FONTES_TESTADAS "src/${CLASSE}.cpp")
-        elseif(BOMBERMAN_TDD_STUBS)
-            list(APPEND FONTES_TESTADAS "tests/tdd/${CLASSE}.cpp")
-            list(APPEND CLASSES_PENDENTES "${CLASSE}")
-        else()
-            message(FATAL_ERROR "Falta src/${CLASSE}.cpp. A fase RED usa BOMBERMAN_TDD_STUBS=ON.")
-        endif()
-    endforeach()
-    if(CLASSES_PENDENTES)
-        message(STATUS "TDD RED - classes nao implementadas: ${CLASSES_PENDENTES}")
-        if(BOMBERMAN_COVERAGE)
-            message(FATAL_ERROR "Cobertura de auxiliares TDD nao representa o jogo. Implemente as classes antes de medir cobertura.")
-        endif()
-    endif()
     add_executable(BombermanTests
         tests/main.cpp tests/test_posicao.cpp tests/test_mapa.cpp
         tests/test_bloco.cpp tests/test_jogador.cpp tests/test_inimigo.cpp
         tests/test_bomba.cpp tests/test_explosao.cpp tests/test_melhoria.cpp
-        tests/test_menu.cpp tests/test_partida.cpp tests/test_defensiva.cpp ${FONTES_TESTADAS})
-    target_include_directories(BombermanTests PRIVATE include third_party)
-    target_link_libraries(BombermanTests PRIVATE SFML::System)
-    if(BOMBERMAN_COVERAGE)
-        if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-            message(FATAL_ERROR "Use GCC para instrumentacao com gcov.")
-        endif()
-        target_compile_options(BombermanTests PRIVATE --coverage -O0 -g)
-        target_link_options(BombermanTests PRIVATE --coverage)
-    endif()
+        tests/test_menu.cpp tests/test_partida.cpp tests/test_defensiva.cpp)
+    target_include_directories(BombermanTests PRIVATE third_party)
+    target_link_libraries(BombermanTests PRIVATE BombermanLogica)
     if(WIN32 AND BUILD_SHARED_LIBS)
         add_custom_command(TARGET BombermanTests POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different

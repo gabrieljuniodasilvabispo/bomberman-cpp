@@ -64,8 +64,36 @@ Os comandos e os cenários verificados estão descritos no
 [guia de testes](docs/testes-iniciais.md). A cobertura será medida com **gcovr**,
 com meta mínima de **60%** para a entrega final.
 
-O executável gráfico ainda apresenta o protótipo de movimento; a integração da
-partida está em desenvolvimento. Após compilar, use `build/Bomberman.exe --ajuda`
-no Windows ou `build/Bomberman --ajuda` no Linux para consultar as instruções.
-O protótipo atual não exige arquivos externos de mapa, imagem, fonte ou configuração
-para iniciar.
+A classe `Partida` já coordena uma arena fixa, movimento, bombas, explosões em
+cadeia, coleta, vitória, derrota e reinício completo. Seu uso e a ordem das
+atualizações estão descritos no [guia da partida](docs/partida.md).
+
+## Como jogar
+
+No Windows, abra `iniciar.bat` ou execute `mingw32-make run`. No Linux, use
+`make run`. O comando `make` (ou `mingw32-make`) compila o jogo; os testes
+continuam disponíveis pelo alvo `test`.
+
+Escolha **Novo Jogo** no menu para abrir a arena. A janela desenha o estado de
+`Partida`: terreno, personagens, bombas, explosões, melhorias e saída. O painel
+mostra inimigos restantes, bombas ativas e limite, alcance e escudo. Para vencer,
+elimine os inimigos e alcance a saída, que fica verde quando liberada.
+
+| Comando | Ação |
+| --- | --- |
+| Setas ou W/A/S/D | Mover uma célula; manter pressionado repete o movimento |
+| Espaço | Colocar uma bomba |
+| R | Reiniciar a fase |
+| Enter na tela de resultado | Reiniciar após vitória ou derrota |
+| Esc | Encerrar a tentativa e voltar ao menu |
+
+Ao alternar para outra janela, a partida fica pausada. As melhorias reveladas
+são identificadas por **A** (alcance), **B** (bomba extra) e **E** (escudo).
+As instruções completas também estão no menu.
+
+A interface utiliza formas geométricas e a fonte incluída em
+`assets/fonts/tuffy.ttf`. O CMake informa o caminho da fonte ao executável;
+se ela estiver ausente, o programa apresenta um erro no terminal. Não são
+necessários arquivos externos de mapa ou imagens. Após compilar, use
+`build/Bomberman.exe --ajuda` no Windows ou `build/Bomberman --ajuda` no Linux
+para consultar os comandos no terminal.

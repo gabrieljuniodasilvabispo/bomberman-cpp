@@ -3,7 +3,9 @@
 Os testes exercitam as implementações das classes descritas nos cartões CRC,
 Posicao e programação defensiva. Nesta etapa, a suíte deve passar; falhas não
 são consideradas esperadas. O CTest também verifica ajuda e argumentos inválidos
-do executável, sem abrir janela. Isso não equivale a uma partida integrada.
+do executável, sem abrir janela. Os testes de Partida integram as regras da fase.
+Jogo e testes utilizam a mesma biblioteca de regras, `BombermanLogica`.
+A interação com teclado e o desenho da janela exigem também verificação visual.
 
 ## Como executar os testes
 
@@ -41,9 +43,9 @@ uma nova pasta de compilação com `BUILD_DIR`, para não misturar as configura�
 ## Diagnóstico e etapa C9
 
 Erros de compilação ou asserções precisam ser corrigidos antes da entrega.
-Os arquivos antigos de `tests/tdd` são auxiliares históricos; todas as classes
-listadas no CMake já possuem implementação própria. Para impedir o uso acidental
-de auxiliares, configure com `-DBOMBERMAN_TDD_STUBS=OFF`.
+Os arquivos antigos de `tests/tdd` são auxiliares históricos e não participam
+da compilação. Todas as classes da biblioteca possuem implementação própria;
+uma fonte ausente causa erro na configuração, sem substituição por auxiliares.
 
 O CTest apresenta a suíte doctest como um teste agregado e os quatro cenários
 de terminal separadamente. Para ver os casos individuais, execute
@@ -51,6 +53,28 @@ de terminal separadamente. Para ver os casos individuais, execute
 
 Os casos de programação defensiva verificam tanto a exceção quanto o estado
 preservado depois da rejeição.
+
+## Verificação da interface
+
+Execute `mingw32-make run` (Windows), `make run` (Linux) ou `iniciar.bat`.
+
+- Consulte as instruções e inicie uma fase pelo menu.
+- Use setas/WASD para andar, verificando limites, blocos e bombas.
+- Coloque uma bomba com Espaço, saia de seu alcance e confira a detonação.
+- Confira a revelação/coleta dos itens A/B/E e a atualização dos atributos.
+- Verifique a derrota por fogo ou contato e a vitória após eliminar os inimigos
+  e alcançar a saída verde.
+- Reinicie com R ou Enter no resultado e confira terreno, personagens e atributos.
+- Use Esc para voltar ao menu e inicie outra fase.
+- Alterne para outra janela e confira que a fase pausa e retoma sem avançar
+  os temporizadores durante a ausência.
+
+Para instrumentar o código próprio com GCC/gcov, configure
+`-DBOMBERMAN_COVERAGE=ON` ou execute `mingw32-make test COVERAGE=ON`
+(Linux: `make test COVERAGE=ON`). A instrumentação inclui a biblioteca e a
+entrada gráfica; dependências externas e testes não são instrumentados.
+Gerar o relatório com gcovr e verificar a meta de 60% continuam sendo etapas
+separadas; executar testes com instrumentação não comprova essa porcentagem.
 
 ## O que os testes verificam
 
@@ -64,7 +88,7 @@ preservado depois da rejeição.
 | Explosao | Propagação em cruz, alcance, limites do mapa, interrupção por blocos e efeito nos personagens |
 | Melhoria | Aumento de alcance, bomba extra, aplicação do benefício uma única vez e proteção do escudo |
 | Menu | Opções disponíveis, confirmação da escolha e seleção dentro dos limites da lista |
-| Partida | Contrato inicial de início/reinício; ainda não comprova criação de inimigos nem o fluxo completo |
+| Partida | Criação real da fase, movimento, bombas, cadeia, dano, coleta, vitória/derrota e restauração completa no reinício |
 | Posicao | Valores de linha e coluna e cópia que pode ser alterada sem modificar o original |
 | Programação defensiva | Entradas inválidas, limites de recursos, estado preservado e valores extremos |
 | Terminal | Ajuda, opção desconhecida e excesso de argumentos; valida código de saída e mensagem |
