@@ -19,8 +19,8 @@ enum class TipoBloco {
 
 /**
  * @brief Obstaculo que conhece sua posicao e trata impactos de explosoes.
- * @details Interface da etapa C6. Atributos privados e corpos dos metodos
- * serao definidos na implementacao. Nao representa o chao nem uma bomba.
+ * @details Mantem tipo, estado de destruicao e referencia a uma melhoria
+ * escondida. Notifica Mapa ao ser destruido e ao revelar essa melhoria.
  */
 class Bloco {
 public:

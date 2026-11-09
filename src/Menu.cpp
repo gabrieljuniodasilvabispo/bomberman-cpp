@@ -2,20 +2,11 @@
 
 CRC09 - Menu
 
-Responsabilidades
--Apresentar o menu inicial do jogo.
--Exibir as opcoes de iniciar partida, consultar comandos e sair.
--Armazenar a opcao atualmente selecionada.
--Interpretar os comandos de navegacao e confirmacao do menu.
--Solicitar o inicio de uma partida individual quando essa opcao for confirmada.
--Apresentar os comandos do jogador antes do inicio da partida.
--Permitir o retorno da tela de comandos ao menu inicial.
--Sinalizar o pedido de encerramento do jogo ao selecionar sair.
-
-Colaboracoes
-Partida: recebe a solicitacao para iniciar uma partida individual.
-Jogador: fornece a descricao dos comandos para exibicao, sem exigir uma partida 
-em andamento.
+Mantem opcoes, selecao, navegacao circular e textos de instrucoes.
+Retorna a opcao confirmada para as funcoes de interface em main.cpp,
+que desenham as telas, leem o teclado e encaminham o inicio a Partida.
+O retorno das instrucoes e o fechamento da janela pertencem a interface.
+As responsabilidades e colaboracoes estao detalhadas em design/cartoes-crc.md.
 
 ******************************************************************************/
 

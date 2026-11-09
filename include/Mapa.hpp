@@ -12,8 +12,8 @@
 
 /**
  * @brief Organiza o terreno e consulta a ocupacao das celulas da arena.
- * @details Interface da etapa C6. A matriz e demais atributos privados serao
- * definidos na implementacao. Bombas bloqueiam entrada, mas seus objetos e
+ * @details Mantem terreno, ocupacao por bombas e registros de melhorias.
+ * Bombas bloqueiam entrada, mas seus objetos e
  * temporizadores pertencem a outras classes. Nao controla vitoria ou desenho.
  */
 class Mapa {
@@ -32,7 +32,8 @@ public:
      * posicoes fora da grade, blocos sobrepostos ou destruidos, ou posicoes
      * iniciais sobrepostas entre personagens ou bloqueadas, ou saida bloqueada.
      * @throws std::length_error Se a arena exceder MAXIMO_CELULAS.
-     * @note A seguranca adicional da area inicial deve ser acordada com o grupo.
+     * @note Partida define a disposicao segura da fase padrao. Mapa valida
+     * posicoes livres e distintas, sem garantir uma rota de fuga em toda configuracao.
      */
     Mapa(int linhas, int colunas, const std::vector<Bloco>& blocos,
          Posicao inicioJogador, const std::vector<Posicao>& iniciosInimigos,
@@ -55,8 +56,8 @@ public:
      * @brief Verifica se o terreno e as bombas permitem entrar na celula.
      * @param posicao Destino do movimento.
      * @return false fora da arena ou havendo bloco intacto ou bomba.
-     * @note Nao verifica contato entre personagens. A saida da propria bomba
-     * e uma regra de movimentacao a ser acordada com o responsavel por Jogador.
+     * @note Nao verifica contato entre personagens. Jogador consulta o destino,
+     * permitindo sair da celula da propria bomba, mas nao voltar enquanto ocupada.
      */
     bool podeEntrar(Posicao posicao) const;
 
