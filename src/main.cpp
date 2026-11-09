@@ -63,18 +63,14 @@ std::optional<Posicao> direcao(Tecla tecla) {
     }
 }
 
-void desenharMenu(sf::RenderWindow& janela, const sf::Font& fonte, const bomberman::Menu& menu) {
-    texto(janela, fonte, "BOMBERMAN", 50, {240.f, 100.f}, DOURADO);
-    texto(janela, fonte, "Uma arena. Uma chance de escapar.", 19, {245.f, 170.f}, SUAVE);
+void desenharMenu(sf::RenderWindow& janela, const sf::Font& fonte, const bomberman::Menu& menu, const sf::Sprite& fundo) {
+    janela.draw(fundo);
     const auto& opcoes = menu.getOpcoes();
     for (std::size_t i = 0; i < opcoes.size(); ++i) {
         const bool selecionado = static_cast<int>(i) == menu.getIndiceSelecionado();
         texto(janela, fonte, (selecionado ? "> " : "  ") + opcoes[i], 30,
               {285.f, 250.f + static_cast<float>(i) * 60.f}, selecionado ? VERDE : sf::Color::White);
     }
-    texto(janela, fonte, "Setas / W S: escolher     Enter: confirmar", 17, {230.f, 470.f}, SUAVE);
-    texto(janela, fonte, "Jogo: WASD / setas para mover, Espaco para bomba", 16, {205.f, 520.f});
-    texto(janela, fonte, "R reinicia a fase. Esc volta ao menu.", 16, {265.f, 545.f}, SUAVE);
 }
 
 void desenharInstrucoes(sf::RenderWindow& janela, const sf::Font& fonte) {
@@ -206,6 +202,15 @@ int executar(int argc, char* argv[]) {
     if (!fonte.openFromFile(caminhoFonte)) {
         throw std::runtime_error("Nao foi possivel carregar a fonte: " + caminhoFonte);
     }
+
+    // Carregamento da imagem de fundo
+    sf::Texture texturaFundo;
+    std::string caminhoImagem = std::string(BOMBERMAN_ASSETS_DIR) + "/img/fundo.png";
+    if (!texturaFundo.loadFromFile(caminhoImagem)) {
+        std::cerr << "Aviso: Imagem de fundo nao encontrada em: " << caminhoImagem << std::endl;
+    }
+    sf::Sprite fundo(texturaFundo);
+
     sf::RenderWindow janela(sf::VideoMode({800, 600}), "Bomberman", sf::Style::Titlebar | sf::Style::Close);
     janela.setFramerateLimit(60);
     janela.setKeyRepeatEnabled(false);
@@ -321,7 +326,7 @@ int executar(int argc, char* argv[]) {
         }
 
         janela.clear(FUNDO);
-        if (tela == Tela::Menu) desenharMenu(janela, fonte, menu);
+        if (tela == Tela::Menu) desenharMenu(janela, fonte, menu, fundo);
         else if (tela == Tela::Instrucoes) desenharInstrucoes(janela, fonte);
         else {
             desenharPartida(janela, fonte, partida);
