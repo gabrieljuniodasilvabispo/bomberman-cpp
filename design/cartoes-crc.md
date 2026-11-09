@@ -2,7 +2,7 @@
 
 Este documento apresenta os cartoes Classe-Responsabilidade-Colaboracao das principais classes do jogo Bomberman, conforme a implementacao atual de uma partida individual.
 
-A interface grafica e implementada por funcoes em `src/main.cpp`: le o teclado, controla as telas, desenha o estado da fase e encaminha eventos ao audio. Ela nao e uma classe do projeto. As colaboracoes mediadas por essa interface ou por outra classe estao identificadas abaixo; nao significam uma chamada direta entre as duas classes.
+A interface grafica é implementada por funcoes em `src/main.cpp`: le o teclado, controla as telas, desenha o estado da fase e encaminha eventos ao audio. Ela nao e uma classe do projeto. As colaboracoes mediadas por essa interface ou por outra classe estao identificadas abaixo; nao significam uma chamada direta entre as duas classes.
 
 ## CRC01 - Partida
 
