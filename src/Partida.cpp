@@ -87,6 +87,7 @@ Partida::~Partida() = default;
 void Partida::iniciarFase() {
     auto novaFase = std::make_unique<ElementosFase>(configuracao_);
     fase_.swap(novaFase);
+    eventos_.clear();
     estado_ = EstadoPartida::EmAndamento;
     verificarResultado();
 }
@@ -96,6 +97,8 @@ bool Partida::moverJogador(Posicao deslocamento) {
         || !fase_->jogador.mover(deslocamento, fase_->mapa)) {
         return false;
     }
+    eventos_.push_back(deslocamento.linha == 0
+        ? EventoPartida::PassoHorizontal : EventoPartida::PassoVertical);
     processarExplosoes();
     resolverContatosEColeta();
     verificarResultado();
@@ -120,6 +123,7 @@ bool Partida::colocarBomba() {
         fase_->bombas.pop_back();
         return false;
     }
+    eventos_.push_back(EventoPartida::BombaColocada);
     processarExplosoes();
     resolverContatosEColeta();
     verificarResultado();
@@ -152,6 +156,7 @@ void Partida::processarExplosoes() {
         auto explosao = (*pronta)->detonar(fase_->mapa);
         bombas.erase(pronta);
         fase_->explosoes.push_back(std::move(explosao));
+        eventos_.push_back(EventoPartida::BombaExplodiu);
         aplicar(*fase_->explosoes.back());
     }
 }
@@ -165,6 +170,7 @@ void Partida::resolverContatosEColeta() {
         if (auto* melhoria = fase_->mapa.obterMelhoria(posicao)) {
             melhoria->aplicarEm(fase_->jogador);
             fase_->mapa.removerMelhoria(posicao);
+            eventos_.push_back(EventoPartida::MelhoriaColetada);
         }
     }
 }
@@ -208,6 +214,9 @@ bool Partida::todosInimigosEliminados() const {
 
 void Partida::verificarResultado() {
     if (!fase_->jogador.ativo()) {
+        if (estado_ != EstadoPartida::Derrota) {
+            eventos_.push_back(EventoPartida::Derrota);
+        }
         estado_ = EstadoPartida::Derrota;
     } else if (todosInimigosEliminados()
                && mesmaPosicao(fase_->jogador.obterPosicao(), fase_->mapa.obterSaida())) {
@@ -216,6 +225,7 @@ void Partida::verificarResultado() {
 }
 
 void Partida::encerrarFase() {
+    eventos_.clear();
     if (estado_ == EstadoPartida::EmAndamento) {
         estado_ = EstadoPartida::Encerrada;
     }
@@ -223,6 +233,12 @@ void Partida::encerrarFase() {
 
 void Partida::reiniciarFase() {
     iniciarFase();
+}
+
+std::vector<EventoPartida> Partida::consumirEventos() {
+    std::vector<EventoPartida> eventos;
+    eventos.swap(eventos_);
+    return eventos;
 }
 
 EstadoPartida Partida::obterEstado() const { return estado_; }

@@ -68,6 +68,14 @@ Execute `mingw32-make run` (Windows), `make run` (Linux) ou `iniciar.bat`.
 - Use Esc para voltar ao menu e inicie outra fase.
 - Alterne para outra janela e confira que a fase pausa e retoma sem avançar
   os temporizadores durante a ausência.
+- Confira os sons de passos, bomba colocada, explosao, coleta e derrota.
+  Movimento bloqueado e bomba recusada nao devem tocar efeitos. Em uma cadeia,
+  cada bomba gera uma detonacao; permanecer na tela de derrota nao repete o som.
+- Ao perder o foco, confira o aviso de pausa; R e Esc devem parar os sons antigos.
+
+Os testes de `Partida` tambem verificam a fila de eventos consumida pelo audio,
+incluindo consumo unico, acoes recusadas, cadeia, coleta, derrota e limpeza no
+reinicio. Eles nao reproduzem som nem dependem de uma saida de audio.
 
 Para instrumentar o código próprio com GCC/gcov, configure
 `-DBOMBERMAN_COVERAGE=ON` ou execute `mingw32-make test COVERAGE=ON`

@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_EXTENSIONS OFF)
 
-# O jogo atual nao utiliza audio nem rede.
-set(SFML_BUILD_AUDIO OFF CACHE BOOL "" FORCE)
+# Os efeitos usam SFML Audio; o jogo nao utiliza rede.
+set(SFML_BUILD_AUDIO ON CACHE BOOL "" FORCE)
 set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
 
 include(FetchContent)
@@ -32,7 +32,7 @@ target_include_directories(BombermanLogica PUBLIC
 )
 target_link_libraries(BombermanLogica PUBLIC SFML::System)
 
-add_executable(Bomberman src/main.cpp)
+add_executable(Bomberman src/main.cpp src/AudioJogo.cpp)
 
 # Caminho absoluto da pasta assets, usado pelo main.cpp para achar a fonte.
 target_compile_definitions(Bomberman PRIVATE
@@ -43,6 +43,7 @@ target_link_libraries(Bomberman PRIVATE
     BombermanLogica
     SFML::Graphics
     SFML::Window
+    SFML::Audio
 )
 
 if(BOMBERMAN_COVERAGE)

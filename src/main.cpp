@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "AudioJogo.hpp"
 #include "Bomba.hpp"
 #include "Explosao.hpp"
 #include "Jogador.hpp"
@@ -208,6 +209,7 @@ int executar(int argc, char* argv[]) {
     sf::RenderWindow janela(sf::VideoMode({800, 600}), "Bomberman", sf::Style::Titlebar | sf::Style::Close);
     janela.setFramerateLimit(60);
     janela.setKeyRepeatEnabled(false);
+    bomberman::AudioJogo audio(std::string(BOMBERMAN_ASSETS_DIR) + "/sounds");
     bomberman::Menu menu;
     Partida partida;
     Tela tela = Tela::Menu;
@@ -222,6 +224,7 @@ int executar(int argc, char* argv[]) {
     };
     const auto iniciar = [&] {
         partida.reiniciarFase();
+        audio.parar();
         tela = Tela::Jogo;
         limparEntrada();
     };
@@ -239,6 +242,11 @@ int executar(int argc, char* argv[]) {
             if (evento->is<sf::Event::FocusLost>() || evento->is<sf::Event::FocusGained>()) {
                 limparEntrada();
                 mudouContexto = true;
+                if (evento->is<sf::Event::FocusLost>() && tela == Tela::Jogo) {
+                    audio.pausar();
+                } else if (evento->is<sf::Event::FocusGained>()) {
+                    audio.retomar();
+                }
             }
             if (const auto* solta = evento->getIf<sf::Event::KeyReleased>()) {
                 teclasMovimento.erase(std::remove(teclasMovimento.begin(), teclasMovimento.end(), solta->code),
@@ -261,6 +269,7 @@ int executar(int argc, char* argv[]) {
                 }
             } else if (codigo == Tecla::Escape) {
                 partida.encerrarFase();
+                audio.parar();
                 tela = Tela::Menu;
                 limparEntrada();
                 mudouContexto = true;
@@ -306,6 +315,9 @@ int executar(int argc, char* argv[]) {
             } else {
                 limparEntrada();
             }
+            // Eventos registram cada ocorrencia, inclusive explosoes que nasceram
+            // e expiraram durante um quadro longo. Consumir evita repetir sons.
+            for (auto evento : partida.consumirEventos()) audio.tocar(evento);
         }
 
         janela.clear(FUNDO);

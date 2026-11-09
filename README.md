@@ -97,3 +97,25 @@ se ela estiver ausente, o programa apresenta um erro no terminal. Não são
 necessários arquivos externos de mapa ou imagens. Após compilar, use
 `build/Bomberman.exe --ajuda` no Windows ou `build/Bomberman --ajuda` no Linux
 para consultar os comandos no terminal.
+
+## Sons
+
+Os efeitos de `assets/sounds` sao reproduzidos pelo modulo **SFML Audio**:
+
+| Evento | Arquivo |
+| --- | --- |
+| Passo horizontal / vertical aceito | `step_horizontal.wav` / `step_vertical.wav` |
+| Bomba colocada | `bomb_lay.wav` |
+| Detonacao, inclusive em cadeia | `bomb_explosion.wav` |
+| Melhoria coletada | `powerup.wav` |
+| Derrota | `bomberman_killed.wav` e `bomberman-death-sound.wav`, alternados entre tentativas |
+| Janela do jogo perde o foco | `pause.wav` |
+
+Movimentos bloqueados e tentativas de colocar bombas sem vaga nao produzem som.
+Os efeitos pausam ao perder o foco e sao interrompidos ao reiniciar ou voltar
+ao menu. Passos possuem volume menor que os outros efeitos. Se um WAV estiver
+ausente, o jogo avisa no terminal e continua com os demais sons.
+
+Na primeira compilacao com audio, o CMake baixa as dependencias internas do
+modulo da SFML (Ogg, Vorbis e FLAC). Os testes de regras continuam independentes
+do dispositivo de audio.

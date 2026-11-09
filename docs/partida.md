@@ -5,6 +5,14 @@ não lê teclado e não desenha. A interface em `main.cpp` encaminha os comandos
 do teclado para essa classe, avança o tempo da fase e desenha suas consultas.
 Jogo e testes compartilham a biblioteca `BombermanLogica`.
 
+`consumirEventos()` entrega e limpa os acontecimentos desde a ultima consulta:
+passos horizontais/verticais aceitos, bombas colocadas/detonadas, coleta e derrota.
+A interface encaminha esses eventos a `AudioJogo`, que usa SFML Audio e os WAV
+de `assets/sounds`. As regras nao carregam arquivos nem abrem dispositivos de som.
+Uma detonacao permanece na fila mesmo se sua explosao expirar no mesmo quadro;
+cada bomba de uma cadeia registra seu proprio evento. Inicio, reinicio e
+encerramento descartam acontecimentos antigos.
+
 ## Uso pela interface
 
 **Novo Jogo** chama `iniciarFase()`. Setas/WASD chamam `moverJogador`, Espaço

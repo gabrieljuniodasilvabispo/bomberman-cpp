@@ -10,6 +10,7 @@ namespace {
 
 using bomberman::ConfiguracaoFase;
 using bomberman::EstadoPartida;
+using bomberman::EventoPartida;
 using bomberman::Partida;
 using bomberman::TipoMelhoria;
 
@@ -407,4 +408,119 @@ TEST_CASE("Partida encerrada congela e pode iniciar novamente") {
     CHECK(partida.obterEstado() == EstadoPartida::EmAndamento);
     CHECK(partida.obterQuantidadeBombas() == 0);
     CHECK(partida.obterJogador().obterBombasAtivas() == 0);
+}
+
+TEST_CASE("Eventos registram somente movimentos e bombas aceitos e sao consumidos uma vez") {
+    auto fase = faseAberta();
+    fase.blocos.push_back({{2, 2}, TipoBloco::Indestrutivel});
+    Partida partida(fase);
+    CHECK_FALSE(partida.moverJogador({0, 1}));
+    CHECK_FALSE(partida.colocarBomba());
+    CHECK(partida.consumirEventos().empty());
+    partida.iniciarFase();
+    CHECK(partida.consumirEventos().empty());
+    CHECK_FALSE(partida.moverJogador({0, 1})); // Parede.
+    CHECK_FALSE(partida.moverJogador({1, 1})); // Diagonal.
+    REQUIRE(partida.moverJogador({-1, 0}));
+    REQUIRE(partida.colocarBomba());
+    CHECK_FALSE(partida.colocarBomba()); // Celula ocupada e limite atingido.
+    REQUIRE(partida.moverJogador({0, 1}));
+    CHECK_FALSE(partida.colocarBomba()); // Limite atingido em celula livre.
+    CHECK_FALSE(partida.moverJogador({1, 0})); // Mesma parede, por outro lado.
+    CHECK((partida.consumirEventos() == std::vector<EventoPartida>{
+        EventoPartida::PassoVertical, EventoPartida::BombaColocada,
+        EventoPartida::PassoHorizontal}));
+    CHECK(partida.consumirEventos().empty());
+}
+
+TEST_CASE("Evento de detonacao permanece mesmo se a explosao expirar no mesmo quadro") {
+    Partida partida(faseAberta());
+    partida.iniciarFase();
+    REQUIRE(partida.colocarBomba());
+    REQUIRE(partida.moverJogador({-1, 0}));
+    REQUIRE(partida.moverJogador({0, -1}));
+    partida.consumirEventos();
+    partida.atualizar(sf::milliseconds(3600));
+    REQUIRE(partida.obterEstado() == EstadoPartida::EmAndamento);
+    CHECK(partida.obterQuantidadeBombas() == 0);
+    CHECK(partida.obterQuantidadeExplosoes() == 0);
+    CHECK((partida.consumirEventos() == std::vector<EventoPartida>{EventoPartida::BombaExplodiu}));
+    partida.atualizar(sf::seconds(1));
+    CHECK(partida.consumirEventos().empty());
+}
+
+TEST_CASE("Reacao em cadeia emite uma detonacao para cada bomba mesmo em quadro longo") {
+    Partida partida(faseComMelhoria(TipoMelhoria::BombaExtra));
+    partida.iniciarFase();
+    revelarMelhoria(partida);
+    coletarMelhoriaRevelada(partida);
+    REQUIRE(partida.colocarBomba());
+    REQUIRE(partida.moverJogador({0, -1}));
+    partida.atualizar(sf::seconds(1));
+    REQUIRE(partida.colocarBomba());
+    REQUIRE(partida.moverJogador({-1, 0}));
+    REQUIRE(partida.moverJogador({0, -1}));
+    partida.consumirEventos();
+    partida.atualizar(sf::milliseconds(2600));
+    REQUIRE(partida.obterEstado() == EstadoPartida::EmAndamento);
+    CHECK(partida.obterQuantidadeBombas() == 0);
+    CHECK(partida.obterQuantidadeExplosoes() == 0);
+    CHECK((partida.consumirEventos() == std::vector<EventoPartida>{
+        EventoPartida::BombaExplodiu, EventoPartida::BombaExplodiu}));
+}
+
+TEST_CASE("Cada melhoria emite coleta uma unica vez e somente ao entrar na sua celula") {
+    auto tipo = TipoMelhoria::AumentoAlcance;
+    SUBCASE("alcance") { tipo = TipoMelhoria::AumentoAlcance; }
+    SUBCASE("bomba extra") { tipo = TipoMelhoria::BombaExtra; }
+    SUBCASE("escudo") { tipo = TipoMelhoria::Escudo; }
+    Partida partida(faseComMelhoria(tipo));
+    partida.iniciarFase();
+    revelarMelhoria(partida);
+    auto eventos = partida.consumirEventos();
+    CHECK(std::count(eventos.begin(), eventos.end(), EventoPartida::MelhoriaColetada) == 0);
+    coletarMelhoriaRevelada(partida);
+    eventos = partida.consumirEventos();
+    REQUIRE_FALSE(eventos.empty());
+    CHECK(eventos.back() == EventoPartida::MelhoriaColetada);
+    CHECK(std::count(eventos.begin(), eventos.end(), EventoPartida::MelhoriaColetada) == 1);
+    REQUIRE(partida.moverJogador({-1, 0}));
+    REQUIRE(partida.moverJogador({1, 0}));
+    eventos = partida.consumirEventos();
+    CHECK(std::count(eventos.begin(), eventos.end(), EventoPartida::MelhoriaColetada) == 0);
+}
+
+TEST_CASE("Derrota emite um unico evento por contato ou explosao") {
+    auto fase = faseAberta();
+    fase.iniciosInimigos = {{2, 2}};
+    Partida partida(fase);
+    partida.iniciarFase();
+    SUBCASE("contato") {
+        REQUIRE(partida.moverJogador({0, 1}));
+    }
+    SUBCASE("explosao") {
+        REQUIRE(partida.colocarBomba());
+        // Evita que o movimento aleatorio do inimigo determine a causa da derrota.
+        // A bomba bloqueia sua entrada na celula do jogador.
+        partida.consumirEventos();
+        partida.atualizar(sf::seconds(3));
+    }
+    REQUIRE(partida.obterEstado() == EstadoPartida::Derrota);
+    auto eventos = partida.consumirEventos();
+    CHECK(std::count(eventos.begin(), eventos.end(), EventoPartida::Derrota) == 1);
+    CHECK_FALSE(partida.moverJogador({-1, 0}));
+    CHECK_FALSE(partida.colocarBomba());
+    partida.atualizar(sf::seconds(4));
+    CHECK(partida.consumirEventos().empty());
+}
+
+TEST_CASE("Inicio reinicio e encerramento descartam eventos da tentativa anterior") {
+    Partida partida(faseAberta());
+    partida.iniciarFase();
+    REQUIRE(partida.moverJogador({0, 1}));
+    REQUIRE(partida.colocarBomba());
+    SUBCASE("inicio") { partida.iniciarFase(); }
+    SUBCASE("reinicio") { partida.reiniciarFase(); }
+    SUBCASE("encerramento") { partida.encerrarFase(); }
+    CHECK(partida.consumirEventos().empty());
 }

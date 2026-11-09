@@ -45,6 +45,16 @@ enum class EstadoPartida {
     Encerrada ///< Encerramento manual, por exemplo ao voltar para o menu.
 };
 
+/** @brief Acontecimentos consumidos pela interface, sem reproduzir audio nas regras. */
+enum class EventoPartida {
+    PassoHorizontal,
+    PassoVertical,
+    BombaColocada,
+    BombaExplodiu,
+    MelhoriaColetada,
+    Derrota
+};
+
 /**
  * @brief Coordena as regras da fase, sem ler teclado ou desenhar a janela.
  * @note Possui mapa, personagens, melhorias, bombas e explosoes. Consultas
@@ -92,6 +102,13 @@ public:
     /** @brief Recria a fase, inclusive itens coletados, atributos e terreno. */
     void reiniciarFase();
 
+    /**
+     * @brief Retira os acontecimentos acumulados, na ordem em que ocorreram.
+     * @note Cada evento e entregue uma unica vez. Inicio, reinicio e encerramento
+     * descartam eventos antigos. A interface deve consumir a fila a cada quadro.
+     */
+    std::vector<EventoPartida> consumirEventos();
+
     EstadoPartida obterEstado() const;
     /** @throws std::logic_error Se a fase ainda nao foi iniciada. */
     const Mapa& obterMapa() const;
@@ -110,6 +127,7 @@ private:
     ConfiguracaoFase configuracao_;
     std::unique_ptr<ElementosFase> fase_;
     EstadoPartida estado_ = EstadoPartida::NaoIniciada;
+    std::vector<EventoPartida> eventos_;
 
     void processarExplosoes();
     void resolverContatosEColeta();
