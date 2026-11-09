@@ -32,7 +32,7 @@ public:
      * posicoes fora da grade, blocos sobrepostos ou destruidos, ou posicoes
      * iniciais sobrepostas entre personagens ou bloqueadas, ou saida bloqueada.
      * @throws std::length_error Se a arena exceder MAXIMO_CELULAS.
-     * @note Partida define a disposicao segura da fase padrao. Mapa valida
+     * @note Partida define a disposicao segura das fases fixas. Mapa valida
      * posicoes livres e distintas, sem garantir uma rota de fuga em toda configuracao.
      */
     Mapa(int linhas, int colunas, const std::vector<Bloco>& blocos,

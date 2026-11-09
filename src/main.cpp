@@ -65,7 +65,7 @@ std::optional<Posicao> direcao(Tecla tecla) {
 
 void desenharMenu(sf::RenderWindow& janela, const sf::Font& fonte, const bomberman::Menu& menu) {
     texto(janela, fonte, "BOMBERMAN", 50, {240.f, 100.f}, DOURADO);
-    texto(janela, fonte, "Uma arena. Uma chance de escapar.", 19, {245.f, 170.f}, SUAVE);
+    texto(janela, fonte, "Quatro mapas. Uma aventura.", 19, {270.f, 170.f}, SUAVE);
     const auto& opcoes = menu.getOpcoes();
     for (std::size_t i = 0; i < opcoes.size(); ++i) {
         const bool selecionado = static_cast<int>(i) == menu.getIndiceSelecionado();
@@ -98,12 +98,14 @@ void desenharPartida(sf::RenderWindow& janela, const sf::Font& fonte, const Part
     const auto inimigosVivos = std::count_if(partida.obterInimigos().begin(), partida.obterInimigos().end(),
                                             [](const auto& inimigo) { return inimigo.ativo(); });
     texto(janela, fonte, "BOMBERMAN", 26, {30.f, 12.f}, DOURADO);
+    texto(janela, fonte, "Fase: " + std::to_string(partida.obterNumeroFase()) + "/"
+          + std::to_string(partida.obterQuantidadeFases()), 19, {350.f, 18.f}, DOURADO);
     texto(janela, fonte, "Inimigos: " + std::to_string(inimigosVivos), 19, {625.f, 18.f});
     texto(janela, fonte, "Bombas: " + std::to_string(jogador.obterBombasAtivas()) + "/"
           + std::to_string(jogador.obterLimiteBombas()) + "     Alcance: "
           + std::to_string(jogador.obterAlcance()) + "     Escudo: " + (jogador.temEscudo() ? "sim" : "nao"),
           18, {160.f, 52.f});
-    texto(janela, fonte, inimigosVivos == 0 ? "Saida liberada! Alcance a porta verde."
+    texto(janela, fonte, inimigosVivos == 0 ? "Saida liberada! Entre para concluir a fase."
           : "Elimine os inimigos para liberar a saida.", 16, {245.f, 79.f}, inimigosVivos == 0 ? VERDE : SUAVE);
 
     const float lado = std::min({48.f, 704.f / mapa.obterColunas(), 432.f / mapa.obterLinhas()});
@@ -196,7 +198,10 @@ int executar(int argc, char* argv[]) {
         std::cout << "Uso: Bomberman [--ajuda|--help]\n"
                   << "Sem argumentos: abre o menu principal do jogo.\n"
                   << "Menu: Setas/W/S e Enter. Jogo: WASD/setas, Espaco para bomba.\n"
-                  << "R reinicia; Enter reinicia apos o resultado; Esc volta ao menu.\n"
+                  << "Sao 4 mapas fixos. A porta liberada leva ao proximo.\n"
+                  << "Conclua o quarto mapa para vencer o jogo.\n"
+                  << "R repete a fase; Enter reinicia apos derrota; Esc volta ao menu.\n"
+                  << "Apos vencer, Enter ou R inicia um novo jogo.\n"
                   << "A partida pausa quando a janela perde o foco.\n";
         return 0;
     }
@@ -222,8 +227,9 @@ int executar(int argc, char* argv[]) {
         comandos.clear();
         esperaMovimento = sf::Time::Zero;
     };
-    const auto iniciar = [&] {
-        partida.reiniciarFase();
+    const auto iniciar = [&](bool novoJogo) {
+        if (novoJogo) partida.iniciarFase();
+        else partida.reiniciarFase();
         audio.parar();
         tela = Tela::Jogo;
         limparEntrada();
@@ -260,7 +266,7 @@ int executar(int argc, char* argv[]) {
                 else if (codigo == Tecla::Down || codigo == Tecla::S) menu.navegarProxima();
                 else if (codigo == Tecla::Enter) {
                     switch (menu.confirmarSelecao()) {
-                    case bomberman::OpcaoMenu::NovoJogo: iniciar(); break;
+                    case bomberman::OpcaoMenu::NovoJogo: iniciar(true); break;
                     case bomberman::OpcaoMenu::Instrucoes: tela = Tela::Instrucoes; break;
                     case bomberman::OpcaoMenu::Sair: janela.close(); break;
                     default: break;
@@ -276,7 +282,7 @@ int executar(int argc, char* argv[]) {
             } else if (tela == Tela::Jogo) {
                 const bool acabou = partida.obterEstado() != EstadoPartida::EmAndamento;
                 if (codigo == Tecla::R || (acabou && codigo == Tecla::Enter)) {
-                    iniciar();
+                    iniciar(partida.obterEstado() == EstadoPartida::Vitoria);
                     mudouContexto = true;
                 } else if (!acabou && codigo == Tecla::Space) {
                     comandos.push_back(codigo);
@@ -315,6 +321,11 @@ int executar(int argc, char* argv[]) {
             } else {
                 limparEntrada();
             }
+            if (partida.obterEstado() == EstadoPartida::Vitoria && partida.avancarFase()) {
+                audio.parar();
+                limparEntrada();
+                relogio.restart();
+            }
             // Eventos registram cada ocorrencia, inclusive explosoes que nasceram
             // e expiraram durante um quadro longo. Consumir evita repetir sons.
             for (auto evento : partida.consumirEventos()) audio.tocar(evento);
@@ -326,7 +337,8 @@ int executar(int argc, char* argv[]) {
         else {
             desenharPartida(janela, fonte, partida);
             if (partida.obterEstado() == EstadoPartida::Vitoria) {
-                desenharAviso(janela, fonte, "VOCE VENCEU!", "Fase concluida. Enter ou R para jogar de novo.", VERDE);
+                desenharAviso(janela, fonte, "VOCE VENCEU!",
+                              "4 fases concluidas! Enter ou R para novo jogo.", VERDE);
             } else if (partida.obterEstado() == EstadoPartida::Derrota) {
                 desenharAviso(janela, fonte, "FIM DE JOGO", "Tente outra vez! Enter ou R reinicia a fase.", DOURADO);
             } else if (!janela.hasFocus()) {

@@ -65,7 +65,7 @@ namespace bomberman {
             {
                 "Setas ou W A S D - Mover o personagem",
                 "Espaco - Posicionar uma bomba",
-                "R - Reiniciar (Enter tambem apos o resultado)",
+                "R - Repetir o mapa; Enter tambem apos o resultado",
                 "Esc - Voltar ao menu; outra janela pausa a partida"
             }
         },
@@ -89,6 +89,7 @@ namespace bomberman {
             "RESULTADO",
             {
                 "A saida fica verde quando todos os inimigos forem eliminados.",
+                "A porta leva ao proximo mapa; conclua os quatro para vencer.",
                 "Fogo sem escudo ou contato com inimigo causam derrota."
             }
         }

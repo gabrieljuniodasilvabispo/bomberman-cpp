@@ -11,28 +11,89 @@
 namespace bomberman {
 namespace {
 
-ConfiguracaoFase criarConfiguracaoPadrao() {
-    ConfiguracaoFase configuracao;
-    configuracao.iniciosInimigos = {{1, 9}, {7, 1}, {7, 9}};
-    for (int linha = 0; linha < configuracao.linhas; ++linha) {
-        for (int coluna = 0; coluna < configuracao.colunas; ++coluna) {
-            const bool borda = linha == 0 || coluna == 0
-                || linha == configuracao.linhas - 1 || coluna == configuracao.colunas - 1;
-            if (borda || (linha % 2 == 0 && coluna % 2 == 0)) {
-                configuracao.blocos.push_back({{linha, coluna}, TipoBloco::Indestrutivel});
+bool mesmaPosicao(Posicao a, Posicao b) {
+    return a.linha == b.linha && a.coluna == b.coluna;
+}
+
+std::vector<ConfiguracaoFase> criarFasesFixas() {
+    std::vector<ConfiguracaoFase> fases(4);
+
+    // Fase 1: o mesmo mapa usado originalmente pelo jogo.
+    fases[0].iniciosInimigos = {{1, 9}, {7, 1}, {7, 9}};
+    fases[0].blocos = {
+        {{1, 4}, TipoBloco::Destrutivel, TipoMelhoria::BombaExtra},
+        {{4, 1}, TipoBloco::Destrutivel, TipoMelhoria::AumentoAlcance},
+        {{3, 3}, TipoBloco::Destrutivel, TipoMelhoria::Escudo},
+        {{1, 7}, TipoBloco::Destrutivel}, {{3, 5}, TipoBloco::Destrutivel},
+        {{3, 7}, TipoBloco::Destrutivel}, {{3, 9}, TipoBloco::Destrutivel},
+        {{5, 1}, TipoBloco::Destrutivel}, {{5, 3}, TipoBloco::Destrutivel},
+        {{5, 5}, TipoBloco::Destrutivel}, {{5, 7}, TipoBloco::Destrutivel},
+        {{5, 9}, TipoBloco::Destrutivel}, {{7, 3}, TipoBloco::Destrutivel},
+        {{7, 5}, TipoBloco::Destrutivel}, {{7, 7}, TipoBloco::Destrutivel}
+    };
+
+    // Fase 2: mais obstaculos nos corredores verticais, porta embaixo a esquerda.
+    fases[1].saida = {7, 1};
+    fases[1].iniciosInimigos = {{1, 9}, {7, 7}, {7, 9}};
+    fases[1].blocos = {
+        {{1, 5}, TipoBloco::Destrutivel, TipoMelhoria::BombaExtra},
+        {{3, 3}, TipoBloco::Destrutivel, TipoMelhoria::AumentoAlcance},
+        {{5, 7}, TipoBloco::Destrutivel, TipoMelhoria::Escudo},
+        {{1, 7}, TipoBloco::Destrutivel}, {{2, 5}, TipoBloco::Destrutivel},
+        {{3, 5}, TipoBloco::Destrutivel}, {{3, 7}, TipoBloco::Destrutivel},
+        {{3, 9}, TipoBloco::Destrutivel}, {{4, 3}, TipoBloco::Destrutivel},
+        {{4, 9}, TipoBloco::Destrutivel}, {{5, 1}, TipoBloco::Destrutivel},
+        {{5, 3}, TipoBloco::Destrutivel}, {{5, 5}, TipoBloco::Destrutivel},
+        {{5, 9}, TipoBloco::Destrutivel}, {{6, 5}, TipoBloco::Destrutivel},
+        {{7, 3}, TipoBloco::Destrutivel}, {{7, 5}, TipoBloco::Destrutivel}
+    };
+
+    // Fase 3: corredores horizontais mais fechados, porta no canto superior direito.
+    fases[2].saida = {1, 9};
+    fases[2].iniciosInimigos = {{5, 9}, {7, 1}, {7, 9}};
+    fases[2].blocos = {
+        {{3, 5}, TipoBloco::Destrutivel, TipoMelhoria::BombaExtra},
+        {{5, 1}, TipoBloco::Destrutivel, TipoMelhoria::AumentoAlcance},
+        {{7, 5}, TipoBloco::Destrutivel, TipoMelhoria::Escudo},
+        {{1, 4}, TipoBloco::Destrutivel}, {{1, 6}, TipoBloco::Destrutivel},
+        {{1, 8}, TipoBloco::Destrutivel}, {{2, 7}, TipoBloco::Destrutivel},
+        {{3, 3}, TipoBloco::Destrutivel}, {{3, 7}, TipoBloco::Destrutivel},
+        {{3, 9}, TipoBloco::Destrutivel}, {{4, 5}, TipoBloco::Destrutivel},
+        {{5, 3}, TipoBloco::Destrutivel}, {{5, 5}, TipoBloco::Destrutivel},
+        {{5, 7}, TipoBloco::Destrutivel}, {{6, 3}, TipoBloco::Destrutivel},
+        {{6, 7}, TipoBloco::Destrutivel}, {{7, 3}, TipoBloco::Destrutivel},
+        {{7, 7}, TipoBloco::Destrutivel}
+    };
+
+    // Fase 4: ultimo mapa, com mais blocos protegendo os caminhos ate a porta.
+    fases[3].iniciosInimigos = {{1, 9}, {5, 9}, {7, 1}};
+    fases[3].blocos = {
+        {{3, 3}, TipoBloco::Destrutivel, TipoMelhoria::BombaExtra},
+        {{3, 7}, TipoBloco::Destrutivel, TipoMelhoria::AumentoAlcance},
+        {{5, 5}, TipoBloco::Destrutivel, TipoMelhoria::Escudo},
+        {{1, 4}, TipoBloco::Destrutivel}, {{1, 6}, TipoBloco::Destrutivel},
+        {{1, 8}, TipoBloco::Destrutivel}, {{2, 5}, TipoBloco::Destrutivel},
+        {{3, 5}, TipoBloco::Destrutivel}, {{3, 9}, TipoBloco::Destrutivel},
+        {{4, 1}, TipoBloco::Destrutivel}, {{4, 7}, TipoBloco::Destrutivel},
+        {{5, 1}, TipoBloco::Destrutivel}, {{5, 3}, TipoBloco::Destrutivel},
+        {{5, 7}, TipoBloco::Destrutivel}, {{6, 3}, TipoBloco::Destrutivel},
+        {{6, 9}, TipoBloco::Destrutivel}, {{7, 3}, TipoBloco::Destrutivel},
+        {{7, 5}, TipoBloco::Destrutivel}, {{7, 7}, TipoBloco::Destrutivel}
+    };
+
+    // As quatro arenas compartilham bordas, pilares e uma curva de fuga no inicio.
+    for (auto& fase : fases) {
+        for (int linha = 0; linha < fase.linhas; ++linha) {
+            for (int coluna = 0; coluna < fase.colunas; ++coluna) {
+                const bool borda = linha == 0 || coluna == 0
+                    || linha == fase.linhas - 1 || coluna == fase.colunas - 1;
+                if (borda || (linha % 2 == 0 && coluna % 2 == 0)) {
+                    fase.blocos.push_back({{linha, coluna}, TipoBloco::Indestrutivel});
+                }
             }
         }
     }
-    // A area inicial permite dobrar um corredor para escapar da primeira bomba.
-    configuracao.blocos.push_back({{1, 4}, TipoBloco::Destrutivel, TipoMelhoria::BombaExtra});
-    configuracao.blocos.push_back({{4, 1}, TipoBloco::Destrutivel, TipoMelhoria::AumentoAlcance});
-    configuracao.blocos.push_back({{3, 3}, TipoBloco::Destrutivel, TipoMelhoria::Escudo});
-    for (Posicao posicao : {Posicao{1, 7}, Posicao{3, 5}, Posicao{3, 7}, Posicao{3, 9},
-                            Posicao{5, 1}, Posicao{5, 3}, Posicao{5, 5}, Posicao{5, 7},
-                            Posicao{5, 9}, Posicao{7, 3}, Posicao{7, 5}, Posicao{7, 7}}) {
-        configuracao.blocos.push_back({posicao, TipoBloco::Destrutivel});
-    }
-    return configuracao;
+    return fases;
 }
 
 std::vector<Bloco> criarBlocos(const ConfiguracaoFase& configuracao,
@@ -51,10 +112,6 @@ std::vector<Bloco> criarBlocos(const ConfiguracaoFase& configuracao,
         blocos.emplace_back(inicial.posicao, inicial.tipo, melhoria);
     }
     return blocos;
-}
-
-bool mesmaPosicao(Posicao a, Posicao b) {
-    return a.linha == b.linha && a.coluna == b.coluna;
 }
 
 } // namespace
@@ -78,15 +135,28 @@ struct Partida::ElementosFase {
     }
 };
 
-Partida::Partida() : Partida(criarConfiguracaoPadrao()) {}
+Partida::Partida() : Partida(criarFasesFixas()) {}
 
-Partida::Partida(ConfiguracaoFase configuracao) : configuracao_(std::move(configuracao)) {}
+Partida::Partida(ConfiguracaoFase configuracao)
+    : Partida(std::vector<ConfiguracaoFase>{std::move(configuracao)}) {}
+
+Partida::Partida(std::vector<ConfiguracaoFase> configuracoes)
+    : configuracoes_(std::move(configuracoes)) {
+    if (configuracoes_.empty()) {
+        throw std::invalid_argument("A partida precisa de pelo menos uma fase.");
+    }
+}
 
 Partida::~Partida() = default;
 
 void Partida::iniciarFase() {
-    auto novaFase = std::make_unique<ElementosFase>(configuracao_);
+    carregarFase(1);
+}
+
+void Partida::carregarFase(std::size_t numero) {
+    auto novaFase = std::make_unique<ElementosFase>(configuracoes_.at(numero - 1));
     fase_.swap(novaFase);
+    numeroFase_ = numero;
     eventos_.clear();
     estado_ = EstadoPartida::EmAndamento;
     verificarResultado();
@@ -232,8 +302,23 @@ void Partida::encerrarFase() {
 }
 
 void Partida::reiniciarFase() {
-    iniciarFase();
+    if (!fase_) {
+        iniciarFase();
+        return;
+    }
+    carregarFase(numeroFase_);
 }
+
+bool Partida::avancarFase() {
+    if (estado_ != EstadoPartida::Vitoria || numeroFase_ >= configuracoes_.size()) {
+        return false;
+    }
+    carregarFase(numeroFase_ + 1);
+    return true;
+}
+
+std::size_t Partida::obterNumeroFase() const { return numeroFase_; }
+std::size_t Partida::obterQuantidadeFases() const { return configuracoes_.size(); }
 
 std::vector<EventoPartida> Partida::consumirEventos() {
     std::vector<EventoPartida> eventos;

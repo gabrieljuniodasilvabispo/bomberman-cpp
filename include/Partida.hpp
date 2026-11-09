@@ -58,15 +58,18 @@ enum class EventoPartida {
 /**
  * @brief Coordena as regras da fase, sem ler teclado ou desenhar a janela.
  * @note Possui mapa, personagens, melhorias, bombas e explosoes. Consultas
- * emprestadas deixam de valer ao iniciar/reiniciar ou destruir a partida;
+ * emprestadas deixam de valer ao iniciar/reiniciar, avancar ou destruir a partida;
  * bombas e explosoes tambem podem desaparecer durante a atualizacao.
  */
 class Partida {
 public:
-    /** @brief Prepara a configuracao de uma arena fixa com as tres melhorias. */
+    /** @brief Prepara os quatro mapas fixos, na ordem em que serao jogados. */
     Partida();
     /** @brief Guarda uma configuracao propria; a validacao ocorre ao iniciar. */
     explicit Partida(ConfiguracaoFase configuracao);
+    /** @brief Guarda uma sequencia propria de fases.
+     * @throws std::invalid_argument Se a lista estiver vazia. */
+    explicit Partida(std::vector<ConfiguracaoFase> configuracoes);
     ~Partida();
     Partida(const Partida&) = delete;
     Partida& operator=(const Partida&) = delete;
@@ -74,7 +77,7 @@ public:
     Partida& operator=(Partida&&) = delete;
 
     /**
-     * @brief Cria todos os elementos em seus estados iniciais.
+     * @brief Comeca um novo jogo no primeiro mapa da sequencia.
      * @throws std::invalid_argument Para configuracao invalida ou melhoria
      * de velocidade (ainda nao suportada). Aplicam-se tambem os limites de Mapa.
      * @note Prepara a fase antes de substituir a anterior, preservando-a em falha.
@@ -101,6 +104,17 @@ public:
     void encerrarFase();
     /** @brief Recria a fase, inclusive itens coletados, atributos e terreno. */
     void reiniciarFase();
+    /**
+     * @brief Inicia o proximo mapa fixo apos concluir a fase atual.
+     * @return false se a fase nao terminou em vitoria ou se era o ultimo mapa.
+     * @note Recria personagens, atributos e itens e descarta bombas, fogo e eventos.
+     * A interface chama este metodo automaticamente ao detectar Vitoria.
+     */
+    bool avancarFase();
+    /** @brief Numero da fase atual, ou zero antes do primeiro inicio. */
+    std::size_t obterNumeroFase() const;
+    /** @brief Quantidade de mapas da sequencia (quatro no jogo padrao). */
+    std::size_t obterQuantidadeFases() const;
 
     /**
      * @brief Retira os acontecimentos acumulados, na ordem em que ocorreram.
@@ -124,11 +138,13 @@ public:
 
 private:
     struct ElementosFase;
-    ConfiguracaoFase configuracao_;
+    std::vector<ConfiguracaoFase> configuracoes_;
+    std::size_t numeroFase_ = 0;
     std::unique_ptr<ElementosFase> fase_;
     EstadoPartida estado_ = EstadoPartida::NaoIniciada;
     std::vector<EventoPartida> eventos_;
 
+    void carregarFase(std::size_t numero);
     void processarExplosoes();
     void resolverContatosEColeta();
     void verificarResultado();

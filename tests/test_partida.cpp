@@ -363,6 +363,55 @@ TEST_CASE("Partida sem inimigos inicia vitoriosa somente se jogador estiver na s
     CHECK(partida.obterEstado() == EstadoPartida::Vitoria);
 }
 
+TEST_CASE("Porta concluida permite novo mapa sem bombas fogo itens ou eventos anteriores") {
+    auto fase = faseComMelhoria(TipoMelhoria::BombaExtra);
+    fase.saida = {4, 0};
+    ConfiguracaoFase segunda;
+    segunda.iniciosInimigos = {{1, 9}, {7, 1}, {7, 9}};
+    Partida partida(std::vector<ConfiguracaoFase>{fase, segunda});
+    partida.iniciarFase();
+    revelarMelhoria(partida);
+    coletarMelhoriaRevelada(partida);
+    REQUIRE(partida.colocarBomba());
+    REQUIRE(partida.moverJogador({-1, 0}));
+    REQUIRE(partida.moverJogador({0, -1}));
+    REQUIRE(partida.moverJogador({0, -1}));
+    partida.atualizar(sf::seconds(3));
+    REQUIRE(partida.colocarBomba());
+    REQUIRE(partida.moverJogador({0, -1}));
+    REQUIRE(partida.moverJogador({1, 0}));
+    REQUIRE(partida.moverJogador({1, 0}));
+    REQUIRE(partida.moverJogador({1, 0}));
+    REQUIRE(partida.obterEstado() == EstadoPartida::Vitoria);
+    REQUIRE(partida.obterQuantidadeBombas() == 1);
+    REQUIRE(partida.obterQuantidadeExplosoes() == 1);
+    REQUIRE(partida.obterJogador().obterLimiteBombas() == 2);
+
+    REQUIRE(partida.avancarFase());
+    CHECK(partida.obterNumeroFase() == 2);
+    CHECK(partida.obterEstado() == EstadoPartida::EmAndamento);
+    CHECK(partida.obterMapa().obterLinhas() == 9);
+    CHECK(partida.obterMapa().obterColunas() == 11);
+    conferirPosicao(partida.obterJogador().obterPosicao(), partida.obterMapa().obterInicioJogador());
+    CHECK(partida.obterJogador().ativo());
+    CHECK(partida.obterJogador().obterLimiteBombas() == 1);
+    CHECK(partida.obterJogador().obterAlcance() == 2);
+    CHECK_FALSE(partida.obterJogador().temEscudo());
+    CHECK(partida.obterJogador().obterBombasAtivas() == 0);
+    CHECK(partida.obterQuantidadeBombas() == 0);
+    CHECK(partida.obterQuantidadeExplosoes() == 0);
+    CHECK(partida.obterInimigos().size() == 3);
+    CHECK_FALSE(partida.todosInimigosEliminados());
+    CHECK(partida.consumirEventos().empty());
+    const auto saida = partida.obterMapa().obterSaida();
+    partida.reiniciarFase();
+    CHECK(partida.obterNumeroFase() == 2);
+    conferirPosicao(partida.obterMapa().obterSaida(), saida);
+    partida.iniciarFase();
+    CHECK(partida.obterNumeroFase() == 1);
+    conferirPosicao(partida.obterMapa().obterSaida(), fase.saida);
+}
+
 TEST_CASE("Reinicio restaura terreno melhorias atributos e limpa bombas e explosoes") {
     Partida partida(faseComMelhoria(TipoMelhoria::BombaExtra));
     partida.iniciarFase();

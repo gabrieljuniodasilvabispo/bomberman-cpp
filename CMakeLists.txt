@@ -70,7 +70,7 @@ if(BUILD_TESTING)
         tests/main.cpp tests/test_posicao.cpp tests/test_mapa.cpp
         tests/test_bloco.cpp tests/test_jogador.cpp tests/test_inimigo.cpp
         tests/test_bomba.cpp tests/test_explosao.cpp tests/test_melhoria.cpp
-        tests/test_menu.cpp tests/test_partida.cpp tests/test_defensiva.cpp)
+        tests/test_menu.cpp tests/test_partida.cpp tests/test_fases.cpp tests/test_defensiva.cpp)
     target_include_directories(BombermanTests PRIVATE third_party)
     target_link_libraries(BombermanTests PRIVATE BombermanLogica)
     if(WIN32 AND BUILD_SHARED_LIBS)

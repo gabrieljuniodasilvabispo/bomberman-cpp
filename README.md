@@ -64,32 +64,63 @@ Os comandos e os cenários verificados estão descritos no
 [guia de testes](docs/testes-iniciais.md). A cobertura será medida com **gcovr**,
 com meta mínima de **60%** para a entrega final.
 
-A classe `Partida` já coordena uma arena fixa, movimento, bombas, explosões em
-cadeia, coleta, vitória, derrota e reinício completo. Seu uso e a ordem das
+A classe `Partida` coordena quatro arenas fixas, movimento, bombas, explosões em
+cadeia, coleta, avanço de fase, derrota e reinício completo. Seu uso e a ordem das
 atualizações estão descritos no [guia da partida](docs/partida.md).
 
 ## Como jogar
 
-No Windows, abra `iniciar.bat` ou execute `mingw32-make run`. No Linux, use
-`make run`. O comando `make` (ou `mingw32-make`) compila o jogo; os testes
-continuam disponíveis pelo alvo `test`.
+O projeto inclui um `Makefile` na raiz. No Linux, execute nessa pasta:
 
-Escolha **Novo Jogo** no menu para abrir a arena. A janela desenha o estado de
+```sh
+make
+make run
+```
+
+`make` configura e compila o jogo completo, incluindo o áudio. `make run`
+compila o que estiver pendente e abre o jogo. O Makefile utiliza a configuração
+CMake do projeto e o gerador Ninja por padrão.
+
+No PowerShell/Windows com MinGW, o programa Make se chama `mingw32-make`:
+
+```powershell
+mingw32-make
+mingw32-make run
+```
+
+Também é possível abrir `iniciar.bat`. São necessários compilador C++17, CMake,
+GNU Make e Ninja disponíveis no terminal, além dos requisitos da SFML indicados
+no [guia de testes](docs/testes-iniciais.md). Na primeira configuração, é preciso
+acesso à internet para baixar as dependências.
+
+Os alvos `test`, `test-build` e `list-tests` continuam disponíveis. Use
+`make run ARGS=--ajuda` para consultar os comandos sem abrir janela, ou
+`mingw32-make run ARGS=--ajuda` no Windows. A quantidade de tarefas de compilação
+pode ser ajustada, por exemplo com `make JOBS=2`.
+
+Escolha **Novo Jogo** no menu para começar o primeiro dos quatro mapas fixos.
+A janela desenha o estado de
 `Partida`: terreno, personagens, bombas, explosões, melhorias e saída. O painel
-mostra inimigos restantes, bombas ativas e limite, alcance e escudo. Para vencer,
-elimine os inimigos e alcance a saída, que fica verde quando liberada.
+mostra o número da fase, inimigos restantes, bombas ativas e limite, alcance e
+escudo. Elimine os inimigos e entre na saída verde para iniciar automaticamente
+o próximo mapa, sempre na ordem 1 → 2 → 3 → 4. A primeira fase mantém o mapa
+original; as outras três têm disposições próprias de blocos, melhorias, inimigos
+e porta. Ao sair do quarto mapa, o jogo mostra a vitória. Cada fase começa com
+os atributos básicos do jogador.
 
 | Comando | Ação |
 | --- | --- |
 | Setas ou W/A/S/D | Mover uma célula; manter pressionado repete o movimento |
 | Espaço | Colocar uma bomba |
-| R | Reiniciar a fase |
-| Enter na tela de resultado | Reiniciar após vitória ou derrota |
+| R | Repetir o mesmo mapa e número da fase, restaurando todos os elementos |
+| Enter após derrota | Tentar novamente o mesmo mapa |
+| Enter ou R após vencer os quatro mapas | Começar um novo jogo na fase 1 |
 | Esc | Encerrar a tentativa e voltar ao menu |
 
 Ao alternar para outra janela, a partida fica pausada. As melhorias reveladas
 são identificadas por **A** (alcance), **B** (bomba extra) e **E** (escudo).
 As instruções completas também estão no menu.
+Voltar ao menu e escolher **Novo Jogo** também retorna ao primeiro mapa.
 
 A interface utiliza formas geométricas e a fonte incluída em
 `assets/fonts/tuffy.ttf`. O CMake informa o caminho da fonte ao executável;
