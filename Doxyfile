@@ -1,0 +1,15 @@
+PROJECT_NAME           = "Bomberman"
+PROJECT_BRIEF          = "Contratos iniciais de Mapa e Bloco - etapa C6"
+OUTPUT_DIRECTORY       = docs/doxygen
+INPUT                  = README.md include design
+FILE_PATTERNS          = *.hpp *.md
+RECURSIVE              = YES
+INPUT_ENCODING         = UTF-8
+OUTPUT_LANGUAGE        = Brazilian
+USE_MDFILE_AS_MAINPAGE  = README.md
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_ALL            = NO
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+HAVE_DOT               = NO

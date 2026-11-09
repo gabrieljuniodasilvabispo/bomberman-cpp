@@ -15,8 +15,6 @@ No PowerShell, na pasta do projeto:
 mingw32-make test
 ```
 
-Também é possível abrir `testar.bat` no Windows.
-
 Para compilar os testes sem executá-los:
 
 ```powershell
@@ -30,6 +28,8 @@ mingw32-make list-tests
 ```
 
 No Linux, use `make` no lugar de `mingw32-make`.
+No Windows, a pasta `bin` do MinGW (por exemplo, `C:\msys64\ucrt64\bin`)
+deve estar no `PATH` para localizar o compilador e suas bibliotecas.
 
 Para compilar, são necessários um compilador compatível com C++17, CMake 3.22
 ou superior, GNU Make, Ninja e as bibliotecas necessárias para a SFML 3.0.2.
@@ -56,7 +56,7 @@ preservado depois da rejeição.
 
 ## Verificação da interface
 
-Execute `mingw32-make run` (Windows), `make run` (Linux) ou `iniciar.bat`.
+Execute `mingw32-make run` (Windows) ou `make run` (Linux).
 
 - Consulte as instruções e inicie uma fase pelo menu.
 - Use setas/WASD para andar, verificando limites, blocos e bombas.

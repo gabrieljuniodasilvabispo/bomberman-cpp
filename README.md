@@ -66,15 +66,27 @@ mingw32-make
 mingw32-make run
 ```
 
-Também é possível abrir `iniciar.bat`. São necessários compilador C++17, CMake,
+São necessários compilador C++17, CMake,
 GNU Make e Ninja disponíveis no terminal, além dos requisitos da SFML indicados
 no [guia de testes](docs/testes-iniciais.md). Na primeira configuração, é preciso
 acesso à internet para baixar as dependências.
+
+No Windows, a pasta `bin` do MinGW (por exemplo, `C:\msys64\ucrt64\bin`)
+deve estar no `PATH`, permitindo encontrar o compilador e suas bibliotecas.
 
 Os alvos `test`, `test-build` e `list-tests` continuam disponíveis. Use
 `make run ARGS=--ajuda` para consultar os comandos sem abrir janela, ou
 `mingw32-make run ARGS=--ajuda` no Windows. A quantidade de tarefas de compilação
 pode ser ajustada, por exemplo com `make JOBS=2`.
+
+Para gerar a documentação, com o Doxygen instalado e disponível no `PATH`,
+execute na raiz do projeto:
+
+```sh
+doxygen Doxyfile
+```
+
+Abra `docs/doxygen/html/index.html` para consultar o resultado.
 
 Escolha **Novo Jogo** no menu para começar o primeiro dos quatro mapas fixos.
 A janela desenha o estado de
