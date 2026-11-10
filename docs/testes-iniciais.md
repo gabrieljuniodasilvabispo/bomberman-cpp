@@ -124,12 +124,4 @@ Execute `mingw32-make run` (Windows) ou `make run` (Linux).
   ao retornar, confira a retomada. Reiniciar, avançar de fase e voltar ao menu
   devem interromper os sons antigos.
 
-## Cobertura de código
 
-Para instrumentar o código próprio com GCC/gcov, configure
-`-DBOMBERMAN_COVERAGE=ON` ou execute `mingw32-make test COVERAGE=ON`
-(Linux: `make test COVERAGE=ON`). A instrumentação inclui a biblioteca de regras
-e o executável do jogo, com interface e áudio; dependências externas e testes
-não são instrumentados.
-Gerar o relatório com gcovr e verificar a meta de 60% continuam sendo etapas
-separadas; executar testes com instrumentação não comprova essa porcentagem.
