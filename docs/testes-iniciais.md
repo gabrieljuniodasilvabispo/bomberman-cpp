@@ -68,9 +68,9 @@ a suíte diretamente e consultar o resumo de casos e asserções, use
 `.\build\BombermanTests.exe` no PowerShell ou `./build/BombermanTests` no Linux,
 após compilar. Se definir outro `BUILD_DIR`, ajuste o caminho do executável.
 
-Erros de compilação ou asserções precisam ser corrigidos. Os testes atuais são
-listados no `CMakeLists.txt` e usam as implementações de `src`. Os auxiliares
-históricos de `tests/tdd` foram removidos do repositório.
+Erros de compilação ou asserções precisam ser corrigidos. Os arquivos de
+`tests/tdd` são auxiliares históricos e não participam da compilação definida
+no `CMakeLists.txt`; os testes atuais usam as implementações de `src`.
 
 ## O que os testes automáticos verificam
 
