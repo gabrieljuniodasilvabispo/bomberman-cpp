@@ -1,0 +1,18 @@
+var searchData=
+[
+  ['obterbloco_0',['obterBloco',['../class_mapa.html#ab9cbf37c7d5797cc119d1edf97f280e3',1,'Mapa::obterBloco(Posicao posicao)'],['../class_mapa.html#a45c60b85ab941afe7b8e6656e29f3d56',1,'Mapa::obterBloco(Posicao posicao) const'],['../classbomberman_1_1_mapa.html#ab9cbf37c7d5797cc119d1edf97f280e3',1,'bomberman::Mapa::obterBloco(Posicao posicao)'],['../classbomberman_1_1_mapa.html#a45c60b85ab941afe7b8e6656e29f3d56',1,'bomberman::Mapa::obterBloco(Posicao posicao) const']]],
+  ['obterbomba_1',['obterBomba',['../classbomberman_1_1_partida.html#a6461c367bc663e2d04b043de5319383a',1,'bomberman::Partida']]],
+  ['obtercolunas_2',['obterColunas',['../class_mapa.html#ae55b4d1c5c6a55ed5b4791ee5c028713',1,'Mapa::obterColunas()'],['../classbomberman_1_1_mapa.html#ae55b4d1c5c6a55ed5b4791ee5c028713',1,'bomberman::Mapa::obterColunas()']]],
+  ['obterexplosao_3',['obterExplosao',['../classbomberman_1_1_partida.html#ad7e3e4479f031af8a9c5b011478b8c03',1,'bomberman::Partida']]],
+  ['obteriniciojogador_4',['obterInicioJogador',['../class_mapa.html#af00c86e83fe86a71d771e6a6044b3e59',1,'Mapa::obterInicioJogador()'],['../classbomberman_1_1_mapa.html#af00c86e83fe86a71d771e6a6044b3e59',1,'bomberman::Mapa::obterInicioJogador()']]],
+  ['obteriniciosinimigos_5',['obterIniciosInimigos',['../class_mapa.html#a734688854ad24cb1a93b91152df1099a',1,'Mapa::obterIniciosInimigos()'],['../classbomberman_1_1_mapa.html#a734688854ad24cb1a93b91152df1099a',1,'bomberman::Mapa::obterIniciosInimigos()']]],
+  ['obterjogador_6',['obterJogador',['../classbomberman_1_1_partida.html#a42a1204db479fdf685a4e8e32eef0452',1,'bomberman::Partida']]],
+  ['obterlinhas_7',['obterLinhas',['../class_mapa.html#afefe563c71f7ab90a6a4278cfb94328c',1,'Mapa::obterLinhas()'],['../classbomberman_1_1_mapa.html#afefe563c71f7ab90a6a4278cfb94328c',1,'bomberman::Mapa::obterLinhas()']]],
+  ['obtermapa_8',['obterMapa',['../classbomberman_1_1_partida.html#a9d07b685ca4cb263868d1c5ec22553c7',1,'bomberman::Partida']]],
+  ['obtermelhoria_9',['obterMelhoria',['../class_mapa.html#a113f943b465f5c79c10d5cecc3f025bd',1,'Mapa::obterMelhoria()'],['../classbomberman_1_1_mapa.html#a113f943b465f5c79c10d5cecc3f025bd',1,'bomberman::Mapa::obterMelhoria()']]],
+  ['obternumerofase_10',['obterNumeroFase',['../classbomberman_1_1_partida.html#a2cd3f22764c61af65b6d89eab1c2cd37',1,'bomberman::Partida']]],
+  ['obterposicao_11',['obterPosicao',['../class_bloco.html#a125f5dd28478907968dad2ba20d54674',1,'Bloco']]],
+  ['obterquantidadefases_12',['obterQuantidadeFases',['../classbomberman_1_1_partida.html#abeee382212440d64eb05e39218f4f8ad',1,'bomberman::Partida']]],
+  ['obtersaida_13',['obterSaida',['../class_mapa.html#ac9d92f78cb8cfa24896b009901d6b6e6',1,'Mapa::obterSaida()'],['../classbomberman_1_1_mapa.html#ac9d92f78cb8cfa24896b009901d6b6e6',1,'bomberman::Mapa::obterSaida()']]],
+  ['obtertipo_14',['obterTipo',['../class_bloco.html#ac32ab822c54ce692960855c25f7e336f',1,'Bloco']]]
+];

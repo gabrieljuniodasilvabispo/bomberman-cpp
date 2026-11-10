@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bomberman: Código-Fonte de Partida.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Bomberman
+   </div>
+   <div id="projectbrief">Regras, classes e guias do jogo Bomberman em C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Busca" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_partida_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Partida.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef BOMBERMAN_PARTIDA_HPP</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define BOMBERMAN_PARTIDA_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_bloco_8hpp.html">Bloco.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Inimigo.hpp&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Melhoria.hpp&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="_posicao_8hpp.html">Posicao.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;SFML/System/Time.hpp&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">class </span><a class="code hl_class" href="class_mapa.html">Mapa</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>bomberman {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">using </span>::<a class="code hl_class" href="class_mapa.html">Mapa</a>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">class </span><a class="code hl_class" href="classbomberman_1_1_jogador.html">Jogador</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">class </span><a class="code hl_class" href="classbomberman_1_1_bomba.html">Bomba</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">class </span><a class="code hl_class" href="classbomberman_1_1_explosao.html">Explosao</a>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span></div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="structbomberman_1_1_bloco_inicial.html">   24</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structbomberman_1_1_bloco_inicial.html">BlocoInicial</a> {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_enumeration" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">TipoBloco</a> tipo;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    std::optional&lt;TipoMelhoria&gt; melhoria = std::nullopt;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>};</div>
+</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structbomberman_1_1_configuracao_fase.html">   31</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structbomberman_1_1_configuracao_fase.html">ConfiguracaoFase</a> {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">int</span> linhas = 9;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">int</span> colunas = 11;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    std::vector&lt;BlocoInicial&gt; blocos;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> inicioJogador{1, 1};</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    std::vector&lt;Posicao&gt; iniciosInimigos;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> saida{7, 9};</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>};</div>
+</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">enum class</span> EstadoPartida {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    NaoIniciada,</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    EmAndamento,</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    Vitoria,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    Derrota,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    Encerrada </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">enum class</span> EventoPartida {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    PassoHorizontal,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    PassoVertical,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    BombaColocada,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    BombaExplodiu,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    MelhoriaColetada,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    Derrota</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="};">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html">   64</a></span><span class="keyword">class </span><a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a> {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">   67</a></span>    <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a9962016477f2f2cf8e2d68663afba7a0">   69</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#a9962016477f2f2cf8e2d68663afba7a0">Partida</a>(<a class="code hl_struct" href="structbomberman_1_1_configuracao_fase.html">ConfiguracaoFase</a> configuracao);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#affa7f9dfdad3401aef88a4fd6e36c728">   72</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#affa7f9dfdad3401aef88a4fd6e36c728">Partida</a>(std::vector&lt;ConfiguracaoFase&gt; configuracoes);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">~Partida</a>();</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>(<span class="keyword">const</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>(<a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>&amp; operator=(<a class="code hl_function" href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">Partida</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#ad06cdd64c761b1719c0a21e817737f58">   85</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#ad06cdd64c761b1719c0a21e817737f58">iniciarFase</a>();</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#ae264338f71a3d93441faaa81a3f3e88a">   92</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#ae264338f71a3d93441faaa81a3f3e88a">atualizar</a>(sf::Time deltaTempo);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#af8383e6b525a139b7b24ea46491e2dbf">   94</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#af8383e6b525a139b7b24ea46491e2dbf">moverJogador</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> deslocamento);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a67dc02b922e80c7459fa51f172133693">  100</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#a67dc02b922e80c7459fa51f172133693">colocarBomba</a>();</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a57c94c4854bd769ee03c4f344ef4ee2d">  102</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#a57c94c4854bd769ee03c4f344ef4ee2d">todosInimigosEliminados</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a2654b04ade40fd7ae55f80b434efbe17">  104</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#a2654b04ade40fd7ae55f80b434efbe17">encerrarFase</a>();</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a1602b34470cedcfe0c31f188beb17d43">  106</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#a1602b34470cedcfe0c31f188beb17d43">reiniciarFase</a>();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#afcc6677613a29f464214163c4a2eae67">  113</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classbomberman_1_1_partida.html#afcc6677613a29f464214163c4a2eae67">avancarFase</a>();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a2cd3f22764c61af65b6d89eab1c2cd37">  115</a></span>    std::size_t <a class="code hl_function" href="classbomberman_1_1_partida.html#a2cd3f22764c61af65b6d89eab1c2cd37">obterNumeroFase</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#abeee382212440d64eb05e39218f4f8ad">  117</a></span>    std::size_t <a class="code hl_function" href="classbomberman_1_1_partida.html#abeee382212440d64eb05e39218f4f8ad">obterQuantidadeFases</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#ab74e84493ada0c898649019d90b353b0">  124</a></span>    std::vector&lt;EventoPartida&gt; <a class="code hl_function" href="classbomberman_1_1_partida.html#ab74e84493ada0c898649019d90b353b0">consumirEventos</a>();</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    EstadoPartida obterEstado() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a9d07b685ca4cb263868d1c5ec22553c7">  128</a></span>    <span class="keyword">const</span> <a class="code hl_class" href="class_mapa.html">Mapa</a>&amp; <a class="code hl_function" href="classbomberman_1_1_partida.html#a9d07b685ca4cb263868d1c5ec22553c7">obterMapa</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a42a1204db479fdf685a4e8e32eef0452">  130</a></span>    <span class="keyword">const</span> <a class="code hl_class" href="classbomberman_1_1_jogador.html">Jogador</a>&amp; <a class="code hl_function" href="classbomberman_1_1_partida.html#a42a1204db479fdf685a4e8e32eef0452">obterJogador</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keyword">const</span> std::vector&lt;Inimigo&gt;&amp; obterInimigos() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    std::size_t obterQuantidadeBombas() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    std::size_t obterQuantidadeExplosoes() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#a6461c367bc663e2d04b043de5319383a">  135</a></span>    <span class="keyword">const</span> <a class="code hl_class" href="classbomberman_1_1_bomba.html">Bomba</a>&amp; <a class="code hl_function" href="classbomberman_1_1_partida.html#a6461c367bc663e2d04b043de5319383a">obterBomba</a>(std::size_t indice) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="classbomberman_1_1_partida.html#ad7e3e4479f031af8a9c5b011478b8c03">  137</a></span>    <span class="keyword">const</span> <a class="code hl_class" href="classbomberman_1_1_explosao.html">Explosao</a>&amp; <a class="code hl_function" href="classbomberman_1_1_partida.html#ad7e3e4479f031af8a9c5b011478b8c03">obterExplosao</a>(std::size_t indice) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keyword">struct </span>ElementosFase;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    std::vector&lt;ConfiguracaoFase&gt; configuracoes_;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    std::size_t numeroFase_ = 0;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    std::unique_ptr&lt;ElementosFase&gt; fase_;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    EstadoPartida estado_ = EstadoPartida::NaoIniciada;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    std::vector&lt;EventoPartida&gt; eventos_;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">void</span> carregarFase(std::size_t numero);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordtype">void</span> processarExplosoes();</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordtype">void</span> resolverContatosEColeta();</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordtype">void</span> verificarResultado();</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>};</div>
+</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>} <span class="comment">// namespace bomberman</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a_bloco_8hpp_html"><div class="ttname"><a href="_bloco_8hpp.html">Bloco.hpp</a></div><div class="ttdoc">Contrato de Bloco, baseado no CRC08 e nas historias US02, US04 e US05.</div></div>
+<div class="ttc" id="a_bloco_8hpp_html_ab0067f8bd4698f2a5e71928025bcb2cf"><div class="ttname"><a href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">TipoBloco</a></div><div class="ttdeci">TipoBloco</div><div class="ttdoc">Tipos de obstaculo previstos na modelagem.</div><div class="ttdef"><b>Definição</b> Bloco.hpp:15</div></div>
+<div class="ttc" id="a_posicao_8hpp_html"><div class="ttname"><a href="_posicao_8hpp.html">Posicao.hpp</a></div><div class="ttdoc">Coordenadas logicas compartilhadas pelas classes da arena.</div></div>
+<div class="ttc" id="aclass_mapa_html"><div class="ttname"><a href="class_mapa.html">Mapa</a></div><div class="ttdoc">Organiza o terreno e consulta a ocupacao das celulas da arena.</div><div class="ttdef"><b>Definição</b> Mapa.hpp:19</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html"><div class="ttname"><a href="classbomberman_1_1_bomba.html">bomberman::Bomba</a></div><div class="ttdoc">Controla o tempo até a detonação e o alcance definido pelo jogador responsável.</div><div class="ttdef"><b>Definição</b> Bomba.hpp:21</div></div>
+<div class="ttc" id="aclassbomberman_1_1_explosao_html"><div class="ttname"><a href="classbomberman_1_1_explosao.html">bomberman::Explosao</a></div><div class="ttdoc">Calcula as células atingidas a partir de uma bomba detonada e aplica seus efeitos sobre o mapa e os p...</div><div class="ttdef"><b>Definição</b> Explosao.hpp:23</div></div>
+<div class="ttc" id="aclassbomberman_1_1_jogador_html"><div class="ttname"><a href="classbomberman_1_1_jogador.html">bomberman::Jogador</a></div><div class="ttdoc">Personagem controlavel, com atributos e reservas de bombas.</div><div class="ttdef"><b>Definição</b> Jogador.hpp:13</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a1602b34470cedcfe0c31f188beb17d43"><div class="ttname"><a href="classbomberman_1_1_partida.html#a1602b34470cedcfe0c31f188beb17d43">bomberman::Partida::reiniciarFase</a></div><div class="ttdeci">void reiniciarFase()</div><div class="ttdoc">Recria a fase, inclusive itens coletados, atributos e terreno.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a2654b04ade40fd7ae55f80b434efbe17"><div class="ttname"><a href="classbomberman_1_1_partida.html#a2654b04ade40fd7ae55f80b434efbe17">bomberman::Partida::encerrarFase</a></div><div class="ttdeci">void encerrarFase()</div><div class="ttdoc">Interrompe uma fase em andamento, preservando o estado para consulta.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a2cd3f22764c61af65b6d89eab1c2cd37"><div class="ttname"><a href="classbomberman_1_1_partida.html#a2cd3f22764c61af65b6d89eab1c2cd37">bomberman::Partida::obterNumeroFase</a></div><div class="ttdeci">std::size_t obterNumeroFase() const</div><div class="ttdoc">Numero da fase atual, ou zero antes do primeiro inicio.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a42a1204db479fdf685a4e8e32eef0452"><div class="ttname"><a href="classbomberman_1_1_partida.html#a42a1204db479fdf685a4e8e32eef0452">bomberman::Partida::obterJogador</a></div><div class="ttdeci">const Jogador &amp; obterJogador() const</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a57c94c4854bd769ee03c4f344ef4ee2d"><div class="ttname"><a href="classbomberman_1_1_partida.html#a57c94c4854bd769ee03c4f344ef4ee2d">bomberman::Partida::todosInimigosEliminados</a></div><div class="ttdeci">bool todosInimigosEliminados() const</div><div class="ttdoc">Retorna false antes do inicio; depois consulta os inimigos reais.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a6461c367bc663e2d04b043de5319383a"><div class="ttname"><a href="classbomberman_1_1_partida.html#a6461c367bc663e2d04b043de5319383a">bomberman::Partida::obterBomba</a></div><div class="ttdeci">const Bomba &amp; obterBomba(std::size_t indice) const</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a67dc02b922e80c7459fa51f172133693"><div class="ttname"><a href="classbomberman_1_1_partida.html#a67dc02b922e80c7459fa51f172133693">bomberman::Partida::colocarBomba</a></div><div class="ttdeci">bool colocarBomba()</div><div class="ttdoc">Coloca uma bomba na celula do jogador e registra sua ocupacao.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a9962016477f2f2cf8e2d68663afba7a0"><div class="ttname"><a href="classbomberman_1_1_partida.html#a9962016477f2f2cf8e2d68663afba7a0">bomberman::Partida::Partida</a></div><div class="ttdeci">Partida(ConfiguracaoFase configuracao)</div><div class="ttdoc">Guarda uma configuracao propria; a validacao ocorre ao iniciar.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a99cc08d0c170309d05dea54bc2c8cc94"><div class="ttname"><a href="classbomberman_1_1_partida.html#a99cc08d0c170309d05dea54bc2c8cc94">bomberman::Partida::Partida</a></div><div class="ttdeci">Partida()</div><div class="ttdoc">Prepara os quatro mapas fixos, na ordem em que serao jogados.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a9d07b685ca4cb263868d1c5ec22553c7"><div class="ttname"><a href="classbomberman_1_1_partida.html#a9d07b685ca4cb263868d1c5ec22553c7">bomberman::Partida::obterMapa</a></div><div class="ttdeci">const Mapa &amp; obterMapa() const</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_ab74e84493ada0c898649019d90b353b0"><div class="ttname"><a href="classbomberman_1_1_partida.html#ab74e84493ada0c898649019d90b353b0">bomberman::Partida::consumirEventos</a></div><div class="ttdeci">std::vector&lt; EventoPartida &gt; consumirEventos()</div><div class="ttdoc">Retira os acontecimentos acumulados, na ordem em que ocorreram.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_abeee382212440d64eb05e39218f4f8ad"><div class="ttname"><a href="classbomberman_1_1_partida.html#abeee382212440d64eb05e39218f4f8ad">bomberman::Partida::obterQuantidadeFases</a></div><div class="ttdeci">std::size_t obterQuantidadeFases() const</div><div class="ttdoc">Quantidade de mapas da sequencia (quatro no jogo padrao).</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_ad06cdd64c761b1719c0a21e817737f58"><div class="ttname"><a href="classbomberman_1_1_partida.html#ad06cdd64c761b1719c0a21e817737f58">bomberman::Partida::iniciarFase</a></div><div class="ttdeci">void iniciarFase()</div><div class="ttdoc">Comeca um novo jogo no primeiro mapa da sequencia.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_ad7e3e4479f031af8a9c5b011478b8c03"><div class="ttname"><a href="classbomberman_1_1_partida.html#ad7e3e4479f031af8a9c5b011478b8c03">bomberman::Partida::obterExplosao</a></div><div class="ttdeci">const Explosao &amp; obterExplosao(std::size_t indice) const</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_ae264338f71a3d93441faaa81a3f3e88a"><div class="ttname"><a href="classbomberman_1_1_partida.html#ae264338f71a3d93441faaa81a3f3e88a">bomberman::Partida::atualizar</a></div><div class="ttdeci">void atualizar(sf::Time deltaTempo)</div><div class="ttdoc">Atualiza temporizadores, inimigos, dano, cadeias, coleta e resultado.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_af8383e6b525a139b7b24ea46491e2dbf"><div class="ttname"><a href="classbomberman_1_1_partida.html#af8383e6b525a139b7b24ea46491e2dbf">bomberman::Partida::moverJogador</a></div><div class="ttdeci">bool moverJogador(Posicao deslocamento)</div><div class="ttdoc">Tenta um passo unitario e resolve dano, coleta e resultado imediatamente.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_afcc6677613a29f464214163c4a2eae67"><div class="ttname"><a href="classbomberman_1_1_partida.html#afcc6677613a29f464214163c4a2eae67">bomberman::Partida::avancarFase</a></div><div class="ttdeci">bool avancarFase()</div><div class="ttdoc">Inicia o proximo mapa fixo apos concluir a fase atual.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_affa7f9dfdad3401aef88a4fd6e36c728"><div class="ttname"><a href="classbomberman_1_1_partida.html#affa7f9dfdad3401aef88a4fd6e36c728">bomberman::Partida::Partida</a></div><div class="ttdeci">Partida(std::vector&lt; ConfiguracaoFase &gt; configuracoes)</div><div class="ttdoc">Guarda uma sequencia propria de fases.</div></div>
+<div class="ttc" id="astruct_posicao_html"><div class="ttname"><a href="struct_posicao.html">Posicao</a></div><div class="ttdoc">Celula da grade, com indices a partir de zero; nao representa pixels.</div><div class="ttdef"><b>Definição</b> Posicao.hpp:9</div></div>
+<div class="ttc" id="astructbomberman_1_1_bloco_inicial_html"><div class="ttname"><a href="structbomberman_1_1_bloco_inicial.html">bomberman::BlocoInicial</a></div><div class="ttdoc">Descricao de um bloco inicial, sem referencias a objetos externos.</div><div class="ttdef"><b>Definição</b> Partida.hpp:24</div></div>
+<div class="ttc" id="astructbomberman_1_1_configuracao_fase_html"><div class="ttname"><a href="structbomberman_1_1_configuracao_fase.html">bomberman::ConfiguracaoFase</a></div><div class="ttdoc">Dados copiados pela partida e reutilizados em cada reinicio.</div><div class="ttdef"><b>Definição</b> Partida.hpp:31</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>include</b></li><li class="navelem"><b>Partida.hpp</b></li>
+    <li class="footer">Gerado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 PROJECT_NAME           = "Bomberman"
-PROJECT_BRIEF          = "Contratos iniciais de Mapa e Bloco - etapa C6"
+PROJECT_BRIEF          = "Regras, classes e guias do jogo Bomberman em C++"
 OUTPUT_DIRECTORY       = docs/doxygen
-INPUT                  = README.md include design
+INPUT                  = README.md include design docs/partida.md docs/testes-iniciais.md
 FILE_PATTERNS          = *.hpp *.md
 RECURSIVE              = YES
 INPUT_ENCODING         = UTF-8
@@ -13,3 +13,5 @@ EXTRACT_ALL            = NO
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
 HAVE_DOT               = NO
+FULL_PATH_NAMES        = NO
+TIMESTAMP              = NO

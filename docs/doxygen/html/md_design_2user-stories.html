@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bomberman: User Stories - Bomberman</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Bomberman
+   </div>
+   <div id="projectbrief">Regras, classes e guias do jogo Bomberman em C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Busca" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('md_design_2user-stories.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">User Stories - Bomberman </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md41"></a></p>
+<p>Este documento apresenta os requisitos funcionais iniciais do jogo Bomberman. As historias foram escritas do ponto de vista dos usuarios e devem orientar a modelagem e a implementacao do sistema.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+US01 - Iniciar uma partida individual</h1>
+<p><b>Como jogador, quero iniciar uma partida individual para enfrentar os desafios de uma fase do Bomberman.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+Criterios de aceitacao</h2>
+<ul>
+<li>A partida deve ser iniciada com um jogador.</li>
+<li>O jogador deve aparecer em uma posicao inicial segura do mapa.</li>
+<li>Os inimigos devem aparecer em posicoes diferentes da posicao inicial do jogador.</li>
+<li>O mapa deve conter limites, paredes indestrutiveis e blocos destrutiveis.</li>
+<li>Os comandos do jogador devem ser apresentados antes do inicio da partida.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+US02 - Movimentar o personagem</h1>
+<p><b>Como jogador, quero movimentar meu personagem pela arena para explorar o mapa e escapar das explosoes.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+Criterios de aceitacao</h2>
+<ul>
+<li>O personagem deve poder se movimentar para cima, para baixo, para a esquerda e para a direita.</li>
+<li>O personagem deve responder aos comandos definidos para o jogador.</li>
+<li>O personagem nao deve atravessar paredes nem blocos.</li>
+<li>O personagem deve permanecer dentro dos limites do mapa.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
+US03 - Posicionar bombas</h1>
+<p><b>Como jogador, quero posicionar bombas na arena para destruir blocos e eliminar inimigos.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+Criterios de aceitacao</h2>
+<ul>
+<li>A bomba deve ser posicionada na celula ocupada pelo jogador ao receber o comando correspondente.</li>
+<li>A bomba deve explodir automaticamente depois de um intervalo definido.</li>
+<li>O jogador nao deve posicionar mais bombas simultaneas do que o limite permitido.</li>
+<li>Depois da explosao, a bomba deve ser removida da arena e voltar a ficar disponivel para o jogador.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+US04 - Interagir com explosoes</h1>
+<p><b>Como jogador, quero que as explosoes interajam com os elementos da arena para que minhas decisoes tenham consequencias durante a partida.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+Criterios de aceitacao</h2>
+<ul>
+<li>A explosao deve se propagar nas quatro direcoes ate atingir seu alcance maximo ou um obstaculo.</li>
+<li>Paredes indestrutiveis devem interromper a explosao sem serem removidas.</li>
+<li>O primeiro bloco destrutivel atingido em cada direcao deve ser removido e interromper a propagacao naquela direcao.</li>
+<li>Uma explosao deve eliminar um inimigo atingido e causar a derrota quando atingir o jogador.</li>
+<li>Uma bomba atingida por uma explosao deve explodir imediatamente, provocando uma reacao em cadeia.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+US05 - Coletar melhorias</h1>
+<p><b>Como jogador, quero coletar melhorias escondidas nos blocos para aumentar minhas possibilidades durante a partida.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+Criterios de aceitacao</h2>
+<ul>
+<li>Um bloco destrutivel pode revelar uma melhoria ao ser destruido.</li>
+<li>A melhoria deve permanecer na arena ate ser coletada ou destruida por uma explosao.</li>
+<li>A melhoria deve ser coletada quando um jogador ocupar sua posicao.</li>
+<li>O jogo deve oferecer pelo menos melhorias de alcance da explosao, quantidade simultanea de bombas e escudo resistente a explosao.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
+US06 - Avancar pelas fases, concluir o jogo ou reiniciar</h1>
+<p><b>Como jogador, quero avancar pelos quatro mapas fixos, visualizar o resultado do jogo e poder reiniciar para continuar jogando depois de uma vitoria ou derrota.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+Criterios de aceitacao</h2>
+<ul>
+<li>Os quatro mapas fixos devem ser jogados na ordem 1, 2, 3 e 4. Nas tres primeiras fases, eliminar todos os inimigos e alcancar a saida com o jogador vivo deve iniciar automaticamente a proxima fase.</li>
+<li>A vitoria final deve ser informada somente ao eliminar todos os inimigos e alcancar a saida da quarta fase com o jogador vivo. Apos a vitoria, Enter ou R deve iniciar um novo jogo na fase 1.</li>
+<li>O jogo deve informar a derrota quando o jogador for atingido por uma explosao sem escudo ou entrar em contato com um inimigo.</li>
+<li>R deve reiniciar a fase atual durante o jogo ou apos a derrota; Enter tambem deve reinicia-la apos a derrota, mantendo o mesmo mapa e numero da fase.</li>
+<li>Ao reiniciar uma fase, terreno, jogador, atributos, inimigos e melhorias devem voltar ao estado inicial, e todas as bombas e explosoes da tentativa anterior devem ser removidas.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
+Referencia</h1>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/User_story">User story - Wikipedia</a> </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Gerado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

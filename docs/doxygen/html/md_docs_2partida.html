@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bomberman: Controlador da partida</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Bomberman
+   </div>
+   <div id="projectbrief">Regras, classes e guias do jogo Bomberman em C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Busca" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('md_docs_2partida.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Controlador da partida </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md55"></a></p>
+<p><span class="tt">Partida</span> mantém os objetos da fase e coordena suas regras. Não cria janela, não lê teclado e não desenha. A interface em <span class="tt">main.cpp</span> encaminha os comandos do teclado para essa classe, avança o tempo da fase e desenha suas consultas. Jogo e testes compartilham a biblioteca <span class="tt">BombermanLogica</span>.</p>
+<p><span class="tt">consumirEventos()</span> entrega e limpa os acontecimentos desde a ultima consulta: passos horizontais/verticais aceitos, bombas colocadas/detonadas, coleta e derrota. A interface encaminha esses eventos a <span class="tt">AudioJogo</span>, que usa SFML Audio e os WAV de <span class="tt">assets/sounds</span>. As regras nao carregam arquivos nem abrem dispositivos de som. Uma detonacao permanece na fila mesmo se sua explosao expirar no mesmo quadro; cada bomba de uma cadeia registra seu proprio evento. Inicio, reinicio, avanço de fase e encerramento descartam acontecimentos antigos.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
+Uso pela interface</h1>
+<p><b>Novo Jogo</b> chama <span class="tt">iniciarFase()</span>. Setas/WASD chamam <span class="tt">moverJogador</span>, Espaço chama <span class="tt">colocarBomba</span>, e o ciclo da janela chama <span class="tt">atualizar</span> durante a partida. O movimento repetido tem intervalo controlado pela interface. Ao perder o foco, a janela pausa a fase e descarta o tempo decorrido antes de retomar.</p>
+<p>A interface detecta <span class="tt">Vitoria</span> e chama <span class="tt">avancarFase()</span> no mesmo quadro. Nas três primeiras fases, o método inicia o próximo mapa. Na quarta, retorna <span class="tt">false</span> e a interface mostra a vitória final. R repete o mapa atual; Enter também repete após a derrota. Após a vitória final, Enter ou R começa um novo jogo na fase 1. Esc chama <span class="tt">encerrarFase()</span> e retorna ao menu. A renderização consulta o estado atual a cada quadro, sem conservar referências de entidades entre reinícios ou fases.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;Partida.hpp&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_class" href="classbomberman_1_1_partida.html">bomberman::Partida</a> partida;</div>
+<div class="line">partida.<a class="code hl_function" href="classbomberman_1_1_partida.html#ad06cdd64c761b1719c0a21e817737f58">iniciarFase</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Exemplos de comandos, encaminhados pela interface conforme a entrada:</span></div>
+<div class="line">partida.<a class="code hl_function" href="classbomberman_1_1_partida.html#af8383e6b525a139b7b24ea46491e2dbf">moverJogador</a>({0, 1}); <span class="comment">// uma coluna à direita</span></div>
+<div class="line">partida.<a class="code hl_function" href="classbomberman_1_1_partida.html#a67dc02b922e80c7459fa51f172133693">colocarBomba</a>();</div>
+<div class="line">partida.<a class="code hl_function" href="classbomberman_1_1_partida.html#ae264338f71a3d93441faaa81a3f3e88a">atualizar</a>(sf::milliseconds(16)); <span class="comment">// tempo decorrido no ciclo</span></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html"><div class="ttname"><a href="classbomberman_1_1_partida.html">bomberman::Partida</a></div><div class="ttdoc">Coordena as regras da fase, sem ler teclado ou desenhar a janela.</div><div class="ttdef"><b>Definição</b> Partida.hpp:64</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_a67dc02b922e80c7459fa51f172133693"><div class="ttname"><a href="classbomberman_1_1_partida.html#a67dc02b922e80c7459fa51f172133693">bomberman::Partida::colocarBomba</a></div><div class="ttdeci">bool colocarBomba()</div><div class="ttdoc">Coloca uma bomba na celula do jogador e registra sua ocupacao.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_ad06cdd64c761b1719c0a21e817737f58"><div class="ttname"><a href="classbomberman_1_1_partida.html#ad06cdd64c761b1719c0a21e817737f58">bomberman::Partida::iniciarFase</a></div><div class="ttdeci">void iniciarFase()</div><div class="ttdoc">Comeca um novo jogo no primeiro mapa da sequencia.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_ae264338f71a3d93441faaa81a3f3e88a"><div class="ttname"><a href="classbomberman_1_1_partida.html#ae264338f71a3d93441faaa81a3f3e88a">bomberman::Partida::atualizar</a></div><div class="ttdeci">void atualizar(sf::Time deltaTempo)</div><div class="ttdoc">Atualiza temporizadores, inimigos, dano, cadeias, coleta e resultado.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_partida_html_af8383e6b525a139b7b24ea46491e2dbf"><div class="ttname"><a href="classbomberman_1_1_partida.html#af8383e6b525a139b7b24ea46491e2dbf">bomberman::Partida::moverJogador</a></div><div class="ttdeci">bool moverJogador(Posicao deslocamento)</div><div class="ttdoc">Tenta um passo unitario e resolve dano, coleta e resultado imediatamente.</div></div>
+</div><!-- fragment --><p><span class="tt">obterEstado()</span> distingue <span class="tt">NaoIniciada</span>, <span class="tt">EmAndamento</span>, <span class="tt">Vitoria</span>, <span class="tt">Derrota</span> e <span class="tt">Encerrada</span> (saída manual para o menu). Movimento e colocação retornam <span class="tt">false</span> quando a ação não pode ser realizada. Depois do resultado, comandos e tempo não alteram a fase; <span class="tt">reiniciarFase()</span> cria uma nova tentativa do mesmo mapa. <span class="tt">avancarFase()</span> só aceita <span class="tt">Vitoria</span> quando existe um próximo mapa e incrementa <span class="tt">obterNumeroFase()</span>, que vale zero antes do início. <span class="tt">obterQuantidadeFases()</span> informa o total de mapas. <span class="tt">iniciarFase()</span> inicia um novo jogo na fase 1.</p>
+<p>Para desenhar, use <span class="tt">obterMapa()</span>, <span class="tt">obterJogador()</span>, <span class="tt">obterInimigos()</span>, <span class="tt">obterQuantidadeBombas()</span>/<span class="tt">obterBomba(indice)</span> e <span class="tt">obterQuantidadeExplosoes()</span>/<span class="tt">obterExplosao(indice)</span>. Inclua os cabeçalhos das entidades consultadas. <a class="el" href="class_mapa.html" title="Organiza o terreno e consulta a ocupacao das celulas da arena.">Mapa</a> e jogador só podem ser consultados após iniciar. Índices inexistentes lançam <span class="tt">std::out_of_range</span>.</p>
+<p>Essas consultas emprestam objetos: não guarde suas referências entre reinícios ou fases, nem referências a bombas/explosões entre comandos ou atualizações. Posições lógicas usam <span class="tt">{linha, coluna}</span>; os vetores SFML de bombas, explosões e melhorias usam <span class="tt">{x = coluna, y = linha}</span>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
+Mapas fixos, avanço e reinício</h1>
+<p>O jogo tem quatro mapas fixos de 9 linhas por 11 colunas, jogados sempre na ordem 1 → 2 → 3 → 4. O primeiro mantém o mapa original. Os outros três definem suas próprias posições de blocos, melhorias, inimigos e porta. As fases incluem alcance, bomba extra e escudo escondidos em blocos destrutíveis.</p>
+<p><span class="tt">reiniciarFase()</span> restaura o mesmo mapa e mantém o número da fase. A interface limpa comandos, movimentos mantidos, sons e tempo acumulado ao avançar, antes de receber a entrada da nova fase.</p>
+<p>O construtor que recebe <span class="tt">ConfiguracaoFase</span> permite outras arenas, inclusive cenários pequenos para testes. Cada <span class="tt">BlocoInicial</span> pode descrever uma melhoria escondida, sem receber ponteiros externos. Essa configuração define um cenário único, sem avanço para os mapas da campanha. A validação ocorre em <span class="tt">iniciarFase()</span>; melhoria de velocidade ainda não é suportada e é rejeitada nesse momento. O construtor com uma lista de <span class="tt">ConfiguracaoFase</span> permite sequências próprias, usadas também nos testes de passagem entre mapas.</p>
+<p>Cada início, reinício ou avanço recria mapa, jogador, inimigos e itens. Os atributos voltam ao padrão (alcance 2, uma bomba e sem escudo). Bombas e explosões antigas são destruídas antes dos objetos que referenciam. A nova fase é preparada antes da substituição da antiga; nenhum registro de bomba, fogo ou item revelado é transportado para ela.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
+Ordem das regras</h1>
+<p>O tempo avança em passos de até 10 ms para verificar efeitos entre movimentos dos inimigos. Tempos não positivos ou maiores que 5 segundos são descartados; uma pausa longa não deve avançar a fase de uma só vez.</p>
+<p>Em cada passo, a partida expira explosões antigas, avança bombas e resolve detonações e cadeias. Depois movimenta os inimigos sobreviventes, reaplica fogo, verifica contato, coleta e resultado. Uma cadeia é resolvida inteira no mesmo passo. Inimigos que entram no fogo são eliminados antes de causar contato.</p>
+<p>Mover o jogador resolve imediatamente fogo, contato, coleta e resultado. Colocar uma bomba sobre fogo ativo a detona imediatamente. O construtor de <span class="tt">Bomba</span> já reserva a vaga; sua detonação já libera vaga e ocupação e devolve a explosão propagada, que passa a ser mantida pela partida.</p>
+<p>Derrota tem precedência sobre vitória. Para vencer, o jogador precisa estar vivo, eliminar todos os inimigos e ocupar a saída. O reinício restaura também melhorias coletadas, atributos, terreno e temporizadores. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Gerado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

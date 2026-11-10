@@ -79,15 +79,6 @@ Os alvos `test`, `test-build` e `list-tests` continuam disponíveis. Use
 `mingw32-make run ARGS=--ajuda` no Windows. A quantidade de tarefas de compilação
 pode ser ajustada, por exemplo com `make JOBS=2`.
 
-Para gerar a documentação, com o Doxygen instalado e disponível no `PATH`,
-execute na raiz do projeto:
-
-```sh
-doxygen Doxyfile
-```
-
-Abra `docs/doxygen/html/index.html` para consultar o resultado.
-
 Escolha **Novo Jogo** no menu para começar o primeiro dos quatro mapas fixos.
 A janela desenha o estado de
 `Partida`: terreno, personagens, bombas, explosões, melhorias e saída. O painel
@@ -119,4 +110,29 @@ necessários arquivos externos de mapa. O fundo do menu usa a imagem incluída e
 `assets/img/fundo.png`. Após compilar, use
 `build/Bomberman.exe --ajuda` no Windows ou `build/Bomberman --ajuda` no Linux
 para consultar os comandos no terminal.
+
+## Documentação
+
+A documentação gerada pelo Doxygen está versionada em
+[`docs/doxygen/html`](https://github.com/gabrieljuniodasilvabispo/bomberman-cpp/tree/main/docs/doxygen/html). Ela reúne as classes e seus métodos,
+a modelagem e os guias de [partida](docs/partida.md) e
+[testes](docs/testes-iniciais.md).
+
+Para consultar a versão navegável no seu computador, baixe ou clone o
+repositório e abra `docs/index.html` no navegador. Na visualização de arquivos
+do GitHub, os arquivos HTML são apresentados como código-fonte.
+
+Para atualizar a documentação, com o Doxygen instalado e disponível no `PATH`,
+execute na raiz do projeto:
+
+```sh
+doxygen Doxyfile
+```
+
+Depois, inclua os arquivos atualizados de `docs/doxygen/html` no commit.
+
+A pasta `docs` também está preparada para o GitHub Pages. Um administrador pode
+ativar a publicação em **Settings → Pages → Deploy from a branch**, selecionando
+a branch **main** e a pasta **/docs**, conforme o
+[guia do GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 

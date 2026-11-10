@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bomberman: Código-Fonte de Bomba.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Bomberman
+   </div>
+   <div id="projectbrief">Regras, classes e guias do jogo Bomberman em C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Busca" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_bomba_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Bomba.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef BOMBERMAN_BOMBA_HPP</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define BOMBERMAN_BOMBA_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;SFML/System/Time.hpp&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;SFML/System/Vector2.hpp&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">class </span><a class="code hl_class" href="class_mapa.html">Mapa</a>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span>bomberman {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">class </span><a class="code hl_class" href="classbomberman_1_1_jogador.html">Jogador</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">using </span>::<a class="code hl_class" href="class_mapa.html">Mapa</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">class </span><a class="code hl_class" href="classbomberman_1_1_explosao.html">Explosao</a>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span></div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html">   21</a></span><span class="keyword">class </span><a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">   34</a></span>    <a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>(sf::Vector2i posicao, <span class="keywordtype">int</span> alcance, <a class="code hl_class" href="classbomberman_1_1_jogador.html">Jogador</a>&amp; responsavel);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#a33c162a7201adbf27b9d09779be19c31">   40</a></span>    <a class="code hl_function" href="classbomberman_1_1_bomba.html#a33c162a7201adbf27b9d09779be19c31">~Bomba</a>();</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="comment">// Uma bomba possui uma unica reserva. Armazene bombas por unique_ptr.</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>(<span class="keyword">const</span> <a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>(<a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>&amp; operator=(<a class="code hl_function" href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">Bomba</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#ab142de6202f29fcf493d9e696dde8e0f">   48</a></span>    sf::Vector2i <a class="code hl_function" href="classbomberman_1_1_bomba.html#ab142de6202f29fcf493d9e696dde8e0f">getPosicao</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#a906ba92dc7cfc3a2b7c06e3aea2786f6">   51</a></span>    <span class="keywordtype">int</span> <a class="code hl_function" href="classbomberman_1_1_bomba.html#a906ba92dc7cfc3a2b7c06e3aea2786f6">getAlcance</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#adeaf1abe72190a5cec4b256539b02f6c">   54</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classbomberman_1_1_bomba.html#adeaf1abe72190a5cec4b256539b02f6c">prontaParaExplodir</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#a8dd2b72d77a82decd05696a7ec89199e">   61</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_bomba.html#a8dd2b72d77a82decd05696a7ec89199e">atualizar</a>(sf::Time deltaTempo);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#a8a557dbeda1296d72cfa8648ef6c739e">   64</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_bomba.html#a8a557dbeda1296d72cfa8648ef6c739e">anteciparDetonacao</a>();</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classbomberman_1_1_bomba.html#a861ccf10e38fe45d3e0533d94067b613">   79</a></span>    std::unique_ptr&lt;Explosao&gt; <a class="code hl_function" href="classbomberman_1_1_bomba.html#a861ccf10e38fe45d3e0533d94067b613">detonar</a>(<a class="code hl_class" href="class_mapa.html">Mapa</a>&amp; mapa);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    sf::Vector2i posicao_;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">int</span> alcance_;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <a class="code hl_class" href="classbomberman_1_1_jogador.html">Jogador</a>&amp; responsavel_;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    sf::Time tempoRestante_;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keywordtype">bool</span> detonada_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>};</div>
+</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>} <span class="comment">// namespace bomberman</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_mapa_html"><div class="ttname"><a href="class_mapa.html">Mapa</a></div><div class="ttdoc">Organiza o terreno e consulta a ocupacao das celulas da arena.</div><div class="ttdef"><b>Definição</b> Mapa.hpp:19</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_a33c162a7201adbf27b9d09779be19c31"><div class="ttname"><a href="classbomberman_1_1_bomba.html#a33c162a7201adbf27b9d09779be19c31">bomberman::Bomba::~Bomba</a></div><div class="ttdeci">~Bomba()</div><div class="ttdoc">Devolve a reserva se a bomba for descartada sem detonar.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_a861ccf10e38fe45d3e0533d94067b613"><div class="ttname"><a href="classbomberman_1_1_bomba.html#a861ccf10e38fe45d3e0533d94067b613">bomberman::Bomba::detonar</a></div><div class="ttdeci">std::unique_ptr&lt; Explosao &gt; detonar(Mapa &amp;mapa)</div><div class="ttdoc">Detona a bomba e cria a explosão correspondente na arena.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_a8a557dbeda1296d72cfa8648ef6c739e"><div class="ttname"><a href="classbomberman_1_1_bomba.html#a8a557dbeda1296d72cfa8648ef6c739e">bomberman::Bomba::anteciparDetonacao</a></div><div class="ttdeci">void anteciparDetonacao()</div><div class="ttdoc">Antecipa a detonação (chamado ao ser atingida por outra explosão).</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_a8dd2b72d77a82decd05696a7ec89199e"><div class="ttname"><a href="classbomberman_1_1_bomba.html#a8dd2b72d77a82decd05696a7ec89199e">bomberman::Bomba::atualizar</a></div><div class="ttdeci">void atualizar(sf::Time deltaTempo)</div><div class="ttdoc">Avança o temporizador da bomba a cada ciclo da partida.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_a906ba92dc7cfc3a2b7c06e3aea2786f6"><div class="ttname"><a href="classbomberman_1_1_bomba.html#a906ba92dc7cfc3a2b7c06e3aea2786f6">bomberman::Bomba::getAlcance</a></div><div class="ttdeci">int getAlcance() const</div><div class="ttdoc">Retorna o alcance da explosão que a bomba irá gerar.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_ab142de6202f29fcf493d9e696dde8e0f"><div class="ttname"><a href="classbomberman_1_1_bomba.html#ab142de6202f29fcf493d9e696dde8e0f">bomberman::Bomba::getPosicao</a></div><div class="ttdeci">sf::Vector2i getPosicao() const</div><div class="ttdoc">Retorna a posição da bomba na arena.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_acefa92572b6b6efda592138614904457"><div class="ttname"><a href="classbomberman_1_1_bomba.html#acefa92572b6b6efda592138614904457">bomberman::Bomba::Bomba</a></div><div class="ttdeci">Bomba(sf::Vector2i posicao, int alcance, Jogador &amp;responsavel)</div><div class="ttdoc">Cria uma bomba em uma posição da arena.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_bomba_html_adeaf1abe72190a5cec4b256539b02f6c"><div class="ttname"><a href="classbomberman_1_1_bomba.html#adeaf1abe72190a5cec4b256539b02f6c">bomberman::Bomba::prontaParaExplodir</a></div><div class="ttdeci">bool prontaParaExplodir() const</div><div class="ttdoc">Indica se o tempo da bomba terminou e ela está pronta para detonar.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_explosao_html"><div class="ttname"><a href="classbomberman_1_1_explosao.html">bomberman::Explosao</a></div><div class="ttdoc">Calcula as células atingidas a partir de uma bomba detonada e aplica seus efeitos sobre o mapa e os p...</div><div class="ttdef"><b>Definição</b> Explosao.hpp:23</div></div>
+<div class="ttc" id="aclassbomberman_1_1_jogador_html"><div class="ttname"><a href="classbomberman_1_1_jogador.html">bomberman::Jogador</a></div><div class="ttdoc">Personagem controlavel, com atributos e reservas de bombas.</div><div class="ttdef"><b>Definição</b> Jogador.hpp:13</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>include</b></li><li class="navelem"><b>Bomba.hpp</b></li>
+    <li class="footer">Gerado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

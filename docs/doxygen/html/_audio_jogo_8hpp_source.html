@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bomberman: Código-Fonte de AudioJogo.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Bomberman
+   </div>
+   <div id="projectbrief">Regras, classes e guias do jogo Bomberman em C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Busca" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_audio_jogo_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">AudioJogo.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef BOMBERMAN_AUDIO_JOGO_HPP</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define BOMBERMAN_AUDIO_JOGO_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Partida.hpp&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;SFML/Audio/Sound.hpp&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;SFML/Audio/SoundBuffer.hpp&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>bomberman {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span></div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classbomberman_1_1_audio_jogo.html">   19</a></span><span class="keyword">class </span>AudioJogo {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">explicit</span> AudioJogo(<span class="keyword">const</span> std::string&amp; pastaSons);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    AudioJogo(<span class="keyword">const</span> AudioJogo&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    AudioJogo&amp; operator=(<span class="keyword">const</span> AudioJogo&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    AudioJogo(AudioJogo&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    AudioJogo&amp; operator=(AudioJogo&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classbomberman_1_1_audio_jogo.html#a91d319cd7535ff303efbb5c548236b3c">   28</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_audio_jogo.html#a91d319cd7535ff303efbb5c548236b3c">tocar</a>(EventoPartida evento);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classbomberman_1_1_audio_jogo.html#abddbfa9274155205fb8765669e5b6df1">   30</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_audio_jogo.html#abddbfa9274155205fb8765669e5b6df1">pausar</a>();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classbomberman_1_1_audio_jogo.html#aa1fc7bde56c75c4228db3a8ad63f5fae">   32</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_audio_jogo.html#aa1fc7bde56c75c4228db3a8ad63f5fae">retomar</a>();</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classbomberman_1_1_audio_jogo.html#af9c269d46a576c2698355d98e9aaedca">   34</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classbomberman_1_1_audio_jogo.html#af9c269d46a576c2698355d98e9aaedca">parar</a>();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">enum class</span> Som : std::size_t {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        PassoHorizontal, PassoVertical, BombaColocada, <a class="code hl_class" href="classbomberman_1_1_explosao.html">Explosao</a>,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <a class="code hl_class" href="classbomberman_1_1_melhoria.html">Melhoria</a>, Derrota, DerrotaAlternativa, Pausa, Quantidade</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    };</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> std::size_t QUANTIDADE_SONS = <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(Som::Quantidade);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> std::size_t MAXIMO_EFEITOS = 8;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="comment">// A ordem importa: canais sao destruidos antes dos buffers que referenciam.</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    std::array&lt;std::unique_ptr&lt;sf::SoundBuffer&gt;, QUANTIDADE_SONS&gt; buffers_;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    std::array&lt;std::unique_ptr&lt;sf::Sound&gt;, MAXIMO_EFEITOS&gt; efeitos_;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    std::unique_ptr&lt;sf::Sound&gt; passo_;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    std::unique_ptr&lt;sf::Sound&gt; pausa_;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    std::size_t proximoCanal_ = 0;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">bool</span> pausado_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">bool</span> derrotaAlternativa_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keyword">const</span> sf::SoundBuffer* obterBuffer(Som som) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordtype">void</span> reproduzir(std::unique_ptr&lt;sf::Sound&gt;&amp; canal, Som som, <span class="keywordtype">float</span> volume);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordtype">void</span> efeito(Som som, <span class="keywordtype">float</span> volume);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
+</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>} <span class="comment">// namespace bomberman</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassbomberman_1_1_audio_jogo_html_a91d319cd7535ff303efbb5c548236b3c"><div class="ttname"><a href="classbomberman_1_1_audio_jogo.html#a91d319cd7535ff303efbb5c548236b3c">bomberman::AudioJogo::tocar</a></div><div class="ttdeci">void tocar(EventoPartida evento)</div><div class="ttdoc">Reproduz uma ocorrencia, ignorando comandos enquanto pausado.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_audio_jogo_html_aa1fc7bde56c75c4228db3a8ad63f5fae"><div class="ttname"><a href="classbomberman_1_1_audio_jogo.html#aa1fc7bde56c75c4228db3a8ad63f5fae">bomberman::AudioJogo::retomar</a></div><div class="ttdeci">void retomar()</div><div class="ttdoc">Interrompe o aviso e retoma somente os efeitos que foram pausados.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_audio_jogo_html_abddbfa9274155205fb8765669e5b6df1"><div class="ttname"><a href="classbomberman_1_1_audio_jogo.html#abddbfa9274155205fb8765669e5b6df1">bomberman::AudioJogo::pausar</a></div><div class="ttdeci">void pausar()</div><div class="ttdoc">Pausa efeitos em andamento e toca o aviso de pausa uma vez.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_audio_jogo_html_af9c269d46a576c2698355d98e9aaedca"><div class="ttname"><a href="classbomberman_1_1_audio_jogo.html#af9c269d46a576c2698355d98e9aaedca">bomberman::AudioJogo::parar</a></div><div class="ttdeci">void parar()</div><div class="ttdoc">Interrompe todos os efeitos ao reiniciar ou voltar ao menu.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_explosao_html"><div class="ttname"><a href="classbomberman_1_1_explosao.html">bomberman::Explosao</a></div><div class="ttdoc">Calcula as células atingidas a partir de uma bomba detonada e aplica seus efeitos sobre o mapa e os p...</div><div class="ttdef"><b>Definição</b> Explosao.hpp:23</div></div>
+<div class="ttc" id="aclassbomberman_1_1_melhoria_html"><div class="ttname"><a href="classbomberman_1_1_melhoria.html">bomberman::Melhoria</a></div><div class="ttdoc">Representa um item coletável no mapa que altera os atributos do jogador.</div><div class="ttdef"><b>Definição</b> Melhoria.hpp:26</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>include</b></li><li class="navelem"><b>AudioJogo.hpp</b></li>
+    <li class="footer">Gerado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

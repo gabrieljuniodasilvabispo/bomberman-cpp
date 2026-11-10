@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bomberman: Código-Fonte de Mapa.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Bomberman
+   </div>
+   <div id="projectbrief">Regras, classes e guias do jogo Bomberman em C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Busca" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_mapa_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Mapa.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_mapa_8hpp.html">Ir para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef BOMBERMAN_MAPA_HPP</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define BOMBERMAN_MAPA_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="_bloco_8hpp.html">Bloco.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="_posicao_8hpp.html">Posicao.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span></div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classbomberman_1_1_mapa.html">   19</a></span><span class="keyword">class </span><a class="code hl_function" href="classbomberman_1_1_mapa.html#a912879a4498251a33ae7ed2c995392e5">Mapa</a> {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_mapa.html#a665ca87cb81c0a35975044e2918954d8">   22</a></span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="class_mapa.html#a665ca87cb81c0a35975044e2918954d8">MAXIMO_CELULAS</a> = 1000000;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_mapa.html#a912879a4498251a33ae7ed2c995392e5">   38</a></span>    <a class="code hl_function" href="class_mapa.html#a912879a4498251a33ae7ed2c995392e5">Mapa</a>(<span class="keywordtype">int</span> linhas, <span class="keywordtype">int</span> colunas, <span class="keyword">const</span> std::vector&lt;Bloco&gt;&amp; blocos,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>         <a class="code hl_struct" href="struct_posicao.html">Posicao</a> inicioJogador, <span class="keyword">const</span> std::vector&lt;Posicao&gt;&amp; iniciosInimigos,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>         <a class="code hl_struct" href="struct_posicao.html">Posicao</a> saida);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_mapa.html#afefe563c71f7ab90a6a4278cfb94328c">   43</a></span>    <span class="keywordtype">int</span> <a class="code hl_function" href="class_mapa.html#afefe563c71f7ab90a6a4278cfb94328c">obterLinhas</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="class_mapa.html#ae55b4d1c5c6a55ed5b4791ee5c028713">   46</a></span>    <span class="keywordtype">int</span> <a class="code hl_function" href="class_mapa.html#ae55b4d1c5c6a55ed5b4791ee5c028713">obterColunas</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="class_mapa.html#abcf07c514e598f98326484f32ddf74ef">   53</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_mapa.html#abcf07c514e598f98326484f32ddf74ef">dentroDosLimites</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_mapa.html#a3fb5aca4132e57ec2fd54ef437ccb40e">   62</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_mapa.html#a3fb5aca4132e57ec2fd54ef437ccb40e">podeEntrar</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_mapa.html#ab9cbf37c7d5797cc119d1edf97f280e3">   70</a></span>    <a class="code hl_class" href="class_bloco.html">Bloco</a>* <a class="code hl_function" href="class_mapa.html#ab9cbf37c7d5797cc119d1edf97f280e3">obterBloco</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_mapa.html#a45c60b85ab941afe7b8e6656e29f3d56">   77</a></span>    <span class="keyword">const</span> <a class="code hl_class" href="class_bloco.html">Bloco</a>* <a class="code hl_function" href="class_mapa.html#a45c60b85ab941afe7b8e6656e29f3d56">obterBloco</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_mapa.html#a6b17df70c0318333e6e09508de60ac5b">   87</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mapa.html#a6b17df70c0318333e6e09508de60ac5b">liberarBlocoDestruido</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_mapa.html#a2d27189266e8306384a60cbd180eb9ac">   95</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_mapa.html#a2d27189266e8306384a60cbd180eb9ac">registrarBomba</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="class_mapa.html#a09ceb0633e645ef3d21b1744b00e174d">  102</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mapa.html#a09ceb0633e645ef3d21b1744b00e174d">removerBomba</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="class_mapa.html#af8e992337a4bb71eb41a13ac511125eb">  109</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_mapa.html#af8e992337a4bb71eb41a13ac511125eb">temBomba</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="class_mapa.html#af00c86e83fe86a71d771e6a6044b3e59">  112</a></span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> <a class="code hl_function" href="class_mapa.html#af00c86e83fe86a71d771e6a6044b3e59">obterInicioJogador</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="class_mapa.html#a734688854ad24cb1a93b91152df1099a">  115</a></span>    std::vector&lt;Posicao&gt; <a class="code hl_function" href="class_mapa.html#a734688854ad24cb1a93b91152df1099a">obterIniciosInimigos</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="class_mapa.html#ac9d92f78cb8cfa24896b009901d6b6e6">  118</a></span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> <a class="code hl_function" href="class_mapa.html#ac9d92f78cb8cfa24896b009901d6b6e6">obterSaida</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="class_mapa.html#aabdbdcc7ffa278635491be7590f2a742">  132</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mapa.html#aabdbdcc7ffa278635491be7590f2a742">registrarMelhoria</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao, Melhoria&amp; melhoria);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="class_mapa.html#a113f943b465f5c79c10d5cecc3f025bd">  139</a></span>    Melhoria* <a class="code hl_function" href="class_mapa.html#a113f943b465f5c79c10d5cecc3f025bd">obterMelhoria</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="class_mapa.html#a17ae7aeec38f19ce40e17172c54175af">  146</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mapa.html#a17ae7aeec38f19ce40e17172c54175af">removerMelhoria</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="class_mapa.html#ab340fd0f65f0536714f56a16e82e1dbc">  156</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mapa.html#ab340fd0f65f0536714f56a16e82e1dbc">reiniciar</a>();</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keyword">struct </span>Celula {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordtype">int</span> indiceBloco = -1;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="class_mapa.html#af8e992337a4bb71eb41a13ac511125eb">temBomba</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        Melhoria* melhoria = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    };</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keywordtype">int</span> linhas_;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordtype">int</span> colunas_;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> inicioJogador_;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    std::vector&lt;Posicao&gt; iniciosInimigos_;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> saida_;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="comment">// Configuracao original, preservada para reiniciar a fase.</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    std::vector&lt;Bloco&gt; blocosIniciais_;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    std::vector&lt;Bloco&gt; blocos_;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    std::vector&lt;std::vector&lt;Celula&gt;&gt; celulas_;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>};</div>
+</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="preprocessor">#endif </span><span class="comment">// BOMBERMAN_MAPA_HPP</span></div>
+<div class="ttc" id="a_bloco_8hpp_html"><div class="ttname"><a href="_bloco_8hpp.html">Bloco.hpp</a></div><div class="ttdoc">Contrato de Bloco, baseado no CRC08 e nas historias US02, US04 e US05.</div></div>
+<div class="ttc" id="a_posicao_8hpp_html"><div class="ttname"><a href="_posicao_8hpp.html">Posicao.hpp</a></div><div class="ttdoc">Coordenadas logicas compartilhadas pelas classes da arena.</div></div>
+<div class="ttc" id="aclass_bloco_html"><div class="ttname"><a href="class_bloco.html">Bloco</a></div><div class="ttdoc">Obstaculo que conhece sua posicao e trata impactos de explosoes.</div><div class="ttdef"><b>Definição</b> Bloco.hpp:25</div></div>
+<div class="ttc" id="aclass_mapa_html_a09ceb0633e645ef3d21b1744b00e174d"><div class="ttname"><a href="class_mapa.html#a09ceb0633e645ef3d21b1744b00e174d">Mapa::removerBomba</a></div><div class="ttdeci">void removerBomba(Posicao posicao)</div><div class="ttdoc">Retira o bloqueio de uma bomba removida da partida.</div></div>
+<div class="ttc" id="aclass_mapa_html_a113f943b465f5c79c10d5cecc3f025bd"><div class="ttname"><a href="class_mapa.html#a113f943b465f5c79c10d5cecc3f025bd">Mapa::obterMelhoria</a></div><div class="ttdeci">Melhoria * obterMelhoria(Posicao posicao) const</div><div class="ttdoc">Localiza uma melhoria revelada.</div></div>
+<div class="ttc" id="aclass_mapa_html_a17ae7aeec38f19ce40e17172c54175af"><div class="ttname"><a href="class_mapa.html#a17ae7aeec38f19ce40e17172c54175af">Mapa::removerMelhoria</a></div><div class="ttdeci">void removerMelhoria(Posicao posicao)</div><div class="ttdoc">Remove o registro de uma melhoria coletada ou destruida.</div></div>
+<div class="ttc" id="aclass_mapa_html_a2d27189266e8306384a60cbd180eb9ac"><div class="ttname"><a href="class_mapa.html#a2d27189266e8306384a60cbd180eb9ac">Mapa::registrarBomba</a></div><div class="ttdeci">bool registrarBomba(Posicao posicao)</div><div class="ttdoc">Registra a ocupacao de uma bomba colocada por outra classe.</div></div>
+<div class="ttc" id="aclass_mapa_html_a3fb5aca4132e57ec2fd54ef437ccb40e"><div class="ttname"><a href="class_mapa.html#a3fb5aca4132e57ec2fd54ef437ccb40e">Mapa::podeEntrar</a></div><div class="ttdeci">bool podeEntrar(Posicao posicao) const</div><div class="ttdoc">Verifica se o terreno e as bombas permitem entrar na celula.</div></div>
+<div class="ttc" id="aclass_mapa_html_a45c60b85ab941afe7b8e6656e29f3d56"><div class="ttname"><a href="class_mapa.html#a45c60b85ab941afe7b8e6656e29f3d56">Mapa::obterBloco</a></div><div class="ttdeci">const Bloco * obterBloco(Posicao posicao) const</div><div class="ttdoc">Consulta um bloco sem permitir sua modificacao.</div></div>
+<div class="ttc" id="aclass_mapa_html_a665ca87cb81c0a35975044e2918954d8"><div class="ttname"><a href="class_mapa.html#a665ca87cb81c0a35975044e2918954d8">Mapa::MAXIMO_CELULAS</a></div><div class="ttdeci">static constexpr int MAXIMO_CELULAS</div><div class="ttdoc">Limite de recursos para evitar alocacoes desproporcionais.</div><div class="ttdef"><b>Definição</b> Mapa.hpp:22</div></div>
+<div class="ttc" id="aclass_mapa_html_a6b17df70c0318333e6e09508de60ac5b"><div class="ttname"><a href="class_mapa.html#a6b17df70c0318333e6e09508de60ac5b">Mapa::liberarBlocoDestruido</a></div><div class="ttdeci">void liberarBlocoDestruido(Posicao posicao)</div><div class="ttdoc">Recebe a notificacao de destruicao de um bloco.</div></div>
+<div class="ttc" id="aclass_mapa_html_a734688854ad24cb1a93b91152df1099a"><div class="ttname"><a href="class_mapa.html#a734688854ad24cb1a93b91152df1099a">Mapa::obterIniciosInimigos</a></div><div class="ttdeci">std::vector&lt; Posicao &gt; obterIniciosInimigos() const</div><div class="ttdoc">Consulta os inicios dos inimigos.</div></div>
+<div class="ttc" id="aclass_mapa_html_a912879a4498251a33ae7ed2c995392e5"><div class="ttname"><a href="class_mapa.html#a912879a4498251a33ae7ed2c995392e5">Mapa::Mapa</a></div><div class="ttdeci">Mapa(int linhas, int colunas, const std::vector&lt; Bloco &gt; &amp;blocos, Posicao inicioJogador, const std::vector&lt; Posicao &gt; &amp;iniciosInimigos, Posicao saida)</div><div class="ttdoc">Define a configuracao inicial de uma fase.</div></div>
+<div class="ttc" id="aclass_mapa_html_aabdbdcc7ffa278635491be7590f2a742"><div class="ttname"><a href="class_mapa.html#aabdbdcc7ffa278635491be7590f2a742">Mapa::registrarMelhoria</a></div><div class="ttdeci">void registrarMelhoria(Posicao posicao, Melhoria &amp;melhoria)</div><div class="ttdoc">Registra uma melhoria revelada por um bloco.</div></div>
+<div class="ttc" id="aclass_mapa_html_ab340fd0f65f0536714f56a16e82e1dbc"><div class="ttname"><a href="class_mapa.html#ab340fd0f65f0536714f56a16e82e1dbc">Mapa::reiniciar</a></div><div class="ttdeci">void reiniciar()</div><div class="ttdoc">Restaura o terreno e as posicoes da configuracao inicial.</div></div>
+<div class="ttc" id="aclass_mapa_html_ab9cbf37c7d5797cc119d1edf97f280e3"><div class="ttname"><a href="class_mapa.html#ab9cbf37c7d5797cc119d1edf97f280e3">Mapa::obterBloco</a></div><div class="ttdeci">Bloco * obterBloco(Posicao posicao)</div><div class="ttdoc">Fornece um bloco para receber impactos.</div></div>
+<div class="ttc" id="aclass_mapa_html_abcf07c514e598f98326484f32ddf74ef"><div class="ttname"><a href="class_mapa.html#abcf07c514e598f98326484f32ddf74ef">Mapa::dentroDosLimites</a></div><div class="ttdeci">bool dentroDosLimites(Posicao posicao) const</div><div class="ttdoc">Verifica os limites da grade.</div></div>
+<div class="ttc" id="aclass_mapa_html_ac9d92f78cb8cfa24896b009901d6b6e6"><div class="ttname"><a href="class_mapa.html#ac9d92f78cb8cfa24896b009901d6b6e6">Mapa::obterSaida</a></div><div class="ttdeci">Posicao obterSaida() const</div><div class="ttdoc">Consulta a saida.</div></div>
+<div class="ttc" id="aclass_mapa_html_ae55b4d1c5c6a55ed5b4791ee5c028713"><div class="ttname"><a href="class_mapa.html#ae55b4d1c5c6a55ed5b4791ee5c028713">Mapa::obterColunas</a></div><div class="ttdeci">int obterColunas() const</div><div class="ttdoc">Consulta a largura logica.</div></div>
+<div class="ttc" id="aclass_mapa_html_af00c86e83fe86a71d771e6a6044b3e59"><div class="ttname"><a href="class_mapa.html#af00c86e83fe86a71d771e6a6044b3e59">Mapa::obterInicioJogador</a></div><div class="ttdeci">Posicao obterInicioJogador() const</div><div class="ttdoc">Consulta o inicio do jogador.</div></div>
+<div class="ttc" id="aclass_mapa_html_af8e992337a4bb71eb41a13ac511125eb"><div class="ttname"><a href="class_mapa.html#af8e992337a4bb71eb41a13ac511125eb">Mapa::temBomba</a></div><div class="ttdeci">bool temBomba(Posicao posicao) const</div><div class="ttdoc">Consulta a ocupacao por bomba.</div></div>
+<div class="ttc" id="aclass_mapa_html_afefe563c71f7ab90a6a4278cfb94328c"><div class="ttname"><a href="class_mapa.html#afefe563c71f7ab90a6a4278cfb94328c">Mapa::obterLinhas</a></div><div class="ttdeci">int obterLinhas() const</div><div class="ttdoc">Consulta a altura logica.</div></div>
+<div class="ttc" id="aclassbomberman_1_1_mapa_html_a912879a4498251a33ae7ed2c995392e5"><div class="ttname"><a href="classbomberman_1_1_mapa.html#a912879a4498251a33ae7ed2c995392e5">bomberman::Mapa::Mapa</a></div><div class="ttdeci">Mapa(int linhas, int colunas, const std::vector&lt; Bloco &gt; &amp;blocos, Posicao inicioJogador, const std::vector&lt; Posicao &gt; &amp;iniciosInimigos, Posicao saida)</div><div class="ttdoc">Define a configuracao inicial de uma fase.</div></div>
+<div class="ttc" id="astruct_posicao_html"><div class="ttname"><a href="struct_posicao.html">Posicao</a></div><div class="ttdoc">Celula da grade, com indices a partir de zero; nao representa pixels.</div><div class="ttdef"><b>Definição</b> Posicao.hpp:9</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>include</b></li><li class="navelem"><a href="_mapa_8hpp.html">Mapa.hpp</a></li>
+    <li class="footer">Gerado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

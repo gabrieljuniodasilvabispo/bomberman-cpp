@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bomberman: Código-Fonte de Bloco.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Bomberman
+   </div>
+   <div id="projectbrief">Regras, classes e guias do jogo Bomberman em C++</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Busca" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_bloco_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Bloco.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_bloco_8hpp.html">Ir para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef BOMBERMAN_BLOCO_HPP</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define BOMBERMAN_BLOCO_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_posicao_8hpp.html">Posicao.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">class </span><a class="code hl_class" href="class_mapa.html">Mapa</a>;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>bomberman { <span class="keyword">class </span><a class="code hl_class" href="classbomberman_1_1_melhoria.html">Melhoria</a>; }</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">using </span>Melhoria = <a class="code hl_class" href="classbomberman_1_1_melhoria.html">bomberman::Melhoria</a>;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span></div>
+<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">   15</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">TipoBloco</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cfa191810bf74c23bdb527e741ff6c1b0e2">   16</a></span>    <a class="code hl_enumvalue" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cfa191810bf74c23bdb527e741ff6c1b0e2">Destrutivel</a>,   </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cfabb14ba4b2c275aa5db4e97b655af4445">   17</a></span>    <a class="code hl_enumvalue" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cfabb14ba4b2c275aa5db4e97b655af4445">Indestrutivel</a>  </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>};</div>
+</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span></div>
+<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_bloco.html">   25</a></span><span class="keyword">class </span><a class="code hl_function" href="class_bloco.html#a92ffb7d5cfcaeeebb9792e751be7f2c0">Bloco</a> {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_bloco.html#a92ffb7d5cfcaeeebb9792e751be7f2c0">   38</a></span>    <a class="code hl_function" href="class_bloco.html#a92ffb7d5cfcaeeebb9792e751be7f2c0">Bloco</a>(<a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao, <a class="code hl_enumeration" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">TipoBloco</a> tipo, Melhoria* melhoria = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="class_bloco.html#a125f5dd28478907968dad2ba20d54674">   41</a></span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> <a class="code hl_function" href="class_bloco.html#a125f5dd28478907968dad2ba20d54674">obterPosicao</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_bloco.html#ac32ab822c54ce692960855c25f7e336f">   44</a></span>    <a class="code hl_enumeration" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">TipoBloco</a> <a class="code hl_function" href="class_bloco.html#ac32ab822c54ce692960855c25f7e336f">obterTipo</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_bloco.html#ab5d05866683e0ac7a4a73c3753876386">   47</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_bloco.html#ab5d05866683e0ac7a4a73c3753876386">estaDestruido</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="class_bloco.html#a7f6faadc94cd47d92a3c31a446376af3">   50</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_bloco.html#a7f6faadc94cd47d92a3c31a446376af3">impedePassagem</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_bloco.html#aa2452258460d3d1578a058f425d428b2">   66</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_bloco.html#aa2452258460d3d1578a058f425d428b2">receberExplosao</a>(<a class="code hl_class" href="class_mapa.html">Mapa</a>&amp; mapa);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_struct" href="struct_posicao.html">Posicao</a> posicao_;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <a class="code hl_enumeration" href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">TipoBloco</a> tipo_;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordtype">bool</span> destruido_ = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    Melhoria* melhoria_ = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>};</div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif </span><span class="comment">// BOMBERMAN_BLOCO_HPP</span></div>
+<div class="ttc" id="a_bloco_8hpp_html_ab0067f8bd4698f2a5e71928025bcb2cf"><div class="ttname"><a href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cf">TipoBloco</a></div><div class="ttdeci">TipoBloco</div><div class="ttdoc">Tipos de obstaculo previstos na modelagem.</div><div class="ttdef"><b>Definição</b> Bloco.hpp:15</div></div>
+<div class="ttc" id="a_bloco_8hpp_html_ab0067f8bd4698f2a5e71928025bcb2cfa191810bf74c23bdb527e741ff6c1b0e2"><div class="ttname"><a href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cfa191810bf74c23bdb527e741ff6c1b0e2">TipoBloco::Destrutivel</a></div><div class="ttdeci">@ Destrutivel</div><div class="ttdoc">E destruido ao receber uma explosao.</div><div class="ttdef"><b>Definição</b> Bloco.hpp:16</div></div>
+<div class="ttc" id="a_bloco_8hpp_html_ab0067f8bd4698f2a5e71928025bcb2cfabb14ba4b2c275aa5db4e97b655af4445"><div class="ttname"><a href="_bloco_8hpp.html#ab0067f8bd4698f2a5e71928025bcb2cfabb14ba4b2c275aa5db4e97b655af4445">TipoBloco::Indestrutivel</a></div><div class="ttdeci">@ Indestrutivel</div><div class="ttdoc">Permanece intacto ao receber uma explosao.</div><div class="ttdef"><b>Definição</b> Bloco.hpp:17</div></div>
+<div class="ttc" id="a_posicao_8hpp_html"><div class="ttname"><a href="_posicao_8hpp.html">Posicao.hpp</a></div><div class="ttdoc">Coordenadas logicas compartilhadas pelas classes da arena.</div></div>
+<div class="ttc" id="aclass_bloco_html_a125f5dd28478907968dad2ba20d54674"><div class="ttname"><a href="class_bloco.html#a125f5dd28478907968dad2ba20d54674">Bloco::obterPosicao</a></div><div class="ttdeci">Posicao obterPosicao() const</div><div class="ttdoc">Consulta a celula ocupada.</div></div>
+<div class="ttc" id="aclass_bloco_html_a7f6faadc94cd47d92a3c31a446376af3"><div class="ttname"><a href="class_bloco.html#a7f6faadc94cd47d92a3c31a446376af3">Bloco::impedePassagem</a></div><div class="ttdeci">bool impedePassagem() const</div><div class="ttdoc">Consulta o bloqueio.</div></div>
+<div class="ttc" id="aclass_bloco_html_a92ffb7d5cfcaeeebb9792e751be7f2c0"><div class="ttname"><a href="class_bloco.html#a92ffb7d5cfcaeeebb9792e751be7f2c0">Bloco::Bloco</a></div><div class="ttdeci">Bloco(Posicao posicao, TipoBloco tipo, Melhoria *melhoria=nullptr)</div><div class="ttdoc">Define um bloco inicialmente intacto.</div></div>
+<div class="ttc" id="aclass_bloco_html_aa2452258460d3d1578a058f425d428b2"><div class="ttname"><a href="class_bloco.html#aa2452258460d3d1578a058f425d428b2">Bloco::receberExplosao</a></div><div class="ttdeci">bool receberExplosao(Mapa &amp;mapa)</div><div class="ttdoc">Trata o impacto e notifica o mapa se houver destruicao.</div></div>
+<div class="ttc" id="aclass_bloco_html_ab5d05866683e0ac7a4a73c3753876386"><div class="ttname"><a href="class_bloco.html#ab5d05866683e0ac7a4a73c3753876386">Bloco::estaDestruido</a></div><div class="ttdeci">bool estaDestruido() const</div><div class="ttdoc">Consulta o estado.</div></div>
+<div class="ttc" id="aclass_bloco_html_ac32ab822c54ce692960855c25f7e336f"><div class="ttname"><a href="class_bloco.html#ac32ab822c54ce692960855c25f7e336f">Bloco::obterTipo</a></div><div class="ttdeci">TipoBloco obterTipo() const</div><div class="ttdoc">Consulta o tipo.</div></div>
+<div class="ttc" id="aclass_mapa_html"><div class="ttname"><a href="class_mapa.html">Mapa</a></div><div class="ttdoc">Organiza o terreno e consulta a ocupacao das celulas da arena.</div><div class="ttdef"><b>Definição</b> Mapa.hpp:19</div></div>
+<div class="ttc" id="aclassbomberman_1_1_melhoria_html"><div class="ttname"><a href="classbomberman_1_1_melhoria.html">bomberman::Melhoria</a></div><div class="ttdoc">Representa um item coletável no mapa que altera os atributos do jogador.</div><div class="ttdef"><b>Definição</b> Melhoria.hpp:26</div></div>
+<div class="ttc" id="astruct_posicao_html"><div class="ttname"><a href="struct_posicao.html">Posicao</a></div><div class="ttdoc">Celula da grade, com indices a partir de zero; nao representa pixels.</div><div class="ttdef"><b>Definição</b> Posicao.hpp:9</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>include</b></li><li class="navelem"><a href="_bloco_8hpp.html">Bloco.hpp</a></li>
+    <li class="footer">Gerado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

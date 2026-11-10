@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['código_0',['Cobertura de código',['../md_docs_2testes-iniciais.html#autotoc_md64',1,'']]],
+  ['cartoes_20crc_20bomberman_1',['Cartoes CRC - Bomberman',['../md_design_2cartoes-crc.html',1,'']]],
+  ['cobertura_20de_20código_2',['Cobertura de código',['../md_docs_2testes-iniciais.html#autotoc_md64',1,'']]],
+  ['colaboracoes_3',['Colaboracoes',['../md_design_2cartoes-crc.html#autotoc_md13',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md16',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md19',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md22',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md25',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md28',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md31',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md34',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md37',1,'Colaboracoes'],['../md_design_2cartoes-crc.html#autotoc_md40',1,'Colaboracoes']]],
+  ['coletar_20melhorias_4',['US05 - Coletar melhorias',['../md_design_2user-stories.html#autotoc_md50',1,'']]],
+  ['com_20explosoes_5',['US04 - Interagir com explosoes',['../md_design_2user-stories.html#autotoc_md48',1,'']]],
+  ['como_20executar_20os_20testes_6',['Como executar os testes',['../md_docs_2testes-iniciais.html#autotoc_md60',1,'']]],
+  ['como_20interpretar_20o_20resultado_7',['Como interpretar o resultado',['../md_docs_2testes-iniciais.html#autotoc_md61',1,'']]],
+  ['como_20jogar_8',['Como jogar',['../index.html#autotoc_md8',1,'']]],
+  ['concluir_20o_20jogo_20ou_20reiniciar_9',['US06 - Avancar pelas fases, concluir o jogo ou reiniciar',['../md_design_2user-stories.html#autotoc_md52',1,'']]],
+  ['contexto_10',['🕹️ Contexto',['../index.html#autotoc_md4',1,'']]],
+  ['contexto_20e_20motivação_11',['🎯 Objetivos, Contexto e Motivação',['../index.html#autotoc_md3',1,'']]],
+  ['controlador_20da_20partida_12',['Controlador da partida',['../md_docs_2partida.html',1,'']]],
+  ['crc_20bomberman_13',['Cartoes CRC - Bomberman',['../md_design_2cartoes-crc.html',1,'']]],
+  ['crc01_20partida_14',['CRC01 - Partida',['../md_design_2cartoes-crc.html#autotoc_md11',1,'']]],
+  ['crc02_20mapa_15',['CRC02 - Mapa',['../md_design_2cartoes-crc.html#autotoc_md14',1,'']]],
+  ['crc03_20jogador_16',['CRC03 - Jogador',['../md_design_2cartoes-crc.html#autotoc_md17',1,'']]],
+  ['crc04_20bomba_17',['CRC04 - Bomba',['../md_design_2cartoes-crc.html#autotoc_md20',1,'']]],
+  ['crc05_20explosao_18',['CRC05 - Explosao',['../md_design_2cartoes-crc.html#autotoc_md23',1,'']]],
+  ['crc06_20inimigo_19',['CRC06 - Inimigo',['../md_design_2cartoes-crc.html#autotoc_md26',1,'']]],
+  ['crc07_20melhoria_20',['CRC07 - Melhoria',['../md_design_2cartoes-crc.html#autotoc_md29',1,'']]],
+  ['crc08_20bloco_21',['CRC08 - Bloco',['../md_design_2cartoes-crc.html#autotoc_md32',1,'']]],
+  ['crc09_20menu_22',['CRC09 - Menu',['../md_design_2cartoes-crc.html#autotoc_md35',1,'']]],
+  ['crc10_20audiojogo_23',['CRC10 - AudioJogo',['../md_design_2cartoes-crc.html#autotoc_md38',1,'']]],
+  ['criterios_20de_20aceitacao_24',['Criterios de aceitacao',['../md_design_2user-stories.html#autotoc_md43',1,'Criterios de aceitacao'],['../md_design_2user-stories.html#autotoc_md45',1,'Criterios de aceitacao'],['../md_design_2user-stories.html#autotoc_md47',1,'Criterios de aceitacao'],['../md_design_2user-stories.html#autotoc_md49',1,'Criterios de aceitacao'],['../md_design_2user-stories.html#autotoc_md51',1,'Criterios de aceitacao'],['../md_design_2user-stories.html#autotoc_md53',1,'Criterios de aceitacao']]]
+];
