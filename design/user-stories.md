@@ -59,17 +59,17 @@ Este documento apresenta os requisitos funcionais iniciais do jogo Bomberman. As
 - A melhoria deve ser coletada quando um jogador ocupar sua posicao.
 - O jogo deve oferecer pelo menos melhorias de alcance da explosao, quantidade simultanea de bombas e escudo resistente a explosao.
 
-## US06 - Concluir ou reiniciar a fase
+## US06 - Avancar pelas fases, concluir o jogo ou reiniciar
 
-**Como jogador, quero visualizar o resultado da fase e poder reinicia-la para continuar jogando depois de uma vitoria ou derrota.**
+**Como jogador, quero avancar pelos quatro mapas fixos, visualizar o resultado do jogo e poder reiniciar para continuar jogando depois de uma vitoria ou derrota.**
 
 ### Criterios de aceitacao
 
-- O jogador deve vencer depois de eliminar todos os inimigos e alcancar a saida da fase.
-- O jogador deve perder ao ser atingido por uma explosao ou por um inimigo.
-- O jogo deve informar se o jogador venceu ou perdeu.
-- O jogo deve oferecer a opcao de reiniciar a fase.
-- Ao reiniciar, o mapa, os jogadores, as bombas e as melhorias devem voltar ao estado inicial.
+- Os quatro mapas fixos devem ser jogados na ordem 1, 2, 3 e 4. Nas tres primeiras fases, eliminar todos os inimigos e alcancar a saida com o jogador vivo deve iniciar automaticamente a proxima fase.
+- A vitoria final deve ser informada somente ao eliminar todos os inimigos e alcancar a saida da quarta fase com o jogador vivo. Apos a vitoria, Enter ou R deve iniciar um novo jogo na fase 1.
+- O jogo deve informar a derrota quando o jogador for atingido por uma explosao sem escudo ou entrar em contato com um inimigo.
+- R deve reiniciar a fase atual durante o jogo ou apos a derrota; Enter tambem deve reinicia-la apos a derrota, mantendo o mesmo mapa e numero da fase.
+- Ao reiniciar uma fase, terreno, jogador, atributos, inimigos e melhorias devem voltar ao estado inicial, e todas as bombas e explosoes da tentativa anterior devem ser removidas.
 
 ## Referencia
 
