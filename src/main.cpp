@@ -7,6 +7,7 @@
 #include "Menu.hpp"
 #include "Partida.hpp"
 #include <algorithm>
+#include <array>
 #include <iostream>
 #include <optional>
 #include <stdexcept>
@@ -53,6 +54,82 @@ void circulo(sf::RenderWindow& janela, sf::Vector2f centro, float raio, sf::Colo
     janela.draw(desenho);
 }
 
+// Texturas dos sprites (pixel art 24x24, ampliadas para o tamanho da celula).
+// Se algum arquivo faltar, o elemento correspondente volta ao desenho com formas.
+struct Sprites {
+    sf::Texture chao;
+    sf::Texture chaoSombra;
+    sf::Texture bloco;
+    std::array<sf::Texture, 3> bomba;
+    // Melhorias (o escudo ainda nao tem sprite e continua com o desenho antigo).
+    sf::Texture itemFogo;  // AumentoAlcance
+    sf::Texture itemBomba; // BombaExtra
+    // Partes da explosao: cada sprite ocupa uma posicao especifica no "+" do fogo.
+    sf::Texture explosaoCentro;
+    sf::Texture explosaoHorizontal;
+    sf::Texture explosaoEsquerda; // ponta esquerda do braco horizontal
+    sf::Texture explosaoDireita;  // ponta direita do braco horizontal
+    sf::Texture explosaoVertical;
+    sf::Texture explosaoCima;     // ponta de cima do braco vertical
+    sf::Texture explosaoBaixo;    // ponta de baixo do braco vertical
+    bool temChao = false;
+    bool temChaoSombra = false;
+    bool temBloco = false;
+    bool temBomba = false;
+    bool temItemFogo = false;
+    bool temItemBomba = false;
+    bool temExplosao = false; // so vale se as 7 partes foram carregadas
+};
+
+bool carregarTextura(sf::Texture& textura, const std::string& caminho) {
+    if (!textura.loadFromFile(caminho)) {
+        std::cerr << "Aviso: sprite nao encontrado em: " << caminho << std::endl;
+        return false;
+    }
+    textura.setSmooth(false); // pixel art: sem suavizacao ao ampliar
+    return true;
+}
+
+Sprites carregarSprites(const std::string& pasta) {
+    Sprites s;
+    s.temChao = carregarTextura(s.chao, pasta + "/green-sheet.png");
+    s.temChaoSombra = carregarTextura(s.chaoSombra, pasta + "/green-tile-with-shadow.png");
+    s.temBloco = carregarTextura(s.bloco, pasta + "/grey-tile.png");
+    s.temBomba = true;
+    for (std::size_t i = 0; i < s.bomba.size(); ++i) {
+        if (!carregarTextura(s.bomba[i], pasta + "/set-bomb-" + std::to_string(i) + ".png")) {
+            s.temBomba = false;
+        }
+    }
+
+    s.temItemFogo = carregarTextura(s.itemFogo, pasta + "/item-fire.png");
+    // O arquivo pode se chamar item-bomb.png ou item-bomba.png; aceita os dois.
+    s.temItemBomba = carregarTextura(s.itemBomba, pasta + "/item-bomb.png")
+        || carregarTextura(s.itemBomba, pasta + "/item-bomba.png");
+
+    // Carrega todas as partes (sem curto-circuito) para avisar de cada arquivo faltando.
+    const bool partes[] = {
+        carregarTextura(s.explosaoCentro, pasta + "/bomb-explode-ctr.png"),
+        carregarTextura(s.explosaoHorizontal, pasta + "/bomb-explode-hrz.png"),
+        carregarTextura(s.explosaoEsquerda, pasta + "/bomb-explode-hrz-l.png"),
+        carregarTextura(s.explosaoDireita, pasta + "/bomb-explode-hrz-r.png"),
+        carregarTextura(s.explosaoVertical, pasta + "/bomb-explode-vrt.png"),
+        carregarTextura(s.explosaoCima, pasta + "/bomb-explode-vrt-u.png"),
+        carregarTextura(s.explosaoBaixo, pasta + "/bomb-explode-vrt-d.png"),
+    };
+    s.temExplosao = std::all_of(std::begin(partes), std::end(partes), [](bool ok) { return ok; });
+    return s;
+}
+
+// Desenha a textura inteira ocupando uma celula quadrada de tamanho "lado".
+void sprite(sf::RenderWindow& janela, const sf::Texture& textura, sf::Vector2f posicao, float lado) {
+    sf::Sprite desenho(textura);
+    const auto tamanho = sf::Vector2f{textura.getSize()};
+    desenho.setPosition(posicao);
+    desenho.setScale({lado / tamanho.x, lado / tamanho.y});
+    janela.draw(desenho);
+}
+
 std::optional<Posicao> direcao(Tecla tecla) {
     switch (tecla) {
     case Tecla::W: case Tecla::Up: return Posicao{-1, 0};
@@ -88,7 +165,8 @@ void desenharInstrucoes(sf::RenderWindow& janela, const sf::Font& fonte) {
     texto(janela, fonte, "Esc: voltar ao menu", 17, {320.f, 568.f}, SUAVE);
 }
 
-void desenharPartida(sf::RenderWindow& janela, const sf::Font& fonte, const Partida& partida) {
+void desenharPartida(sf::RenderWindow& janela, const sf::Font& fonte, const Partida& partida,
+                     const Sprites& sprites, sf::Time tempoAnimacao) {
     const auto& mapa = partida.obterMapa();
     const auto& jogador = partida.obterJogador();
     const auto inimigosVivos = std::count_if(partida.obterInimigos().begin(), partida.obterInimigos().end(),
@@ -114,29 +192,50 @@ void desenharPartida(sf::RenderWindow& janela, const sf::Font& fonte, const Part
         for (int coluna = 0; coluna < mapa.obterColunas(); ++coluna) {
             const Posicao p{linha, coluna};
             const auto pos = canto(p);
-            retangulo(janela, pos, {lado - 1.f, lado - 1.f},
-                      (linha + coluna) % 2 == 0 ? sf::Color(35, 46, 54) : sf::Color(40, 52, 59));
+            // Chao: a variante sombreada fica logo abaixo de um bloco (a sombra
+            // do sprite esta no topo da celula).
+            const bool sombra = mapa.obterBloco(Posicao{linha - 1, coluna}) != nullptr;
+            if (sombra && sprites.temChaoSombra) {
+                sprite(janela, sprites.chaoSombra, pos, lado);
+            } else if (sprites.temChao) {
+                sprite(janela, sprites.chao, pos, lado);
+            } else {
+                retangulo(janela, pos, {lado - 1.f, lado - 1.f},
+                          (linha + coluna) % 2 == 0 ? sf::Color(35, 46, 54) : sf::Color(40, 52, 59));
+            }
             if (const auto* bloco = mapa.obterBloco(p)) {
                 const bool parede = bloco->obterTipo() == TipoBloco::Indestrutivel;
-                retangulo(janela, pos + sf::Vector2f{2.f, 2.f}, {lado - 5.f, lado - 5.f},
-                          parede ? sf::Color(93, 111, 132) : sf::Color(167, 108, 63));
-                retangulo(janela, pos + sf::Vector2f{5.f, 5.f}, {lado - 11.f, 3.f},
-                          parede ? sf::Color(132, 152, 173) : sf::Color(220, 158, 99));
-                if (!parede) {
-                    retangulo(janela, pos + sf::Vector2f{3.f, lado / 2.f}, {lado - 7.f, 2.f}, FUNDO);
-                    retangulo(janela, pos + sf::Vector2f{lado / 2.f, 3.f}, {2.f, lado / 2.f - 3.f}, FUNDO);
+                if (!parede && sprites.temBloco) {
+                    sprite(janela, sprites.bloco, pos, lado);
+                } else {
+                    retangulo(janela, pos + sf::Vector2f{2.f, 2.f}, {lado - 5.f, lado - 5.f},
+                              parede ? sf::Color(93, 111, 132) : sf::Color(167, 108, 63));
+                    retangulo(janela, pos + sf::Vector2f{5.f, 5.f}, {lado - 11.f, 3.f},
+                              parede ? sf::Color(132, 152, 173) : sf::Color(220, 158, 99));
+                    if (!parede) {
+                        retangulo(janela, pos + sf::Vector2f{3.f, lado / 2.f}, {lado - 7.f, 2.f}, FUNDO);
+                        retangulo(janela, pos + sf::Vector2f{lado / 2.f, 3.f}, {2.f, lado / 2.f - 3.f}, FUNDO);
+                    }
                 }
             }
             if (const auto* melhoria = mapa.obterMelhoria(p)) {
-                std::string letra = "E";
-                sf::Color cor{80, 195, 255};
-                if (melhoria->getTipo() == bomberman::TipoMelhoria::AumentoAlcance) {
-                    letra = "A"; cor = DOURADO;
-                } else if (melhoria->getTipo() == bomberman::TipoMelhoria::BombaExtra) {
-                    letra = "B"; cor = VERDE;
+                const auto tipoMelhoria = melhoria->getTipo();
+                if (tipoMelhoria == bomberman::TipoMelhoria::AumentoAlcance && sprites.temItemFogo) {
+                    sprite(janela, sprites.itemFogo, pos, lado);
+                } else if (tipoMelhoria == bomberman::TipoMelhoria::BombaExtra && sprites.temItemBomba) {
+                    sprite(janela, sprites.itemBomba, pos, lado);
+                } else {
+                    // Escudo (sem sprite ainda) ou sprite ausente: desenho antigo.
+                    std::string letra = "E";
+                    sf::Color cor{80, 195, 255};
+                    if (tipoMelhoria == bomberman::TipoMelhoria::AumentoAlcance) {
+                        letra = "A"; cor = DOURADO;
+                    } else if (tipoMelhoria == bomberman::TipoMelhoria::BombaExtra) {
+                        letra = "B"; cor = VERDE;
+                    }
+                    retangulo(janela, pos + sf::Vector2f{10.f, 10.f}, {lado - 20.f, lado - 20.f}, cor);
+                    texto(janela, fonte, letra, 21, pos + sf::Vector2f{17.f, 9.f}, FUNDO);
                 }
-                retangulo(janela, pos + sf::Vector2f{10.f, 10.f}, {lado - 20.f, lado - 20.f}, cor);
-                texto(janela, fonte, letra, 21, pos + sf::Vector2f{17.f, 9.f}, FUNDO);
             }
         }
     }
@@ -148,16 +247,60 @@ void desenharPartida(sf::RenderWindow& janela, const sf::Font& fonte, const Part
 
     for (std::size_t i = 0; i < partida.obterQuantidadeBombas(); ++i) {
         const auto p = partida.obterBomba(i).getPosicao();
+        if (sprites.temBomba) {
+            // Pulsa em ciclo 0 -> 1 -> 2 -> 1, trocando de estagio a cada 150 ms.
+            static constexpr std::array<std::size_t, 4> CICLO{0, 1, 2, 1};
+            const auto passo = static_cast<std::size_t>(tempoAnimacao.asMilliseconds() / 150);
+            sprite(janela, sprites.bomba[CICLO[passo % CICLO.size()]], canto({p.y, p.x}), lado);
+            continue;
+        }
         const auto c = centro({p.y, p.x});
         circulo(janela, c, lado * 0.32f, sf::Color(185, 190, 200));
         circulo(janela, c, lado * 0.27f, sf::Color(15, 16, 24));
         retangulo(janela, c + sf::Vector2f{1.f, -lado * 0.35f}, {4.f, 9.f}, DOURADO);
     }
     for (std::size_t i = 0; i < partida.obterQuantidadeExplosoes(); ++i) {
-        for (auto p : partida.obterExplosao(i).getCelulasAtingidas()) {
-            const auto pos = canto({p.y, p.x});
-            retangulo(janela, pos + sf::Vector2f{3.f, 3.f}, {lado - 6.f, lado - 6.f}, sf::Color(255, 120, 45, 220));
-            retangulo(janela, pos + sf::Vector2f{12.f, 12.f}, {lado - 24.f, lado - 24.f}, DOURADO);
+        const auto& celulas = partida.obterExplosao(i).getCelulasAtingidas();
+        if (celulas.empty()) continue;
+
+        // A primeira celula e sempre a origem (centro). As demais ficam na mesma
+        // linha ou na mesma coluna dela, entao o deslocamento (dx, dy) em relacao
+        // a origem diz de que braco a celula faz parte.
+        const sf::Vector2i origem = celulas.front();
+
+        // Tamanho real de cada braco: pode ser menor que o alcance da bomba se um
+        // bloco interrompeu o fogo. A ultima celula do braco e a ponta.
+        int esquerda = 0, direita = 0, cima = 0, baixo = 0;
+        for (const auto& c : celulas) {
+            const int dx = c.x - origem.x;
+            const int dy = c.y - origem.y;
+            if (dy == 0 && dx < 0) esquerda = std::max(esquerda, -dx);
+            else if (dy == 0 && dx > 0) direita = std::max(direita, dx);
+            else if (dx == 0 && dy < 0) cima = std::max(cima, -dy);
+            else if (dx == 0 && dy > 0) baixo = std::max(baixo, dy);
+        }
+
+        for (const auto& c : celulas) {
+            const auto pos = canto({c.y, c.x});
+            if (!sprites.temExplosao) {
+                // Sem os sprites: desenho antigo.
+                retangulo(janela, pos + sf::Vector2f{3.f, 3.f}, {lado - 6.f, lado - 6.f}, sf::Color(255, 120, 45, 220));
+                retangulo(janela, pos + sf::Vector2f{12.f, 12.f}, {lado - 24.f, lado - 24.f}, DOURADO);
+                continue;
+            }
+            const int dx = c.x - origem.x;
+            const int dy = c.y - origem.y;
+            const sf::Texture* textura = &sprites.explosaoCentro;
+            if (dy == 0 && dx < 0) {
+                textura = (-dx == esquerda) ? &sprites.explosaoEsquerda : &sprites.explosaoHorizontal;
+            } else if (dy == 0 && dx > 0) {
+                textura = (dx == direita) ? &sprites.explosaoDireita : &sprites.explosaoHorizontal;
+            } else if (dx == 0 && dy < 0) {
+                textura = (-dy == cima) ? &sprites.explosaoCima : &sprites.explosaoVertical;
+            } else if (dx == 0 && dy > 0) {
+                textura = (dy == baixo) ? &sprites.explosaoBaixo : &sprites.explosaoVertical;
+            }
+            sprite(janela, *textura, pos, lado);
         }
     }
     const auto personagem = [&](Posicao p, sf::Color cor, bool escudo) {
@@ -215,6 +358,10 @@ int executar(int argc, char* argv[]) {
         std::cerr << "Aviso: Imagem de fundo nao encontrada em: " << caminhoImagem << std::endl;
     }
     sf::Sprite fundo(texturaFundo);
+
+    // Sprites do jogo (chao, blocos e bombas)
+    const Sprites sprites = carregarSprites(std::string(BOMBERMAN_ASSETS_DIR) + "/img");
+    const sf::Clock relogioAnimacao;
 
     sf::RenderWindow janela(sf::VideoMode({800, 600}), "Bomberman", sf::Style::Titlebar | sf::Style::Close);
     janela.setFramerateLimit(60);
@@ -340,7 +487,7 @@ int executar(int argc, char* argv[]) {
         if (tela == Tela::Menu) desenharMenu(janela, fonte, menu, fundo);
         else if (tela == Tela::Instrucoes) desenharInstrucoes(janela, fonte);
         else {
-            desenharPartida(janela, fonte, partida);
+            desenharPartida(janela, fonte, partida, sprites, relogioAnimacao.getElapsedTime());
             if (partida.obterEstado() == EstadoPartida::Vitoria) {
                 desenharAviso(janela, fonte, "VOCE VENCEU!",
                               "4 fases concluidas! Enter ou R para novo jogo.", VERDE);
